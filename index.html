@@ -7,194 +7,208 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Týden v lednici">
-<meta name="theme-color" content="#F1F4F3" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#111917" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F2F4F1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F1613" media="(prefers-color-scheme: dark)">
 <title>Týden v lednici</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Caveat:wght@700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#F1F4F3; --surface:#FFFFFF; --ink:#1F2B29; --muted:#5E6D6A; --line:#DCE3E1;
-  --btn:#1F2B29; --btn-ink:#FFFFFF;
-  --oves:#C9B48C; --seda:#93A09D; --ok:#2E9A5A; --warn:#B9650B;
-  --tint:14%;
+  --bg:#F2F4F1; --surface:#FFFFFF; --ink:#18241F; --muted:#64716B; --line:#E1E6E1; --line2:#CDD5CF;
+  --btn:#18241F; --btn-ink:#FFFFFF;
+  --snid:#6C9A2E; --obed:#D9472D; --obed2:#2F8C7E; --vec:#9A6436;
+  --seda:#A3ADA7; --ok:#2F8A56; --warn:#B15E0C; --note:#FFE58A; --note-ink:#3D3209;
+  --tint:12%;
+  --r-lg:22px; --r-md:16px; --r-sm:12px;
+  --font:'Bricolage Grotesque',system-ui,-apple-system,sans-serif;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#111917; --surface:#1A2422; --ink:#E7EFEC; --muted:#93A39F; --line:#2A3633;
-    --btn:#E7EFEC; --btn-ink:#111917; --oves:#A99470; --seda:#6E7C79; --warn:#E79A45; --tint:24%;
+    --bg:#0F1613; --surface:#18211D; --ink:#E8EEEA; --muted:#97A59E; --line:#26312C; --line2:#34413A;
+    --btn:#E8EEEA; --btn-ink:#0F1613;
+    --snid:#93C152; --obed:#F0674C; --obed2:#4DB3A3; --vec:#CF915C;
+    --seda:#6F7C76; --ok:#5DBE84; --warn:#E89A4C; --note:#E9CD6A; --note-ink:#2E2507; --tint:20%;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#111917; --surface:#1A2422; --ink:#E7EFEC; --muted:#93A39F; --line:#2A3633;
-  --btn:#E7EFEC; --btn-ink:#111917; --oves:#A99470; --seda:#6E7C79; --warn:#E79A45; --tint:24%;
+  --bg:#0F1613; --surface:#18211D; --ink:#E8EEEA; --muted:#97A59E; --line:#26312C; --line2:#34413A;
+  --btn:#E8EEEA; --btn-ink:#0F1613;
+  --snid:#93C152; --obed:#F0674C; --obed2:#4DB3A3; --vec:#CF915C;
+  --seda:#6F7C76; --ok:#5DBE84; --warn:#E89A4C; --note:#E9CD6A; --note-ink:#2E2507; --tint:20%;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0}
-body{background:var(--bg);color:var(--ink);font:17px/1.45 Outfit,system-ui,-apple-system,sans-serif;
-  padding:env(safe-area-inset-top) 0 calc(78px + env(safe-area-inset-bottom));-webkit-font-smoothing:antialiased}
-h1,h2,h3{font-family:Outfit,system-ui,sans-serif;margin:0;letter-spacing:-.01em}
-h1{font-family:Caveat,cursive;font-size:54px;line-height:.95;font-weight:700;letter-spacing:0}
-h2{font-size:23px;line-height:1.15;font-weight:700;margin:30px 0 12px}
-h3{font-size:19px;line-height:1.15;font-weight:700}
+body{background:var(--bg);color:var(--ink);font:400 17px/1.45 var(--font);font-optical-sizing:auto;
+  padding:env(safe-area-inset-top) 0 calc(84px + env(safe-area-inset-bottom));-webkit-font-smoothing:antialiased}
+h1,h2,h3{margin:0;font-weight:700}
+h1{font-size:34px;line-height:1.05;font-weight:800;letter-spacing:-.025em}
+h2{font-size:22px;line-height:1.15;letter-spacing:-.015em;margin:34px 0 12px}
+h3{font-size:18px;line-height:1.2;letter-spacing:-.01em}
 button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;padding:0;text-align:left}
-:focus-visible{outline:3px solid var(--ok);outline-offset:2px;border-radius:6px}
-.wrap{max-width:560px;margin:0 auto;padding:22px 16px 28px}
+:focus-visible{outline:3px solid var(--ok);outline-offset:2px;border-radius:8px}
+.wrap{max-width:560px;margin:0 auto;padding:20px 16px 28px}
 .muted{color:var(--muted)}
-.small{font-size:14.5px}
+.small{font-size:15px}
 .tiny{font-size:13px}
-.top{margin:8px 0 22px}
-.top .sub{margin-top:8px;color:var(--muted)}
-.btn{display:flex;align-items:center;justify-content:center;background:var(--btn);color:var(--btn-ink);font-weight:700;border-radius:12px;padding:14px 18px;min-height:52px;width:100%;text-align:center}
-.btn.line{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
-.btn[disabled]{opacity:.4;cursor:default}
-.link{color:var(--ink);font-weight:700;text-decoration:underline;text-underline-offset:3px}
-.pair{display:flex;gap:10px;margin-top:18px}
+.top{margin:14px 0 22px}
+.top .sub{margin:6px 0 0;color:var(--muted)}
+.btn{display:flex;align-items:center;justify-content:center;background:var(--btn);color:var(--btn-ink);font-weight:650;border-radius:var(--r-sm);padding:14px 18px;min-height:54px;width:100%;text-align:center;font-size:17px}
+.btn.line{background:var(--surface);color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line2)}
+.btn[disabled]{opacity:.35;cursor:default}
+.link{color:var(--ink);font-weight:650;text-decoration:underline;text-decoration-color:var(--line2);text-decoration-thickness:2px;text-underline-offset:4px}
+.pair{display:flex;gap:10px;margin-top:22px}
 .pair .btn.line{flex:0 0 34%}
 
-/* krabička */
-.box{--c:var(--seda);position:relative;display:flex;align-items:center;gap:12px;background:color-mix(in srgb,var(--c) var(--tint),var(--surface));
-  border-radius:12px;padding:14px 14px 14px 16px;margin-bottom:10px;border-top:9px solid var(--c)}
-.box .em{font-size:30px;line-height:1;flex:none}
+/* úvod */
+.hello{margin:18px 0 16px}
+.hello .date{margin:0 0 4px;color:var(--muted);font-size:15px;font-weight:500}
+.hello h1{font-size:40px}
+.listek{background:var(--note);color:var(--note-ink);border-radius:var(--r-md);padding:18px 18px 16px;margin:0 0 8px}
+.listek .motto{margin:0;font-size:19px;line-height:1.35;font-weight:600;letter-spacing:-.01em;max-width:34ch}
+.listek .streak{margin:10px 0 0;font-size:15px;font-weight:600}
+.listek .od{margin:14px 0 0;font-size:14px;opacity:.75}
+
+/* souhrn dne */
+.sum{margin:6px 0 4px}
+.top-sum{background:var(--surface);border-radius:var(--r-md);padding:16px;margin:0 0 10px}
+.kc{margin:0;font-size:15px;color:var(--muted)}
+.kc b{font-size:28px;font-weight:800;color:var(--ink);letter-spacing:-.02em;margin-right:2px}
+.kc.off b{color:var(--warn)}
+.meter{position:relative;display:flex;gap:3px;height:12px;border-radius:6px;background:var(--line);overflow:hidden;margin:10px 0 10px}
+.meter i{display:block;height:100%;background:var(--c);flex:none}
+.meter i:first-child{border-radius:6px 0 0 6px}
+.meter .goal{position:absolute;top:0;bottom:0;width:2px;background:var(--ink)}
+.mac{display:flex;gap:4px 16px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
+.mac b{color:var(--ink);font-weight:650}
+
+/* jídlo dne */
+.box{--c:var(--seda);position:relative;display:flex;align-items:center;gap:14px;background:var(--surface);
+  border-radius:var(--r-md);padding:14px 14px 14px 14px;margin-bottom:8px}
+.box .em{width:52px;height:52px;border-radius:var(--r-sm);display:grid;place-items:center;font-size:28px;line-height:1;flex:none;
+  background:color-mix(in srgb,var(--c) var(--tint),var(--surface))}
 .box .body{flex:1;min-width:0}
-.box .when{font-size:13.5px;color:var(--muted);font-weight:600}
-.box .nm{display:block;font-weight:700;font-size:17.5px;line-height:1.25}
-.box .meta{display:block;font-size:13.5px;color:var(--muted);margin-top:3px}
-.box.eaten{opacity:.55}
+.box .when{display:flex;align-items:center;gap:6px;font-size:13.5px;color:var(--muted);font-weight:550}
+.box .when::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c);flex:none}
+.box .nm{display:block;font-weight:650;font-size:17px;line-height:1.25;margin-top:2px}
+.box .meta{display:block;font-size:14px;color:var(--muted);margin-top:3px}
+.box.eaten .em,.box.eaten .body{opacity:.45}
 .box.eaten .nm{text-decoration:line-through}
-.tick{width:44px;height:44px;border-radius:50%;border:2px solid color-mix(in srgb,var(--c) 70%,var(--ink));display:grid;place-items:center;flex:none;background:var(--surface)}
+.tick{width:44px;height:44px;border-radius:50%;box-shadow:inset 0 0 0 2px var(--line2);display:grid;place-items:center;flex:none}
 .tick svg{opacity:0}
-.tick.on{background:var(--c);border-color:var(--c)}
+.tick.on{background:var(--c);box-shadow:none}
 .tick.on svg{opacity:1}
 @media (prefers-reduced-motion:no-preference){.tick.on{animation:pop .25s ease-out}}
-@keyframes pop{50%{transform:scale(1.15)}}
-.rate{display:flex;gap:8px;align-items:center;margin:-2px 0 12px 4px;font-size:14.5px}
-.rate button,.seg button{border:1.5px solid var(--line);border-radius:10px;padding:7px 12px;font-weight:600;background:var(--surface);font-size:14.5px}
-.rate button.on,.seg button.on{background:var(--btn);color:var(--btn-ink);border-color:var(--btn)}
+@keyframes pop{50%{transform:scale(1.12)}}
+.rate{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:2px 0 12px 4px;font-size:15px}
+.rate button,.seg button{border-radius:10px;padding:8px 13px;font-weight:600;background:var(--surface);font-size:15px;box-shadow:inset 0 0 0 1.5px var(--line2)}
+.rate button.on,.seg button.on{background:var(--btn);color:var(--btn-ink);box-shadow:none}
 
-/* lednice: mřížka týdne */
-.fridge{display:grid;grid-template-columns:50px repeat(3,minmax(0,1fr));gap:6px;align-items:stretch}
-.fridge .hd{font-size:13px;color:var(--muted);font-weight:600;padding:0 2px 2px}
-.fridge .day{display:flex;flex-direction:column;justify-content:center;font-family:Outfit,sans-serif}
-.fridge .day b{font-size:18px;font-weight:700;line-height:1}
-.fridge .day span{font-size:12px;color:var(--muted);font-family:Outfit,sans-serif;margin-top:3px}
-.fridge .day span.off{color:var(--warn);font-weight:700}
-.cell{--c:var(--seda);position:relative;min-height:62px;border-radius:8px;border-top:6px solid var(--c);background:color-mix(in srgb,var(--c) var(--tint),var(--surface));
-  padding:6px 7px;display:flex;flex-direction:column;gap:2px;overflow:hidden}
-.cell .em{font-size:18px;line-height:1}
-.cell .cn{font-size:12.5px;font-weight:700;line-height:1.15;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.cell.empty{background:transparent;border:1.5px dashed var(--line);border-top-width:6px;color:var(--muted);justify-content:center;align-items:center;font-size:20px}
-.cell .flag{position:absolute;top:4px;right:5px;font-size:12px;font-weight:800;color:var(--warn)}
-.today-row .day b{text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:4px}
+/* týden */
+.fridge{display:grid;grid-template-columns:52px repeat(3,minmax(0,1fr));gap:6px;align-items:stretch}
+.fridge .hd{font-size:13px;color:var(--muted);font-weight:550;padding:0 2px 2px}
+.fridge .day{display:flex;flex-direction:column;justify-content:center}
+.fridge .day b{font-size:18px;font-weight:750;line-height:1}
+.fridge .day span{font-size:12px;color:var(--muted);margin-top:4px}
+.fridge .day span.off{color:var(--warn);font-weight:650}
+.cell{--c:var(--seda);position:relative;min-height:70px;border-radius:var(--r-sm);background:var(--surface);
+  padding:8px;display:flex;flex-direction:column;gap:4px;overflow:hidden;box-shadow:inset 3px 0 0 var(--c)}
+.cell .em{font-size:20px;line-height:1}
+.cell .cn{font-size:12.5px;font-weight:600;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cell.empty{background:transparent;box-shadow:inset 0 0 0 1.5px var(--line2);color:var(--muted);justify-content:center;align-items:center;font-size:22px}
+.cell .flag{position:absolute;top:6px;right:7px;font-size:12px;font-weight:800;color:var(--warn)}
+.today-row .day b{color:var(--obed)}
 
 /* vaření */
-.cook{background:var(--surface);border-radius:14px;padding:16px;margin-bottom:12px;border:1.5px solid var(--line)}
-.cook.now{background:var(--btn);color:var(--btn-ink);border-color:var(--btn)}
+.cook{background:var(--surface);border-radius:var(--r-md);padding:16px;margin-bottom:10px}
+.cook.now{background:var(--btn);color:var(--btn-ink)}
 .cook.now .muted{color:color-mix(in srgb,var(--btn-ink) 70%,transparent)}
-.cook-dish{display:flex;gap:12px;align-items:flex-start;padding:12px 0 0;width:100%}
-.lid{--c:var(--seda);width:14px;align-self:stretch;border-radius:4px;background:var(--c);flex:none}
-.boxes{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
-.boxes i{--c:var(--seda);font-style:normal;font-size:12px;font-weight:700;border-radius:5px;padding:2px 6px;border-top:3px solid var(--c);background:color-mix(in srgb,var(--c) var(--tint),var(--surface));color:var(--ink)}
+.cook.now .boxes i{background:color-mix(in srgb,var(--btn-ink) 14%,transparent);color:var(--btn-ink)}
+.cook-dish{display:flex;gap:12px;align-items:flex-start;padding:14px 0 0;width:100%}
+.lid{--c:var(--seda);width:6px;align-self:stretch;border-radius:3px;background:var(--c);flex:none}
+.boxes{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.boxes i{font-style:normal;font-size:12.5px;font-weight:600;border-radius:7px;padding:3px 8px;background:var(--bg);color:var(--ink)}
 .boxes i.fz::after{content:" ❄"}
-.boxes i.bad{outline:2px solid var(--warn)}
-.note{font-size:14px;margin-top:12px}
+.boxes i.bad{box-shadow:inset 0 0 0 1.5px var(--warn)}
+.note{font-size:14.5px;margin:12px 0 0;color:inherit;opacity:.85}
 
-/* průvodce */
+/* plánování */
 .progress{display:flex;gap:5px;margin:4px 0 8px}
-.progress i{height:6px;flex:1;border-radius:3px;background:var(--line)}
+.progress i{height:5px;flex:1;border-radius:3px;background:var(--line2)}
 .progress i.on{background:var(--ink)}
 .seg{display:flex;gap:8px;margin:0 0 18px}
-.opt{--c:var(--line);display:flex;align-items:center;gap:12px;width:100%;padding:12px 12px 12px 0;border-bottom:1px solid var(--line)}
-.opt .sw{width:30px;height:44px;border-radius:7px;border:2px dashed var(--line);flex:none;margin-left:2px}
-.opt.on .sw{border:0;background:var(--c);border-top:8px solid color-mix(in srgb,var(--c) 75%,#000)}
-.opt .em{font-size:26px;flex:none}
+.opt{--c:var(--line2);display:flex;align-items:center;gap:14px;width:100%;padding:12px;margin-bottom:8px;background:var(--surface);border-radius:var(--r-md);box-shadow:inset 0 0 0 1.5px transparent}
+.opt.on{box-shadow:inset 0 0 0 2px var(--c)}
+.opt .sw{order:3;width:26px;height:26px;border-radius:50%;box-shadow:inset 0 0 0 2px var(--line2);flex:none;display:grid;place-items:center}
+.opt.on .sw{background:var(--c);box-shadow:none}
+.opt.on .sw::after{content:"";width:10px;height:6px;border:solid #fff;border-width:0 0 2.5px 2.5px;transform:translate(0,-1px) rotate(-45deg)}
+.opt .em{width:48px;height:48px;border-radius:var(--r-sm);display:grid;place-items:center;font-size:26px;flex:none;background:var(--bg)}
 .opt .t{flex:1;min-width:0}
-.opt .t b{display:block;line-height:1.25}
-.opt .t span{font-size:13.5px;color:var(--muted)}
-.warn{color:var(--warn);font-weight:700}
-.tpl{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);width:100%}
-
-/* součty */
-.sum{margin:6px 0 4px}
-.meter{height:10px;border-radius:5px;background:var(--line);overflow:hidden;margin:8px 0 6px}
-.meter i{display:block;height:100%;background:var(--ok)}
-.meter.off i{background:var(--warn)}
-.mac{display:flex;gap:4px 14px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
-.mac b{color:var(--ink)}
+.opt .t b{display:block;line-height:1.25;font-weight:650}
+.opt .t span{font-size:14px;color:var(--muted)}
+.warn{color:var(--warn);font-weight:650}
+.tpl{display:flex;align-items:center;gap:10px;padding:14px;margin-bottom:8px;background:var(--surface);border-radius:var(--r-md);width:100%}
 
 /* nákup */
-.shop h3{margin:26px 0 4px;font-size:18px}
-.item{display:flex;align-items:center;gap:14px;width:100%;padding:13px 0;border-bottom:1px solid var(--line)}
-.item .sq{width:26px;height:26px;border-radius:7px;border:2px solid var(--muted);flex:none;display:grid;place-items:center}
+.shop h3{margin:28px 0 6px;font-size:15px;color:var(--muted);font-weight:600;letter-spacing:0}
+.shop>.small{margin:-2px 0 8px!important}
+.item{display:flex;align-items:center;gap:14px;width:100%;padding:13px 2px;border-bottom:1px solid var(--line)}
+.item .sq{width:26px;height:26px;border-radius:8px;box-shadow:inset 0 0 0 2px var(--line2);flex:none;display:grid;place-items:center}
 .item .sq svg{opacity:0}
-.item.on .sq{background:var(--ink);border-color:var(--ink)}
+.item.on .sq{background:var(--ink);box-shadow:none}
 .item.on .sq svg{opacity:1}
-.item .nm{flex:1;min-width:0;font-weight:600}
-.item .nm small{display:block;font-weight:600;font-size:13px;color:var(--warn)}
-.item .amt{color:var(--muted);font-size:15px;text-align:right}
+.item .nm{flex:1;min-width:0;font-weight:550}
+.item .nm small{display:block;font-weight:550;font-size:13px;color:var(--warn)}
+.item .amt{color:var(--muted);font-size:15px;text-align:right;font-variant-numeric:tabular-nums}
 .item.on .nm,.item.on .amt{color:var(--muted);text-decoration:line-through}
-.count{margin:0;font-family:Outfit,sans-serif;font-size:20px;font-weight:700}
+.count{margin:0;font-size:22px;font-weight:750;letter-spacing:-.015em}
 
 /* recepty */
-.rec{display:flex;align-items:center;gap:14px;width:100%;padding:13px 0;border-bottom:1px solid var(--line)}
-.rec .em{font-size:30px;width:40px;text-align:center;flex:none}
+.rec{display:flex;align-items:center;gap:14px;width:100%;padding:12px;margin-bottom:8px;background:var(--surface);border-radius:var(--r-md)}
+.rec .em{width:48px;height:48px;border-radius:var(--r-sm);display:grid;place-items:center;font-size:26px;flex:none;background:var(--bg)}
 .rec .t{flex:1;min-width:0}
-.rec .t b{display:block;line-height:1.25}
-.rec .t span{font-size:13.5px;color:var(--muted)}
+.rec .t b{display:block;line-height:1.25;font-weight:650}
+.rec .t span{font-size:14px;color:var(--muted)}
 
 /* panel */
 .sheet{position:fixed;inset:0;z-index:10;display:none}
 .sheet.open{display:block}
-.sheet .bg{position:absolute;inset:0;background:rgba(10,20,18,.5)}
-.sheet .panel{position:absolute;left:0;right:0;bottom:0;max-height:calc(100% - 40px);overflow:auto;background:var(--bg);border-radius:20px 20px 0 0;
+.sheet .bg{position:absolute;inset:0;background:rgba(12,20,16,.45)}
+.sheet .panel{position:absolute;left:0;right:0;bottom:0;max-height:calc(100% - 40px);overflow:auto;background:var(--bg);border-radius:var(--r-lg) var(--r-lg) 0 0;
   padding:0 16px calc(28px + env(safe-area-inset-bottom));max-width:600px;margin:0 auto}
 @media (prefers-reduced-motion:no-preference){.sheet.open .panel{animation:up .22s ease-out}}
 @keyframes up{from{transform:translateY(30px);opacity:.6}}
-.sheet .lidbar{height:12px;margin:0 -16px 18px;background:var(--c,var(--ink));border-radius:20px 20px 0 0}
-.sheet .x{position:absolute;right:12px;top:22px;width:40px;height:40px;border-radius:50%;background:var(--surface);display:grid;place-items:center;font-size:18px}
-.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:16px 0}
-.facts div{background:var(--surface);border-radius:10px;padding:10px 8px;text-align:center}
-.facts b{display:block;font-family:Outfit,sans-serif;font-size:22px;font-weight:700;line-height:1.1}
+.sheet .lidbar{width:40px;height:5px;margin:10px auto 22px;background:var(--line2);border-radius:3px}
+.sheet .x{position:absolute;right:12px;top:22px;width:40px;height:40px;border-radius:50%;background:var(--surface);display:grid;place-items:center;font-size:17px}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:18px 0}
+.facts div{background:var(--surface);border-radius:var(--r-sm);padding:12px 6px;text-align:center}
+.facts b{display:block;font-size:22px;font-weight:750;line-height:1.1;letter-spacing:-.015em}
 .facts span{font-size:12.5px;color:var(--muted)}
-.stepper{display:inline-flex;align-items:center;gap:12px;background:var(--surface);border-radius:10px;padding:3px}
-.stepper button{width:38px;height:38px;border-radius:8px;font-size:22px;font-weight:700;text-align:center}
+.stepper{display:inline-flex;align-items:center;gap:12px;background:var(--surface);border-radius:var(--r-sm);padding:3px}
+.stepper button{width:38px;height:38px;border-radius:9px;font-size:22px;font-weight:600;text-align:center}
 ul.ing{list-style:none;padding:0;margin:6px 0}
-ul.ing li{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}
+ul.ing li{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+ul.ing li>span:last-child{font-variant-numeric:tabular-nums;text-align:right}
 ol.how{padding-left:22px;margin:8px 0}
-ol.how li{margin:0 0 10px}
+ol.how li{margin:0 0 10px;padding-left:4px}
 
 /* lišta */
-nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);z-index:5;padding:6px 8px calc(6px + env(safe-area-inset-bottom))}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;background:color-mix(in srgb,var(--surface) 88%,transparent);-webkit-backdrop-filter:saturate(1.4) blur(16px);backdrop-filter:saturate(1.4) blur(16px);
+  border-top:1px solid var(--line);z-index:5;padding:6px 8px calc(6px + env(safe-area-inset-bottom))}
 nav.tabs .in{display:flex;max-width:560px;margin:0 auto}
-nav.tabs button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 0;font-size:12.5px;font-weight:700;color:var(--muted)}
+nav.tabs button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 0;font-size:12px;font-weight:600;color:var(--muted)}
 nav.tabs button.on{color:var(--ink)}
 nav.tabs svg{width:24px;height:24px}
-.toast{position:fixed;left:16px;right:16px;max-width:420px;margin:0 auto;bottom:calc(92px + env(safe-area-inset-bottom));background:var(--btn);color:var(--btn-ink);
-  padding:12px 16px;border-radius:12px;font-weight:600;font-size:15px;z-index:20;opacity:0;transition:opacity .2s;pointer-events:none;text-align:center}
+.toast{position:fixed;left:16px;right:16px;max-width:420px;margin:0 auto;bottom:calc(96px + env(safe-area-inset-bottom));background:var(--btn);color:var(--btn-ink);
+  padding:13px 16px;border-radius:var(--r-sm);font-weight:600;font-size:15px;z-index:20;opacity:0;transition:opacity .2s;pointer-events:none;text-align:center}
 .toast.on{opacity:1}
 .empty{padding:20px 0}
-/* lísteček na lednici */
-.listek{position:relative;background:#FFE27A;color:#3B2F06;border-radius:3px 3px 22px 3px;padding:30px 20px 18px;margin:10px 6px 26px;transform:rotate(-1.4deg);
-  box-shadow:0 1px 0 rgba(0,0,0,.05),0 12px 26px -8px rgba(70,55,0,.35)}
-.listek::before{content:"";position:absolute;top:-11px;left:calc(50% - 12px);width:24px;height:24px;border-radius:50%;background:#E4572E;
-  box-shadow:inset -3px -4px 0 rgba(0,0,0,.18),0 3px 6px rgba(0,0,0,.25)}
-.listek h1{color:#3B2F06}
-.listek .sub{color:rgba(59,47,6,.78);margin-top:6px}
-.listek .streak{display:inline-block;margin-top:10px;font-weight:700;font-size:14.5px;background:rgba(255,255,255,.55);border-radius:8px;padding:4px 10px}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .listek{background:#EBCB5E}}
-:root[data-theme="dark"] .listek{background:#EBCB5E}
-.listek .motto{margin:12px 0 0;font-size:17.5px;font-weight:600;line-height:1.35}
-.listek .od{margin:14px 0 0;padding-top:10px;border-top:1.5px dashed rgba(59,47,6,.25);font-size:14.5px;color:rgba(59,47,6,.8)}
-.fld{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
-.fld input{width:120px;font:inherit;font-size:17px;padding:10px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);text-align:right}
-.police{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 6px}
-.police .cell{min-height:78px;align-items:flex-start}
-.police .cell .em{font-size:24px}
-.callout{--c:#4656D2;background:color-mix(in srgb,var(--c) var(--tint),var(--surface));border-radius:14px;padding:18px 16px;margin-top:22px}
-.callout h2{margin:0 0 6px}
-.callout p{color:var(--muted);margin:0 0 16px}
 .empty p{color:var(--muted);margin:8px 0 18px}
+.fld{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.fld input{width:120px;font:inherit;font-size:17px;padding:10px 12px;border-radius:10px;border:0;box-shadow:inset 0 0 0 1.5px var(--line2);background:var(--surface);color:var(--ink);text-align:right}
+.callout{background:var(--surface);border-radius:var(--r-md);padding:18px 16px 16px;margin-top:26px}
+.callout h2{margin:0 0 6px;font-size:20px}
+.callout p{color:var(--muted);margin:0 0 16px}
 </style>
 </head>
 <body>
@@ -236,7 +250,7 @@ const NASTAVENI = {
    doma = koření a věci, které se jen zkontrolují
    ===================================================================== */
 const S = {
-  vlocky:    { n: 'Ovesné vločky', v: [370, 13, 60, 7], o: 'Trvanlivé' },
+  vlocky:    { n: 'Ovesné vločky', v: [370, 13, 60, 7], o: 'Trvanlivé', zasoba: true },
   mleko:     { n: 'Mléko polotučné', v: [47, 3.4, 4.8, 1.5], o: 'Mléčné a vejce', ks: 1000, ksN: 'l' },
   skyr:      { n: 'Skyr bílý', v: [63, 11, 4, 0.2], o: 'Mléčné a vejce' },
   jogurt:    { n: 'Bílý jogurt', v: [62, 4.5, 5, 3], o: 'Mléčné a vejce' },
@@ -271,10 +285,10 @@ const S = {
   testoviny: { n: 'Celozrnné těstoviny', v: [350, 13, 65, 2.5], o: 'Trvanlivé' },
   cocka:     { n: 'Červená čočka', v: [340, 24, 57, 1.5], o: 'Trvanlivé' },
   kuskus:    { n: 'Kuskus', v: [360, 12, 72, 1.5], o: 'Trvanlivé' },
-  arasidy:   { n: 'Arašídové máslo', v: [590, 25, 20, 50], o: 'Trvanlivé' },
-  med:       { n: 'Med', v: [304, 0.3, 82, 0], o: 'Trvanlivé' },
-  olej:      { n: 'Olivový olej', v: [884, 0, 0, 100], o: 'Trvanlivé' },
-  sojovka:   { n: 'Sójová omáčka', v: [60, 8, 5, 0.5], o: 'Trvanlivé' },
+  arasidy:   { n: 'Arašídové máslo', v: [590, 25, 20, 50], o: 'Trvanlivé', zasoba: true },
+  med:       { n: 'Med', v: [304, 0.3, 82, 0], o: 'Trvanlivé', zasoba: true },
+  olej:      { n: 'Olivový olej', v: [884, 0, 0, 100], o: 'Trvanlivé', zasoba: true },
+  sojovka:   { n: 'Sójová omáčka', v: [60, 8, 5, 0.5], o: 'Trvanlivé', zasoba: true },
   kokos:     { n: 'Kokosové mléko light', v: [80, 0.8, 2, 8], o: 'Konzervy', ks: 400, ksN: ['plechovka', 'plechovky', 'plechovek'] },
   passata:   { n: 'Passata / drcená rajčata', v: [32, 1.5, 5, 0.2], o: 'Konzervy', ks: 500, ksN: ['balení', 'balení', 'balení'] },
   cizrna:    { n: 'Cizrna (konzerva)', v: [120, 7, 17, 2.5], o: 'Konzervy', ks: 240, ksN: ['plechovka', 'plechovky', 'plechovek'] },
@@ -283,13 +297,13 @@ const S = {
   tunak:     { n: 'Tuňák ve vlastní šťávě', v: [110, 25, 0, 1], o: 'Konzervy', ks: 120, ksN: ['plechovka', 'plechovky', 'plechovek'] },
   hruska:    { n: 'Hruška', v: [57, 0.4, 15, 0.1], o: 'Ovoce a zelenina', ks: 180 },
   petrzel:   { n: 'Petrželka čerstvá', v: [36, 3, 6, 0.8], o: 'Ovoce a zelenina', ks: 30, ksN: ['svazek', 'svazky', 'svazků'] },
-  chia:      { n: 'Chia semínka', v: [486, 17, 42, 31], o: 'Trvanlivé' },
-  protein:   { n: 'Čokoládový protein', v: [380, 75, 8, 6], o: 'Trvanlivé' },
+  chia:      { n: 'Chia semínka', v: [486, 17, 42, 31], o: 'Trvanlivé', zasoba: true },
+  protein:   { n: 'Čokoládový protein', v: [380, 75, 8, 6], o: 'Trvanlivé', zasoba: true },
   orzo:      { n: 'Orzo (těstoviny)', v: [355, 12.5, 72, 1.5], o: 'Trvanlivé' },
-  spalda:    { n: 'Špaldová mouka hladká', v: [340, 13, 68, 1.8], o: 'Trvanlivé' },
-  cukr:      { n: 'Cukr krupice', v: [400, 0, 100, 0], o: 'Trvanlivé' },
-  cukrTrt:   { n: 'Třtinový cukr', v: [380, 0, 98, 0], o: 'Trvanlivé' },
-  skrob:     { n: 'Kukuřičný škrob', v: [350, 0.3, 86, 0.1], o: 'Trvanlivé' },
+  spalda:    { n: 'Špaldová mouka hladká', v: [340, 13, 68, 1.8], o: 'Trvanlivé', zasoba: true },
+  cukr:      { n: 'Cukr krupice', v: [400, 0, 100, 0], o: 'Trvanlivé', zasoba: true },
+  cukrTrt:   { n: 'Třtinový cukr', v: [380, 0, 98, 0], o: 'Trvanlivé', zasoba: true },
+  skrob:     { n: 'Kukuřičný škrob', v: [350, 0.3, 86, 0.1], o: 'Trvanlivé', zasoba: true },
   mlekoR:    { n: 'Rostlinné mléko', v: [45, 1, 6.5, 1.5], o: 'Trvanlivé', ks: 1000, ksN: 'l' },
   tukR:      { n: 'Rostlinný tuk na pečení', v: [720, 0, 0.5, 80], o: 'Mléčné a vejce', ks: 250, ksN: ['kostka', 'kostky', 'kostek'] },
   smetana:   { n: 'Zakysaná smetana', v: [160, 3, 4, 15], o: 'Mléčné a vejce' },
@@ -308,7 +322,8 @@ const S = {
   sladidlo:  { n: 'Sladidlo (flavor drops slaný karamel)', doma: true, o: 'Koření a doma' },
   kypr:      { n: 'Kypřicí prášek', doma: true, o: 'Koření a doma' },
 };
-const ODDELENI = ['Ovoce a zelenina', 'Maso a ryby', 'Mléčné a vejce', 'Pečivo', 'Trvanlivé', 'Konzervy', 'Mražené', 'Koření a doma'];
+const ZASOBY = 'Zásoby doma';
+const ODDELENI = ['Ovoce a zelenina', 'Maso a ryby', 'Mléčné a vejce', 'Pečivo', 'Trvanlivé', 'Konzervy', 'Mražené', ZASOBY, 'Koření a doma'];
 
 /* =====================================================================
    RECEPTY - nahoře Kájiny (14. 11. 2026), pod nimi ukázkové na vyzkoušení
@@ -399,7 +414,7 @@ const TYP_N = { snidane: 'Snídaně', hlavni: 'Obědy do krabiček', vecere: 'Ve
 const CHUT_N = { sladka: 'sladká', slana: 'slaná' };
 const PREHLED = 2 + NASTAVENI.vareni.length;
 const DRUHE_VARENI = DNY_KDY[((NASTAVENI.vareni[1] || NASTAVENI.vareni[0]).denVareni + 7) % 7];
-const VICKA = ['#E4572E', '#2E9A5A', '#E0A408', '#4656D2', '#C23F7A', '#17949F'];
+const VICKA = ['var(--obed)', 'var(--obed2)', '#C9971C', '#4F5BD0', '#B8457A', '#2E8F8A'];
 const KLIC = 'kajin-tyden-v1';
 const IKONA_OK = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 
@@ -430,7 +445,7 @@ const TENTO = iso(pondeli(DNES));
 const PRISTI = iso(plus(pondeli(DNES), 7));
 const DEN = (DNES.getDay() + 6) % 7;
 
-let ui = { tab: 'dnes', tyden: DEN >= 4 ? PRISTI : TENTO, krok: 0, filtr: 'vse', sheet: null };
+let ui = { tab: 'dnes', tyden: DEN >= 4 || !maPlan(TENTO) ? PRISTI : TENTO, krok: 0, filtr: 'vse', sheet: null };
 
 function prazdnyTyden() { return { snidane: [], vecere: [], vareni: NASTAVENI.vareni.map(() => []), zmeny: {}, snedeno: {}, nakup: {}, hotovo: false }; }
 function tyden(k) { if (!stav.tydny[k]) stav.tydny[k] = prazdnyTyden(); const t = stav.tydny[k]; if (!t.vecere) t.vecere = []; return t; }
@@ -438,7 +453,7 @@ function maPlan(k) { return !!(stav.tydny[k] && stav.tydny[k].hotovo); }
 
 /* --- barvy víček --- */
 function barvy(t) { const m = {}; let i = 0; (t ? t.vareni.flat() : []).forEach(id => { if (!(id in m)) m[id] = VICKA[i++ % VICKA.length]; }); return m; }
-function barva(id, m) { if (!id) return 'var(--seda)'; if (R[id].typ === 'snidane') return 'var(--oves)'; return (m && m[id]) || 'var(--seda)'; }
+function barva(id, m) { if (!id) return 'var(--seda)'; if (R[id].typ === 'snidane') return 'var(--snid)'; if (R[id].typ === 'vecere') return 'var(--vec)'; if (R[id].typ === 'zachranne') return 'var(--seda)'; return (m && m[id]) || 'var(--seda)'; }
 
 /* --- živiny --- */
 const ZIV = {};
@@ -501,7 +516,7 @@ function nakup(t) {
     });
   });
   const skup = {};
-  Object.values(pol).forEach(p => { const o = S[p.k].o; (skup[o] = skup[o] || []).push(p); });
+  Object.values(pol).forEach(p => { const o = S[p.k].zasoba ? ZASOBY : S[p.k].o; (skup[o] = skup[o] || []).push(p); });
   return ODDELENI.filter(o => skup[o]).map(o => ({ o, polozky: skup[o].sort((a, b) => S[a.k].n.localeCompare(S[b.k].n, 'cs')) }));
 }
 function mnozstvi(k, g) {
@@ -521,12 +536,15 @@ function hodn(id) { return stav.hodnoceni[id] || 0; }
 function serie() { let n = 0, k = maPlan(PRISTI) ? PRISTI : TENTO; while (maPlan(k)) { n++; k = iso(plus(zIso(k), -7)); } return n; }
 
 /* --- komponenty --- */
-function soucet(z) {
-  const c = cil(); const pct = Math.min(100, z[0] / c.kcal * 100);
-  return `<div class="meter ${mimoCil(z[0]) ? 'off' : ''}"><i style="width:${pct}%"></i></div>
-    <div class="mac"><span><b>${cislo(z[0])}</b> z ${cislo(c.kcal)} kcal</span><span>bílkoviny <b>${cislo(z[1])}</b>/${c.b} g</span><span>sacharidy <b>${cislo(z[2])}</b>/${c.s} g</span><span>tuky <b>${cislo(z[3])}</b>/${c.t} g</span></div>`;
+function soucet(z, dily) {
+  const c = cil(), strop = Math.max(c.kcal, z[0]);
+  const casti = (dily || [{ kcal: z[0], c: 'var(--ok)' }]).map(d => `<i style="width:${d.kcal / strop * 100}%;--c:${d.c}"></i>`).join('');
+  return `<p class="kc ${mimoCil(z[0]) ? 'off' : ''}"><b>${cislo(z[0])}</b> z ${cislo(c.kcal)} kcal</p>
+    <div class="meter">${casti}${z[0] > c.kcal ? `<span class="goal" style="left:${c.kcal / strop * 100}%"></span>` : ''}</div>
+    <div class="mac"><span>bílkoviny <b>${cislo(z[1])}</b>/${c.b} g</span><span>sacharidy <b>${cislo(z[2])}</b>/${c.s} g</span><span>tuky <b>${cislo(z[3])}</b>/${c.t} g</span></div>`;
 }
 function vyberTydne(k) {
+  if (!maPlan(TENTO)) return '';
   return `<div class="seg"><button class="${k === TENTO ? 'on' : ''}" data-a="tyden:${TENTO}">Tento týden</button><button class="${k === PRISTI ? 'on' : ''}" data-a="tyden:${PRISTI}">Příští týden</button></div>`;
 }
 
@@ -544,21 +562,15 @@ const MOTTA = [
   'Dnes je plánovací večer. Patnáct minut teď ušetří čtyři dny vymýšlení.',
 ];
 function motto() {
-  if (!maPlan(TENTO) && DEN < 4) return 'Nikdy není pozdě. Naplánuj zbytek týdne a zítra už nevymýšlíš.';
+  if (!maPlan(TENTO)) return maPlan(PRISTI) ? 'Plán na příští týden máš. V neděli večer uvaříš a pak už jen otevřeš lednici.' : 'Od pondělí už jen otevřeš lednici. Patnáct minut plánování a máš vyřešené čtyři dny.';
   return MOTTA[DEN];
 }
 
 function vDnes() {
   const ser = serie();
-  let o = `<header class="listek"><h1>${NASTAVENI.pozdrav}</h1>
-    <p class="sub">${DNY[DEN].toLowerCase()} ${kr(DNES)}</p><p class="motto">${motto()}</p>${ser >= 2 ? `<span class="streak">${ser}. týden v řadě s plánem</span>` : ''}
-    <p class="od">Tuhle aplikaci pro tebe udělala ${NASTAVENI.autor}.</p></header>`;
-  const polK = maPlan(TENTO) ? TENTO : maPlan(PRISTI) ? PRISTI : null;
-  if (polK) {
-    const tp = stav.tydny[polK], mp = barvy(tp), jidla = Object.keys(mp);
-    o += `<h3 style="margin:0 0 10px">${polK === TENTO ? 'Tento týden v lednici' : 'Příští týden v lednici'}</h3><div class="police">` +
-      jidla.map(id => `<button class="cell" style="--c:${mp[id]}" data-a="recept:${id}"><span class="em" aria-hidden="true">${R[id].em}</span><span class="cn">${esc(kratce(id))}</span></button>`).join('') + `</div>`;
-  }
+  let o = `<header class="hello"><p class="date">${DNY[DEN]} ${kr(DNES)}</p><h1>${NASTAVENI.pozdrav}</h1></header>
+    <div class="listek"><p class="motto">${motto()}</p>${ser >= 2 ? `<p class="streak">${ser}. týden v řadě s plánem</p>` : ''}
+    <p class="od">Tuhle aplikaci pro tebe udělala ${NASTAVENI.autor}.</p></div>`;
 
   const vareniDnes = [];
   if (maPlan(TENTO)) NASTAVENI.vareni.forEach((v, b) => { if (v.denVareni === DEN) vareniDnes.push({ k: TENTO, b }); });
@@ -569,7 +581,8 @@ function vDnes() {
     o += `<p class="small muted" style="margin:6px 0 0">Dneska plán nemáš, jez, na co máš chuť.</p>`;
   } else if (maPlan(TENTO)) {
     const t = stav.tydny[TENTO], den = rozpis(t)[DEN], m = barvy(t);
-    o += `<h2>Dnes jíš</h2>`;
+    const dily = SLOTY.filter(s => den[s]).map(s => ({ kcal: ziviny(den[s].id)[0], c: barva(den[s].id, m) }));
+    o += `<h2>Dnes jíš</h2><div class="sum top-sum">${soucet(denZiviny(den), dily)}</div>`;
     SLOTY.forEach(s => {
       const x = den[s]; if (!x) return; const rc = R[x.id]; const kk = DEN + '-' + s; const on = t.snedeno[kk];
       o += `<div class="box ${on ? 'eaten' : ''}" style="--c:${barva(rc.id, m)}">
@@ -579,10 +592,6 @@ function vDnes() {
         <button class="tick ${on ? 'on' : ''}" data-a="snedeno:${kk}" aria-label="${on ? 'Snědeno' : 'Označit jako snědené'}">${IKONA_OK}</button></div>`;
       if (on && !hodn(rc.id)) o += `<div class="rate"><span class="muted">Chutnalo?</span><button data-a="hodnotit:${rc.id}:1">Ano, uvařím znovu</button><button data-a="hodnotit:${rc.id}:-1">Spíš ne</button></div>`;
     });
-    o += `<div class="sum">${soucet(denZiviny(den))}</div>`;
-  } else if (DEN < 4) {
-    o += `<div class="callout" style="--c:#E4572E"><h2>Tenhle týden ještě nemáš naplánovaný</h2><p>Vybereš snídani, večeře a oběd do krabiček, zbytek spočítá aplikace. Zabere to asi 15 minut.</p>
-      <button class="btn" data-a="planovat:${TENTO}">Naplánovat tento týden</button></div>`;
   }
 
   const zK = DEN === 6 ? PRISTI : TENTO, zD = (DEN + 1) % 7;
@@ -594,16 +603,17 @@ function vDnes() {
     }).join('');
   }
 
-  if (DEN >= 4 && !maPlan(PRISTI)) {
+  const doPristiho = DEN >= 4 || !maPlan(TENTO);
+  if (doPristiho && !maPlan(PRISTI)) {
     o += `<div class="callout" style="--c:#E4572E"><h2>Naplánuj si příští týden</h2><p>Udělej to dnes nebo v neděli, ať máš v pondělí nakoupeno a uvařeno.</p>
       <button class="btn" data-a="planovat:${PRISTI}">Naplánovat ${rozsah(PRISTI)}</button></div>`;
-  } else if (DEN >= 4 && DEN < 6 && maPlan(PRISTI)) {
+  } else if (doPristiho && DEN < 6 && maPlan(PRISTI)) {
     o += `<div class="callout" style="--c:#2E9A5A"><h2>Příští týden máš naplánovaný</h2><p>Do neděle nakoupit, v neděli večer vaříš.</p>
       <button class="btn" data-a="nakup-pristi">Otevřít nákupní seznam</button></div>`;
   }
 
-  o += `<p class="small muted" style="margin-top:28px">Dnes plán nevyšel? <button class="link" data-a="zachrana">Záchranná jídla ze zásob</button></p>
-    <p class="small muted">Tvůj denní cíl: ${cislo(cil().kcal)} kcal. <button class="link" data-a="cil">Změnit</button></p>`;
+  if (maPlan(TENTO)) o += `<p class="small muted" style="margin-top:28px">Dnes plán nevyšel? <button class="link" data-a="zachrana">Záchranná jídla ze zásob</button></p>`;
+  o += `<p class="small muted" style="margin-top:${maPlan(TENTO) ? 0 : 28}px">Tvůj denní cíl: ${cislo(cil().kcal)} kcal. <button class="link" data-a="cil">Změnit</button></p>`;
   return o;
 }
 
@@ -616,9 +626,9 @@ function kartaVareni(k, b, dnes) {
     <div class="small muted">Asi ${cas} minut${bal.length > 1 ? ', obě jídla se dají dělat souběžně' : ''}</div>`;
   bal.forEach(x => {
     const rc = R[x.id];
-    o += `<button class="cook-dish" data-a="recept:${rc.id}:${x.porce}"><span class="lid" style="--c:${m[x.id]}"></span>
+    o += `<button class="cook-dish" data-a="recept:${rc.id}:${x.porce}"><span class="lid" style="--c:${barva(x.id, m)}"></span>
       <span style="flex:1;min-width:0"><b>${esc(rc.nazev)}</b><br><span class="small muted">${x.celek ? `celý koláč, ${x.porce} ${kus(x.porce)}` : `${x.porce} ${x.porce < 5 ? 'krabičky' : 'krabiček'}`}, ${rc.cas} min</span>
-      <span class="boxes">${x.kde.map(z => `<i style="--c:${m[x.id]}" class="${z.st === 'mraz' ? 'fz' : z.st === 'nevydrzi' ? 'bad' : ''}">${DNY_KR[z.d]} ${z.s === 'obed' ? 'oběd' : 'večeře'}</i>`).join('')}</span></span></button>`;
+      <span class="boxes">${x.kde.map(z => `<i style="--c:${barva(x.id, m)}" class="${z.st === 'mraz' ? 'fz' : z.st === 'nevydrzi' ? 'bad' : ''}">${DNY_KR[z.d]} ${z.s === 'obed' ? 'oběd' : 'večeře'}</i>`).join('')}</span></span></button>`;
   });
   bal.filter(x => x.celek && x.kde.length < x.porce).forEach(x => { o += `<p class="note">Z koláče sníš tento týden ${x.kde.length} ${x.kde.length < 5 ? 'kousky' : 'kousků'}. Zbytek hned zamraz a příští týden ho nepeč, stačí vytáhnout z mrazáku a koláčové suroviny v nákupu odškrtnout.</p>`; });
   if (bal.some(x => !x.celek)) o += `<p class="note">Uvařený hrnec zvaž a vyděl počtem krabiček, ať je v každé stejně.</p>`;
@@ -717,12 +727,12 @@ function vNakup() {
   if (!t || !t.hotovo) return o + `<div class="empty"><p>Seznam vznikne sám, jakmile naplánuješ týden. Suroviny ze všech receptů se sečtou a seřadí podle oddělení.</p>
     <button class="btn" data-a="planovat:${k}">Naplánovat týden</button></div>`;
   const sk = nakup(t);
-  const vse = sk.flatMap(g => g.polozky).filter(p => !S[p.k].doma);
+  const vse = sk.flatMap(g => g.polozky).filter(p => !S[p.k].doma && !S[p.k].zasoba);
   const zbyva = vse.filter(p => !t.nakup[p.k]).length;
   o += `<p class="count">${zbyva ? `Zbývá ${zbyva} z ${vse.length}` : 'Máš všechno'}</p><p class="small muted" style="margin-top:2px">Odškrtni i to, co už máš doma.</p><div class="shop">`;
   sk.forEach(g => {
     const pol = g.polozky.slice().sort((a, b) => (t.nakup[a.k] ? 1 : 0) - (t.nakup[b.k] ? 1 : 0));
-    o += `<h3>${g.o}</h3>`;
+    o += `<h3>${g.o}</h3>` + (g.o === ZASOBY ? `<p class="small muted" style="margin:-4px 0 6px">Vydrží dlouho, většinou je máš. Mrkni, jestli máš aspoň tolik, a kup jen to, co dochází.</p>` : '');
     pol.forEach(p => {
       const on = t.nakup[p.k]; const s = S[p.k];
       const pozdeji = s.o === 'Maso a ryby' && p.pozdejiG > 0
