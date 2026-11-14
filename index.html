@@ -362,6 +362,9 @@ nav.tabs .theme-toggle.on{color:var(--btn)}
 @media(min-width:800px){nav.tabs .theme-toggle svg{display:block;width:18px;height:18px}nav.tabs .theme-toggle{gap:7px}.theme-desktop-label{display:inline}}
 
 @media(min-width:800px){.home-recipe h3,.home-meal.featured h3{max-width:none}.recipe-heading{max-width:none}}
+
+nav.tabs .theme-toggle{justify-content:center;min-height:44px;min-width:44px;gap:0}
+@media(min-width:800px){nav.tabs .theme-toggle{padding:10px;width:44px;height:44px}nav.tabs .theme-toggle svg{width:22px;height:22px}}
 </style>
 </head>
 <body>
@@ -370,7 +373,7 @@ nav.tabs .theme-toggle.on{color:var(--btn)}
   <button data-a="tab:tyden"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9.5h18M9 9.5V21M15 9.5V21"/></svg>Týden</button>
   <button data-a="tab:nakup"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>Nákup</button>
   <button data-a="tab:recepty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg>Recepty</button>
-  <button type="button" class="theme-toggle" data-a="tema" aria-label="Noční režim" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 15.5A8.5 8.5 0 0 1 8.5 4 8.5 8.5 0 1 0 20 15.5Z"/></svg><span>Noční<span class="theme-desktop-label"> režim</span></span></button>
+  <button type="button" class="theme-toggle" data-a="tema" aria-label="Noční režim" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 15.5A8.5 8.5 0 0 1 8.5 4 8.5 8.5 0 1 0 20 15.5Z"/></svg></button>
 </div></nav>
 <main class="wrap" id="view"></main>
 <div class="sheet" id="sheet"><div class="bg" data-a="zavrit"></div><div class="panel" id="panel" role="dialog" aria-modal="true"></div></div>
@@ -963,6 +966,7 @@ function vykresliTema() {
   const dark = document.documentElement.dataset.theme === 'dark';
   const button = document.querySelector('[data-a="tema"]');
   button.setAttribute('aria-pressed', String(dark));
+  button.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${dark ? '<path d="M20 15.5A8.5 8.5 0 0 1 8.5 4 8.5 8.5 0 1 0 20 15.5Z"/>' : '<circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.4 1.4M17.6 17.6L19 19M5 19l1.4-1.4M17.6 6.4L19 5"/>'}</svg>`;
   button.title = dark ? 'Vypnout noční režim' : 'Zapnout noční režim';
   button.classList.toggle('on', dark);
   document.querySelector('meta[name="theme-color"]').content = dark ? '#191520' : '#F8F6FB';
