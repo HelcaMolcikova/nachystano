@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="cs">
+<html lang="cs" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -7,8 +7,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Týden v lednici">
-<meta name="theme-color" content="#F2F4F1" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0F1613" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F8F6FB">
+<meta name="color-scheme" content="light">
 <title>Týden v lednici</title>
 <style>
 :root{
@@ -613,14 +613,16 @@ function vyberTydne(k) {
 /* =====================================================================
    OBRAZOVKY
    ===================================================================== */
+function navrhTydne() {
+  return { ...prazdnyTyden(), snidane: ['oats-hruska'], vecere: ['tousty', 'kolac'], vareni: NASTAVENI.vareni.map(() => ['orzo']) };
+}
 function vDnes() {
-  const k = ui.tyden, t = stav.tydny[k], planned = maPlan(k);
+  const k = ui.tyden, planned = maPlan(k), t = planned ? stav.tydny[k] : navrhTydne();
   const days = NASTAVENI.planDny;
   const d = days.includes(ui.den) ? ui.den : (k === TENTO && days.includes(DEN) ? DEN : days[0]);
-  const date = datumDne(k, d), current = k === TENTO && d === DEN;
-  let o = `<header class="home-heading"><div><p class="home-eyebrow">Ahoj, Kájo</p><h1>${planned ? 'Tenhle týden<br>máš vyřešený.' : 'Tvůj týden,<br>tvoje jídla.'}</h1><p class="home-sub">${planned ? 'Tvůj jídelníček na ' + rozsah(k) : 'Vyber si jídla a nákupní seznam vznikne sám.'}</p></div><span class="home-mark" aria-hidden="true">✳</span></header>`;
+  const date = datumDne(k, d), current = planned && k === TENTO && d === DEN;
+  let o = `<header class="home-heading"><div><p class="home-eyebrow">Ahoj, Kájo</p><h1>${planned ? 'Tenhle týden<br>máš vyřešený.' : 'Tvůj týden,<br>tvoje jídla.'}</h1><p class="home-sub">${planned ? 'Tvůj jídelníček na ' + rozsah(k) : 'Návrh jídelníčku na ' + rozsah(k)}</p></div><span class="home-mark" aria-hidden="true">✳</span></header>`;
   o += vyberTydne(k);
-  if (!planned) return o + `<section class="home-empty"><h2>Co si dáš tento týden?</h2><p>Naplánuj snídaně, obědy a večeře na pondělí až čtvrtek.</p><button class="btn" data-a="planovat:${k}">Vybrat jídla</button></section>`;
   const day = rozpis(t)[d], z = denZiviny(day);
   o += `<div class="home-layout"><section class="home-menu" aria-label="Jídelníček"><div class="home-days" aria-label="Vybrat den">${days.map(n => `<button class="home-day ${d === n ? 'on' : ''}" aria-pressed="${d === n}" data-a="home-den:${n}"><span>${DNY_KR[n]}</span><b>${datumDne(k, n).getDate()}</b></button>`).join('')}</div><div class="home-day-heading"><h2>${current ? 'Dnes' : DNY[d]}</h2><span>${kr(date)}</span></div><div class="home-meals">`;
   SLOTY.forEach((slot, i) => {
@@ -629,7 +631,7 @@ function vDnes() {
     const rc = R[x.id], values = ziviny(rc.id), eaten = !!t.snedeno[d + '-' + slot];
     o += `<article class="home-meal ${i === 0 ? 'featured' : ''} ${eaten ? 'eaten' : ''}"><div class="home-meal-top"><span class="home-eyebrow">${SLOT_N[slot]}</span><span class="home-number">0${i + 1} / 03</span></div><button class="home-recipe" data-a="recept:${rc.id}:1"><h3>${esc(rc.nazev)}</h3><span class="home-recipe-arrow" aria-hidden="true">↗</span></button><div class="home-meal-bottom"><div class="home-pills"><span>${cislo(values[0])} kcal</span><span>${rc.cas} min</span></div>${current ? `<button class="home-eaten ${eaten ? 'on' : ''}" aria-pressed="${eaten}" data-a="snedeno:${d}-${slot}">${eaten ? '✓ Snědeno' : 'Označit snědené'}</button>` : `<span class="home-protein">${cislo(values[1])} g bílkovin</span>`}</div></article>`;
   });
-  o += `</div><button class="btn home-plan-button" data-a="planovat:${k}">Můj plán na celý týden <span aria-hidden="true">↗</span></button></section><aside class="home-aside"><section class="home-nutrition"><div class="home-aside-title"><h2>Souhrn dne</h2><button class="home-settings" data-a="cil" aria-label="Upravit výživové cíle">Upravit cíl</button></div><div class="home-calories"><strong>${cislo(z[0])}</strong><span>z ${cislo(cil().kcal)} kcal</span></div><div class="home-calorie-bar"><i style="width:${Math.min(100, z[0] / cil().kcal * 100)}%"></i></div><p class="tiny muted">Naplánovaná jídla · ${DNY[d].toLowerCase()}</p><div class="home-macros">${[['Bílkoviny', z[1], cil().b], ['Sacharidy', z[2], cil().s], ['Tuky', z[3], cil().t]].map(([name, value, target]) => `<div><span>${name}</span><b>${cislo(value)} <small>/ ${target} g</small></b></div>`).join('')}</div></section><section class="home-shortcuts"><button data-a="home-nakup"><span><b>Nákupní seznam</b><small>Suroviny na celý týden</small></span><span aria-hidden="true">↗</span></button><button data-a="planovat:${k}"><span><b>Upravit jídelníček</b><small>Vyměnit jídla v plánu</small></span><span aria-hidden="true">↗</span></button></section></aside></div>`;
+  o += `</div><button class="btn home-plan-button" data-a="${planned ? 'planovat:' + k : 'home-pouzit'}">${planned ? 'Můj plán na celý týden' : 'Použít tento jídelníček'} <span aria-hidden="true">↗</span></button></section><aside class="home-aside"><section class="home-nutrition"><div class="home-aside-title"><h2>Souhrn dne</h2><button class="home-settings" data-a="cil" aria-label="Upravit výživové cíle">Upravit cíl</button></div><div class="home-calories"><strong>${cislo(z[0])}</strong><span>z ${cislo(cil().kcal)} kcal</span></div><div class="home-calorie-bar"><i style="width:${Math.min(100, z[0] / cil().kcal * 100)}%"></i></div><p class="tiny muted">Naplánovaná jídla · ${DNY[d].toLowerCase()}</p><div class="home-macros">${[['Bílkoviny', z[1], cil().b], ['Sacharidy', z[2], cil().s], ['Tuky', z[3], cil().t]].map(([name, value, target]) => `<div><span>${name}</span><b>${cislo(value)} <small>/ ${target} g</small></b></div>`).join('')}</div></section><section class="home-shortcuts"><button data-a="${planned ? 'home-nakup' : 'planovat:' + k}"><span><b>${planned ? 'Nákupní seznam' : 'Vybrat jiná jídla'}</b><small>${planned ? 'Suroviny na celý týden' : 'Sestavit vlastní jídelníček'}</small></span><span aria-hidden="true">↗</span></button><button data-a="${planned ? 'planovat:' + k : 'home-pouzit-nakup'}"><span><b>${planned ? 'Upravit jídelníček' : 'Použít návrh a nakoupit'}</b><small>${planned ? 'Vyměnit jídla v plánu' : 'Uložit plán a otevřít seznam'}</small></span><span aria-hidden="true">↗</span></button></section></aside></div>`;
   return o;
 }
 
@@ -840,6 +842,11 @@ document.addEventListener('click', e => {
   switch (a) {
     case 'tab': ui.tab = p[0]; ui.sheet = null; if (p[0] === 'tyden' && !maPlan(ui.tyden) && ui.krok === PREHLED) ui.krok = 0; nahoru(); break;
     case 'home-den': ui.den = +p[0]; break;
+    case 'home-pouzit':
+    case 'home-pouzit-nakup':
+      if (!maPlan(ui.tyden)) { stav.tydny[ui.tyden] = { ...navrhTydne(), hotovo: true }; uloz(); }
+      if (a === 'home-pouzit-nakup') ui.tab = 'nakup';
+      break;
     case 'home-nakup': ui.tab = 'nakup'; nahoru(); break;
     case 'tyden': ui.den = null; ui.tyden = p[0]; ui.krok = maPlan(p[0]) ? PREHLED : 0; break;
     case 'planovat': ui.tyden = p[0]; ui.tab = 'tyden'; ui.krok = maPlan(p[0]) ? PREHLED : 0; nahoru(); break;
