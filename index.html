@@ -653,8 +653,8 @@ function vTyden() {
     o += navigace(t.vecere.length > 0, 'Vyber aspoň jednu večeři');
   } else if (ui.krok < PREHLED) {
     const b = ui.krok - 2, v = NASTAVENI.vareni[b], j = t.vareni[b];
-    o += `<h2 style="margin-top:14px">${v.nazev} ${kr(datumDne(k, v.denVareni))}</h2>
-      <p class="small muted">Vaříš obědy do krabiček na ${v.dny.map(d => DNY_KDY[d]).join(', ').replace(/, ([^,]*)$/, ' a $1')}. Vyber jedno jídlo, nebo dvě, která se budou střídat den po dni.</p>`;
+    o += `<h2 style="margin-top:14px">Co budeš obědvat?</h2>
+      <p class="small muted">Obědy si uvaříš do krabiček ${v.nazev.toLowerCase().replace('neděle', 'v neděli').replace('čtvrtek', 've čtvrtek')} ${kr(datumDne(k, v.denVareni))} na ${v.dny.map(d => DNY_KDY[d]).join(', ').replace(/, ([^,]*)$/, ' a $1')}. Vyber jedno jídlo, nebo dvě, která se budou střídat den po dni.</p>`;
     o += vyber(['hlavni'], j, 'pick:v' + b, t, v.dny[v.dny.length - 1] - v.denVareni, b > 0 ? t.vareni.slice(0, b).flat() : []);
     o += navigace(j.length > 0, 'Vyber aspoň jedno jídlo');
   } else {
