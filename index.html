@@ -340,6 +340,18 @@ h1,.hello h1,.home-heading h1{font-size:24px;line-height:1.25;font-weight:600;le
  main.wrap{border-top:1px solid var(--line)}
 }
 
+
+.recipe-back{display:inline-flex;align-items:center;min-height:44px;font-size:14px;color:var(--btn);margin-bottom:18px}
+.recipe-heading{max-width:760px;margin-bottom:24px}.recipe-heading h1{font-size:28px;font-weight:600;line-height:1.3;letter-spacing:0;margin:8px 0 14px}
+.recipe-page .detail-photo{max-height:none;aspect-ratio:auto;object-fit:contain;width:100%;height:auto;max-width:900px;margin:0 0 28px}
+.recipe-facts{max-width:680px;margin-bottom:28px}.recipe-facts .facts{margin-top:0}
+.recipe-columns{display:grid;gap:32px}.recipe-columns section{min-width:0}.recipe-columns h2{font-size:20px;font-weight:600;letter-spacing:0;line-height:1.3;margin:0 0 18px}
+.recipe-ingredients-heading{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:14px}.recipe-ingredients-heading h2{margin:0}
+.recipe-page .how{margin:0;padding-left:24px;line-height:1.7}.recipe-page .how li{margin-bottom:18px;padding-left:8px}
+.recipe-page .ing{font-size:15px}.recipe-page .ing li{padding:13px 0}.recipe-page .rate{flex-wrap:wrap}
+@media(min-width:900px){.recipe-columns{grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:56px}.recipe-heading h1{font-size:32px}}
+@media(max-width:799px){.recipe-heading h1{font-size:24px}.recipe-back{margin-bottom:12px}.recipe-page .facts b{font-size:21px}}
+
 </style>
 </head>
 <body>
@@ -863,21 +875,19 @@ function vRecepty() {
 }
 
 /* --- panely --- */
-function sheetRecept(id, porce) {
+function vRecept(id, porce) {
   const r = R[id], z = ziviny(id), f = porce / r.porce;
-  const t = stav.tydny[ui.tyden]; const c = barva(id, barvy(t));
   const forma = porce === 1 ? 'porce' : porce < 5 ? 'porce' : 'porcí';
-  return `<div class="lidbar" style="--c:${c}"></div><button class="x" data-a="zavrit" aria-label="Zavřít">✕</button>
-    ${fotkaReceptu(r, true)}<h2 style="margin:10px 44px 6px 0">${esc(r.nazev)}</h2>${bezpecnyOdkaz(r.zdroj) && /^https?:/.test(r.zdroj) ? `<p class="tiny"><a class="link" href="${esc(r.zdroj)}" target="_blank" rel="noopener noreferrer">Původní recept${r.autor ? ' · ' + esc(r.autor) : ''}</a></p>` : ''}
-    <p class="small muted" style="margin:0">${r.cas} minut${r.typ !== 'snidane' ? `, v lednici vydrží ${r.lednice} ${r.lednice === 1 ? 'den' : 'dny'}${r.mrazak ? ', jde zamrazit' : ''}` : ''}</p>
-    <div class="facts"><div><b>${cislo(z[0])}</b><span>kcal</span></div><div><b>${cislo(z[1])}</b><span>bílkoviny</span></div><div><b>${cislo(z[2])}</b><span>sacharidy</span></div><div><b>${cislo(z[3])}</b><span>tuky</span></div></div>
-    <p class="tiny muted" style="margin-top:-8px">Na jednu porci, přibližně spočítáno ze surovin.</p>
-    <div style="display:flex;align-items:center;margin:20px 0 4px"><h3 style="flex:1">Suroviny</h3>
+  return `<article class="recipe-page"><button class="recipe-back" data-a="recept-zpet">← Zpět</button><header class="recipe-heading"><p class="home-eyebrow">${TYP_N[r.typ]}</p><h1>${esc(r.nazev)}</h1>${bezpecnyOdkaz(r.zdroj) && /^https?:/.test(r.zdroj) ? `<p class="tiny"><a class="link" href="${esc(r.zdroj)}" target="_blank" rel="noopener noreferrer">Původní recept${r.autor ? ' · ' + esc(r.autor) : ''}</a></p>` : ''}
+    <p class="small muted" style="margin:0">${r.cas} minut${r.typ !== 'snidane' ? `, v lednici vydrží ${r.lednice} ${r.lednice === 1 ? 'den' : 'dny'}${r.mrazak ? ', jde zamrazit' : ''}` : ''}</p></header>
+    ${fotkaReceptu(r, true)}<div class="recipe-facts"><div class="facts"><div><b>${cislo(z[0])}</b><span>kcal</span></div><div><b>${cislo(z[1])}</b><span>bílkoviny</span></div><div><b>${cislo(z[2])}</b><span>sacharidy</span></div><div><b>${cislo(z[3])}</b><span>tuky</span></div></div>
+    <p class="tiny muted" style="margin-top:-8px">Na jednu porci, přibližně spočítáno ze surovin.</p></div>
+    <div class="recipe-columns"><section class="recipe-ingredients"><div class="recipe-ingredients-heading"><h2>Suroviny</h2>
       <div class="stepper"><button data-a="porce:${id}:${Math.max(1, porce - 1)}" aria-label="Méně porcí">−</button><b>${porce} ${forma}</b><button data-a="porce:${id}:${porce + 1}" aria-label="Více porcí">+</button></div></div>
     <ul class="ing">${r.suroviny.map(([k, g, na]) => `<li><span>${esc(S[k].n)}${na === 'porce' ? ' <span class="muted">(k jídlu)</span>' : ''}</span><span class="muted">${typeof g === 'number' ? cislo(Math.round(na === 'porce' ? g * porce : g * f)) + ' g' : esc(g)}</span></li>`).join('')}</ul>
-    <h3 style="margin-top:22px">Postup</h3><ol class="how">${r.postup.map(p => `<li>${esc(p)}</li>`).join('')}</ol>
+    </section><section class="recipe-instructions"><h2>Postup</h2><ol class="how">${r.postup.map(p => `<li>${esc(p)}</li>`).join('')}</ol>
     <div class="rate" style="margin:18px 0 0"><span class="muted" style="flex:1">Uvařit znovu?</span>
-      <button class="${hodn(id) > 0 ? 'on' : ''}" data-a="hodnotit:${id}:1">Ano</button><button class="${hodn(id) < 0 ? 'on' : ''}" data-a="hodnotit:${id}:-1">Ne</button></div>`;
+      <button class="${hodn(id) > 0 ? 'on' : ''}" data-a="hodnotit:${id}:1">Ano</button><button class="${hodn(id) < 0 ? 'on' : ''}" data-a="hodnotit:${id}:-1">Ne</button></div></section></div></article>`;
 }
 function sheetCil() {
   const c = cil();
@@ -907,11 +917,44 @@ function sheetSlot(kk) {
 /* =====================================================================
    VYKRESLENÍ A AKCE
    ===================================================================== */
+function adresaReceptu(id, porce) {
+  return '#recept/' + encodeURIComponent(id) + '?porce=' + porce;
+}
+function receptZAdresy() {
+  if (!location.hash.startsWith('#recept/')) return null;
+  try {
+    const [id, query = ''] = location.hash.slice(8).split('?');
+    const decoded = decodeURIComponent(id), n = Number(new URLSearchParams(query).get('porce'));
+    return { id: decoded, porce: Number.isInteger(n) && n > 0 && n <= 1000 ? n : (Object.hasOwn(R, decoded) ? R[decoded].porce : 1) };
+  } catch { return { id: '', porce: 1 }; }
+}
+function otevriRecept(id, porce) {
+  if (!Object.hasOwn(R, id)) return;
+  // Návrat obnoví původní záložku, filtr, týden, otevřený výběr i posun stránky.
+  history.replaceState({ kajaUi: JSON.parse(JSON.stringify(ui)), scroll: scrollY }, '', location.href);
+  ui.sheet = null;
+  history.pushState({ recipeFromApp: true }, '', adresaReceptu(id, porce));
+  nahoru();
+}
+function zpetZReceptu() {
+  if (history.state?.recipeFromApp) { history.back(); return; }
+  ui.tab = 'recepty'; ui.sheet = null;
+  history.replaceState({ kajaUi: JSON.parse(JSON.stringify(ui)) }, '', location.pathname + location.search);
+  render(); nahoru();
+}
+window.addEventListener('popstate', () => {
+  if (history.state?.kajaUi) Object.assign(ui, history.state.kajaUi);
+  render();
+  if (!receptZAdresy() && history.state?.kajaUi) requestAnimationFrame(() => window.scrollTo(0, history.state.scroll || 0));
+});
+window.addEventListener('hashchange', render);
 function render() {
-  $('#view').className = 'wrap view-' + ui.tab;
-  $('#view').innerHTML = { dnes: vDnes, tyden: vTyden, nakup: vNakup, recepty: vRecepty }[ui.tab]();
-  document.querySelectorAll('nav.tabs button').forEach(b => { const on = b.dataset.a === 'tab:' + ui.tab; b.classList.toggle('on', on); b.setAttribute('aria-current', on ? 'page' : 'false'); });
-  if (ui.sheet) { $('#panel').innerHTML = ui.sheet.typ === 'recept' ? sheetRecept(ui.sheet.id, ui.sheet.porce) : ui.sheet.typ === 'cil' ? sheetCil() : sheetSlot(ui.sheet.kk); $('#sheet').classList.add('open'); }
+  const recipe = receptZAdresy();
+  $('#view').className = 'wrap view-' + (recipe ? 'recept' : ui.tab);
+  $('#view').innerHTML = recipe ? (Object.hasOwn(R, recipe.id) ? vRecept(recipe.id, recipe.porce) : `<h1>Recept se nenašel</h1><p><button class="link" data-a="recept-zpet">Přejít na recepty</button></p>`) : { dnes: vDnes, tyden: vTyden, nakup: vNakup, recepty: vRecepty }[ui.tab]();
+  document.title = recipe && Object.hasOwn(R, recipe.id) ? R[recipe.id].nazev + ' | Týden v lednici' : 'Týden v lednici';
+  document.querySelectorAll('nav.tabs button').forEach(b => { const on = b.dataset.a === 'tab:' + (recipe ? 'recepty' : ui.tab); b.classList.toggle('on', on); b.setAttribute('aria-current', on ? 'page' : 'false'); });
+  if (ui.sheet && !recipe) { $('#panel').innerHTML = ui.sheet.typ === 'cil' ? sheetCil() : sheetSlot(ui.sheet.kk); $('#sheet').classList.add('open'); }
   else $('#sheet').classList.remove('open');
 }
 function toast(t) { const el = $('#toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('on'), 2400); }
@@ -922,7 +965,7 @@ document.addEventListener('click', e => {
   const [a, ...p] = el.dataset.a.split(':');
   const t = () => tyden(ui.tyden);
   switch (a) {
-    case 'tab': ui.tab = p[0]; ui.sheet = null; if (p[0] === 'tyden' && !maPlan(ui.tyden) && ui.krok === PREHLED) ui.krok = 0; nahoru(); break;
+    case 'tab': if (receptZAdresy()) history.pushState(null, '', location.pathname + location.search); ui.tab = p[0]; ui.sheet = null; if (p[0] === 'tyden' && !maPlan(ui.tyden) && ui.krok === PREHLED) ui.krok = 0; nahoru(); break;
     case 'home-den': ui.den = +p[0]; break;
     case 'home-pouzit':
     case 'home-pouzit-nakup':
@@ -946,8 +989,9 @@ document.addEventListener('click', e => {
     case 'slot': ui.sheet = { typ: 'slot', kk: p[0] }; break;
     case 'zmena': t().zmeny[p[0]] = p[1]; uloz(); ui.sheet = null; break;
     case 'zmena-zpet': delete t().zmeny[p[0]]; uloz(); ui.sheet = null; break;
-    case 'recept': ui.sheet = { typ: 'recept', id: p[0], porce: +(p[1] || R[p[0]].porce) }; break;
-    case 'porce': ui.sheet = { typ: 'recept', id: p[0], porce: +p[1] }; break;
+    case 'recept': otevriRecept(p[0], +(p[1] || R[p[0]]?.porce || 1)); break;
+    case 'recept-zpet': zpetZReceptu(); return;
+    case 'porce': if (R[p[0]]) history.replaceState(history.state, '', adresaReceptu(p[0], Math.min(1000, Math.max(1, +p[1] || 1)))); break;
     case 'zavrit': ui.sheet = null; break;
     case 'cil': ui.sheet = { typ: 'cil' }; break;
     case 'ulozit-cil': {
