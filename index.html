@@ -376,6 +376,10 @@ nav.tabs .theme-toggle{justify-content:center;min-height:44px;min-width:44px;gap
 .local-data-note{font-size:13px;line-height:1.6;color:var(--muted);background:var(--surface);padding:16px;border-radius:16px;margin:22px 0}
 .fld #nast-jmeno{width:210px;max-width:50%;text-align:left}
 
+
+.recipe-page .facts{grid-template-columns:repeat(5,minmax(0,1fr))}.recipe-page .facts b{font-size:22px}.recipe-page .facts span{font-size:12px}
+@media(max-width:450px){.recipe-page .facts{grid-template-columns:repeat(3,minmax(0,1fr))}.recipe-page .facts b{font-size:21px}}
+
 </style>
 </head>
 <body>
@@ -409,74 +413,74 @@ const NASTAVENI = {
 };
 
 /* =====================================================================
-   SUROVINY - hodnoty na 100 g: [kcal, bílkoviny, sacharidy, tuky]
+   SUROVINY - hodnoty na 100 g: [kcal, bílkoviny, sacharidy, tuky, vláknina] (energie kcal/100 g, ostatní g/100 g; vláknina null = neznámá)
    ks = kolik gramů má jeden kus (pro nákupní seznam)
    doma = koření a věci, které se jen zkontrolují
    ===================================================================== */
 const S = {
-  vlocky:    { n: 'Ovesné vločky', v: [370, 13, 60, 7], o: 'Trvanlivé', zasoba: true },
-  mleko:     { n: 'Mléko polotučné', v: [47, 3.4, 4.8, 1.5], o: 'Mléčné a vejce', ks: 1000, ksN: 'l' },
-  skyr:      { n: 'Skyr bílý', v: [63, 11, 4, 0.2], o: 'Mléčné a vejce' },
-  jogurt:    { n: 'Bílý jogurt', v: [62, 4.5, 5, 3], o: 'Mléčné a vejce' },
-  tvaroh:    { n: 'Tvaroh polotučný', v: [120, 17, 4, 4], o: 'Mléčné a vejce', ks: 250, ksN: ['balení', 'balení', 'balení'] },
-  vejce:     { n: 'Vejce', v: [143, 12.6, 0.7, 9.5], o: 'Mléčné a vejce', ks: 55 },
-  parmazan:  { n: 'Parmazán', v: [392, 36, 3, 26], o: 'Mléčné a vejce' },
-  feta:      { n: 'Feta', v: [264, 14, 4, 21], o: 'Mléčné a vejce' },
-  eidam:     { n: 'Eidam 30 %', v: [260, 30, 0, 15], o: 'Mléčné a vejce' },
-  tofu:      { n: 'Tofu natural', v: [120, 13, 2, 7], o: 'Mléčné a vejce' },
-  banan:     { n: 'Banán', v: [89, 1.1, 23, 0.3], o: 'Ovoce a zelenina', ks: 120 },
-  jablko:    { n: 'Jablko', v: [52, 0.3, 14, 0.2], o: 'Ovoce a zelenina', ks: 150 },
-  citron:    { n: 'Citron', v: [29, 1.1, 9, 0.3], o: 'Ovoce a zelenina', ks: 100 },
-  avokado:   { n: 'Avokádo', v: [160, 2, 9, 15], o: 'Ovoce a zelenina', ks: 150 },
-  cibule:    { n: 'Cibule', v: [40, 1.1, 9, 0.1], o: 'Ovoce a zelenina', ks: 100 },
-  cesnek:    { n: 'Česnek', v: [149, 6.4, 33, 0.5], o: 'Ovoce a zelenina', ks: 5, ksN: ['stroužek', 'stroužky', 'stroužků'] },
-  mrkev:     { n: 'Mrkev', v: [41, 0.9, 10, 0.2], o: 'Ovoce a zelenina', ks: 80 },
-  paprika:   { n: 'Paprika', v: [31, 1, 6, 0.3], o: 'Ovoce a zelenina', ks: 150 },
-  cuketa:    { n: 'Cuketa', v: [17, 1.2, 3.1, 0.3], o: 'Ovoce a zelenina', ks: 250 },
-  brokolice: { n: 'Brokolice', v: [34, 2.8, 7, 0.4], o: 'Ovoce a zelenina', ks: 400, ksN: ['hlávka', 'hlávky', 'hlávek'] },
-  spenat:    { n: 'Baby špenát', v: [23, 2.9, 3.6, 0.4], o: 'Ovoce a zelenina' },
-  cherry:    { n: 'Cherry rajčata', v: [18, 0.9, 3.9, 0.2], o: 'Ovoce a zelenina' },
-  okurka:    { n: 'Okurka salátová', v: [15, 0.7, 3.6, 0.1], o: 'Ovoce a zelenina', ks: 300 },
-  batat:     { n: 'Batáty', v: [86, 1.6, 20, 0.1], o: 'Ovoce a zelenina' },
-  zazvor:    { n: 'Zázvor', v: [80, 1.8, 18, 0.8], o: 'Ovoce a zelenina' },
-  kurPrsa:   { n: 'Kuřecí prsa', v: [110, 23, 0, 1.5], o: 'Maso a ryby' },
-  kurStehna: { n: 'Kuřecí stehna bez kosti', v: [140, 19, 0, 7], o: 'Maso a ryby' },
-  hovezi:    { n: 'Hovězí mleté libové', v: [176, 20, 0, 10], o: 'Maso a ryby' },
-  losos:     { n: 'Losos (filet)', v: [208, 20, 0, 13], o: 'Maso a ryby' },
-  chleb:     { n: 'Celozrnný chléb', v: [247, 13, 41, 3.4], o: 'Pečivo', ks: 40, ksN: ['krajíc', 'krajíce', 'krajíců'] },
-  tortilla:  { n: 'Celozrnné tortilly', v: [300, 9, 48, 7], o: 'Pečivo', ks: 60 },
-  ryze:      { n: 'Rýže basmati', v: [350, 8, 77, 0.8], o: 'Trvanlivé' },
-  testoviny: { n: 'Celozrnné těstoviny', v: [350, 13, 65, 2.5], o: 'Trvanlivé' },
-  cocka:     { n: 'Červená čočka', v: [340, 24, 57, 1.5], o: 'Trvanlivé' },
-  kuskus:    { n: 'Kuskus', v: [360, 12, 72, 1.5], o: 'Trvanlivé' },
-  arasidy:   { n: 'Arašídové máslo', v: [590, 25, 20, 50], o: 'Trvanlivé', zasoba: true },
-  med:       { n: 'Med', v: [304, 0.3, 82, 0], o: 'Trvanlivé', zasoba: true },
-  olej:      { n: 'Olivový olej', v: [884, 0, 0, 100], o: 'Trvanlivé', zasoba: true },
-  sojovka:   { n: 'Sójová omáčka', v: [60, 8, 5, 0.5], o: 'Trvanlivé', zasoba: true },
-  kokos:     { n: 'Kokosové mléko light', v: [80, 0.8, 2, 8], o: 'Konzervy', ks: 400, ksN: ['plechovka', 'plechovky', 'plechovek'] },
-  passata:   { n: 'Passata / drcená rajčata', v: [32, 1.5, 5, 0.2], o: 'Konzervy', ks: 500, ksN: ['balení', 'balení', 'balení'] },
-  cizrna:    { n: 'Cizrna (konzerva)', v: [120, 7, 17, 2.5], o: 'Konzervy', ks: 240, ksN: ['plechovka', 'plechovky', 'plechovek'] },
-  fazole:    { n: 'Černé fazole (konzerva)', v: [110, 7, 16, 0.5], o: 'Konzervy', ks: 240, ksN: ['plechovka', 'plechovky', 'plechovek'] },
-  kukurice:  { n: 'Kukuřice (konzerva)', v: [80, 2.5, 15, 1.2], o: 'Konzervy', ks: 140, ksN: ['plechovka', 'plechovky', 'plechovek'] },
-  tunak:     { n: 'Tuňák ve vlastní šťávě', v: [110, 25, 0, 1], o: 'Konzervy', ks: 120, ksN: ['plechovka', 'plechovky', 'plechovek'] },
-  hruska:    { n: 'Hruška', v: [57, 0.4, 15, 0.1], o: 'Ovoce a zelenina', ks: 180 },
-  petrzel:   { n: 'Petrželka čerstvá', v: [36, 3, 6, 0.8], o: 'Ovoce a zelenina', ks: 30, ksN: ['svazek', 'svazky', 'svazků'] },
-  chia:      { n: 'Chia semínka', v: [486, 17, 42, 31], o: 'Trvanlivé', zasoba: true },
-  protein:   { n: 'Čokoládový protein', v: [380, 75, 8, 6], o: 'Trvanlivé', zasoba: true },
-  orzo:      { n: 'Orzo (těstoviny)', v: [355, 12.5, 72, 1.5], o: 'Trvanlivé' },
-  spalda:    { n: 'Špaldová mouka hladká', v: [340, 13, 68, 1.8], o: 'Trvanlivé', zasoba: true },
-  cukr:      { n: 'Cukr krupice', v: [400, 0, 100, 0], o: 'Trvanlivé', zasoba: true },
-  cukrTrt:   { n: 'Třtinový cukr', v: [380, 0, 98, 0], o: 'Trvanlivé', zasoba: true },
-  skrob:     { n: 'Kukuřičný škrob', v: [350, 0.3, 86, 0.1], o: 'Trvanlivé', zasoba: true },
-  mlekoR:    { n: 'Rostlinné mléko', v: [45, 1, 6.5, 1.5], o: 'Trvanlivé', ks: 1000, ksN: 'l' },
-  tukR:      { n: 'Rostlinný tuk na pečení', v: [720, 0, 0.5, 80], o: 'Mléčné a vejce', ks: 250, ksN: ['kostka', 'kostky', 'kostek'] },
-  smetana:   { n: 'Zakysaná smetana', v: [160, 3, 4, 15], o: 'Mléčné a vejce' },
-  lucina:    { n: 'Lučina Skyr', v: [135, 8.1, 4, 9.6], o: 'Mléčné a vejce', ks: 80, ksN: ['balení', 'balení', 'balení'] },
-  toast:     { n: 'Toastový chléb', v: [265, 8, 49, 3.5], o: 'Pečivo', ks: 25, ksN: ['plátek', 'plátky', 'plátků'] },
-  rajcata:   { n: 'Krájená rajčata', v: [21, 1.1, 3.5, 0.2], o: 'Konzervy', ks: 400, ksN: ['plechovka', 'plechovky', 'plechovek'] },
-  protlak:   { n: 'Rajčatový protlak', v: [82, 4.3, 15, 0.5], o: 'Konzervy' },
-  boruvky:   { n: 'Borůvky mražené', v: [57, 0.7, 14, 0.3], o: 'Mražené' },
-  hrasek:    { n: 'Hrášek mražený', v: [80, 5, 14, 0.4], o: 'Mražené' },
+  vlocky:    { n: 'Ovesné vločky', v: [370, 13, 60, 7, 10.1], o: 'Trvanlivé', zasoba: true },
+  mleko:     { n: 'Mléko polotučné', v: [47, 3.4, 4.8, 1.5, 0.0], o: 'Mléčné a vejce', ks: 1000, ksN: 'l' },
+  skyr:      { n: 'Skyr bílý', v: [63, 11, 4, 0.2, 0.0], o: 'Mléčné a vejce' },
+  jogurt:    { n: 'Bílý jogurt', v: [62, 4.5, 5, 3, 0.0], o: 'Mléčné a vejce' },
+  tvaroh:    { n: 'Tvaroh polotučný', v: [120, 17, 4, 4, 0.0], o: 'Mléčné a vejce', ks: 250, ksN: ['balení', 'balení', 'balení'] },
+  vejce:     { n: 'Vejce', v: [143, 12.6, 0.7, 9.5, 0.0], o: 'Mléčné a vejce', ks: 55 },
+  parmazan:  { n: 'Parmazán', v: [392, 36, 3, 26, 0.0], o: 'Mléčné a vejce' },
+  feta:      { n: 'Feta', v: [264, 14, 4, 21, 0.0], o: 'Mléčné a vejce' },
+  eidam:     { n: 'Eidam 30 %', v: [260, 30, 0, 15, 0.0], o: 'Mléčné a vejce' },
+  tofu:      { n: 'Tofu natural', v: [120, 13, 2, 7, 0.3], o: 'Mléčné a vejce' },
+  banan:     { n: 'Banán', v: [89, 1.1, 23, 0.3, 2.6], o: 'Ovoce a zelenina', ks: 120 },
+  jablko:    { n: 'Jablko', v: [52, 0.3, 14, 0.2, 2.4], o: 'Ovoce a zelenina', ks: 150 },
+  citron:    { n: 'Citron', v: [29, 1.1, 9, 0.3, 2.8], o: 'Ovoce a zelenina', ks: 100 },
+  avokado:   { n: 'Avokádo', v: [160, 2, 9, 15, 6.7], o: 'Ovoce a zelenina', ks: 150 },
+  cibule:    { n: 'Cibule', v: [40, 1.1, 9, 0.1, 1.7], o: 'Ovoce a zelenina', ks: 100 },
+  cesnek:    { n: 'Česnek', v: [149, 6.4, 33, 0.5, 2.1], o: 'Ovoce a zelenina', ks: 5, ksN: ['stroužek', 'stroužky', 'stroužků'] },
+  mrkev:     { n: 'Mrkev', v: [41, 0.9, 10, 0.2, 2.8], o: 'Ovoce a zelenina', ks: 80 },
+  paprika:   { n: 'Paprika', v: [31, 1, 6, 0.3, 2.1], o: 'Ovoce a zelenina', ks: 150 },
+  cuketa:    { n: 'Cuketa', v: [17, 1.2, 3.1, 0.3, 1.0], o: 'Ovoce a zelenina', ks: 250 },
+  brokolice: { n: 'Brokolice', v: [34, 2.8, 7, 0.4, 2.6], o: 'Ovoce a zelenina', ks: 400, ksN: ['hlávka', 'hlávky', 'hlávek'] },
+  spenat:    { n: 'Baby špenát', v: [23, 2.9, 3.6, 0.4, 2.2], o: 'Ovoce a zelenina' },
+  cherry:    { n: 'Cherry rajčata', v: [18, 0.9, 3.9, 0.2, 1.2], o: 'Ovoce a zelenina' },
+  okurka:    { n: 'Okurka salátová', v: [15, 0.7, 3.6, 0.1, 0.5], o: 'Ovoce a zelenina', ks: 300 },
+  batat:     { n: 'Batáty', v: [86, 1.6, 20, 0.1, 3.0], o: 'Ovoce a zelenina' },
+  zazvor:    { n: 'Zázvor', v: [80, 1.8, 18, 0.8, 2.0], o: 'Ovoce a zelenina' },
+  kurPrsa:   { n: 'Kuřecí prsa', v: [110, 23, 0, 1.5, 0.0], o: 'Maso a ryby' },
+  kurStehna: { n: 'Kuřecí stehna bez kosti', v: [140, 19, 0, 7, 0.0], o: 'Maso a ryby' },
+  hovezi:    { n: 'Hovězí mleté libové', v: [176, 20, 0, 10, 0.0], o: 'Maso a ryby' },
+  losos:     { n: 'Losos (filet)', v: [208, 20, 0, 13, 0.0], o: 'Maso a ryby' },
+  chleb:     { n: 'Celozrnný chléb', v: [247, 13, 41, 3.4, 6.0], o: 'Pečivo', ks: 40, ksN: ['krajíc', 'krajíce', 'krajíců'] },
+  tortilla:  { n: 'Celozrnné tortilly', v: [300, 9, 48, 7, 9.8], o: 'Pečivo', ks: 60 },
+  ryze:      { n: 'Rýže basmati', v: [350, 8, 77, 0.8, 1.3], o: 'Trvanlivé' },
+  testoviny: { n: 'Celozrnné těstoviny', v: [350, 13, 65, 2.5, 9.2], o: 'Trvanlivé' },
+  cocka:     { n: 'Červená čočka', v: [340, 24, 57, 1.5, 10.7], o: 'Trvanlivé' },
+  kuskus:    { n: 'Kuskus', v: [360, 12, 72, 1.5, 5.0], o: 'Trvanlivé' },
+  arasidy:   { n: 'Arašídové máslo', v: [590, 25, 20, 50, 5.0], o: 'Trvanlivé', zasoba: true },
+  med:       { n: 'Med', v: [304, 0.3, 82, 0, 0.2], o: 'Trvanlivé', zasoba: true },
+  olej:      { n: 'Olivový olej', v: [884, 0, 0, 100, 0.0], o: 'Trvanlivé', zasoba: true },
+  sojovka:   { n: 'Sójová omáčka', v: [60, 8, 5, 0.5, 0.8], o: 'Trvanlivé', zasoba: true },
+  kokos:     { n: 'Kokosové mléko light', v: [80, 0.8, 2, 8, null], o: 'Konzervy', ks: 400, ksN: ['plechovka', 'plechovky', 'plechovek'] },
+  passata:   { n: 'Passata / drcená rajčata', v: [32, 1.5, 5, 0.2, 1.5], o: 'Konzervy', ks: 500, ksN: ['balení', 'balení', 'balení'] },
+  cizrna:    { n: 'Cizrna (konzerva)', v: [120, 7, 17, 2.5, 6.4], o: 'Konzervy', ks: 240, ksN: ['plechovka', 'plechovky', 'plechovek'] },
+  fazole:    { n: 'Černé fazole (konzerva)', v: [110, 7, 16, 0.5, 6.9], o: 'Konzervy', ks: 240, ksN: ['plechovka', 'plechovky', 'plechovek'] },
+  kukurice:  { n: 'Kukuřice (konzerva)', v: [80, 2.5, 15, 1.2, 2.0], o: 'Konzervy', ks: 140, ksN: ['plechovka', 'plechovky', 'plechovek'] },
+  tunak:     { n: 'Tuňák ve vlastní šťávě', v: [110, 25, 0, 1, 0.0], o: 'Konzervy', ks: 120, ksN: ['plechovka', 'plechovky', 'plechovek'] },
+  hruska:    { n: 'Hruška', v: [57, 0.4, 15, 0.1, 3.1], o: 'Ovoce a zelenina', ks: 180 },
+  petrzel:   { n: 'Petrželka čerstvá', v: [36, 3, 6, 0.8, 3.3], o: 'Ovoce a zelenina', ks: 30, ksN: ['svazek', 'svazky', 'svazků'] },
+  chia:      { n: 'Chia semínka', v: [486, 17, 42, 31, 34.4], o: 'Trvanlivé', zasoba: true },
+  protein:   { n: 'Čokoládový protein', v: [380, 75, 8, 6, null], o: 'Trvanlivé', zasoba: true },
+  orzo:      { n: 'Orzo (těstoviny)', v: [355, 12.5, 72, 1.5, 3.2], o: 'Trvanlivé' },
+  spalda:    { n: 'Špaldová mouka hladká', v: [340, 13, 68, 1.8, null], o: 'Trvanlivé', zasoba: true },
+  cukr:      { n: 'Cukr krupice', v: [400, 0, 100, 0, 0.0], o: 'Trvanlivé', zasoba: true },
+  cukrTrt:   { n: 'Třtinový cukr', v: [380, 0, 98, 0, 0.0], o: 'Trvanlivé', zasoba: true },
+  skrob:     { n: 'Kukuřičný škrob', v: [350, 0.3, 86, 0.1, 0.9], o: 'Trvanlivé', zasoba: true },
+  mlekoR:    { n: 'Rostlinné mléko', v: [45, 1, 6.5, 1.5, null], o: 'Trvanlivé', ks: 1000, ksN: 'l' },
+  tukR:      { n: 'Rostlinný tuk na pečení', v: [720, 0, 0.5, 80, 0.0], o: 'Mléčné a vejce', ks: 250, ksN: ['kostka', 'kostky', 'kostek'] },
+  smetana:   { n: 'Zakysaná smetana', v: [160, 3, 4, 15, 0.0], o: 'Mléčné a vejce' },
+  lucina:    { n: 'Lučina Skyr', v: [135, 8.1, 4, 9.6, null], o: 'Mléčné a vejce', ks: 80, ksN: ['balení', 'balení', 'balení'] },
+  toast:     { n: 'Toastový chléb', v: [265, 8, 49, 3.5, 2.7], o: 'Pečivo', ks: 25, ksN: ['plátek', 'plátky', 'plátků'] },
+  rajcata:   { n: 'Krájená rajčata', v: [21, 1.1, 3.5, 0.2, 1.9], o: 'Konzervy', ks: 400, ksN: ['plechovka', 'plechovky', 'plechovek'] },
+  protlak:   { n: 'Rajčatový protlak', v: [82, 4.3, 15, 0.5, 4.1], o: 'Konzervy' },
+  boruvky:   { n: 'Borůvky mražené', v: [57, 0.7, 14, 0.3, 2.7], o: 'Mražené' },
+  hrasek:    { n: 'Hrášek mražený', v: [80, 5, 14, 0.4, 4.5], o: 'Mražené' },
   kari:      { n: 'Kari koření', doma: true, o: 'Koření a doma' },
   skorice:   { n: 'Skořice', doma: true, o: 'Koření a doma' },
   oregano:   { n: 'Oregano', doma: true, o: 'Koření a doma' },
@@ -625,11 +629,18 @@ function barva(id, m) { if (!id) return 'var(--seda)'; if (R[id].typ === 'snidan
 const ZIV = {};
 function ziviny(id) {
   if (ZIV[id]) return ZIV[id];
-  const r = R[id], s = [0, 0, 0, 0];
-  r.suroviny.forEach(([k, g, na]) => { const x = S[k]; if (!x || !x.v || typeof g !== 'number') return; const gg = na === 'porce' ? g * r.porce : g; for (let i = 0; i < 4; i++) s[i] += x.v[i] * gg / 100; });
+  const r = R[id], s = [0, 0, 0, 0, 0];
+  r.suroviny.forEach(([k, g, na]) => { const x = S[k]; if (!x || !x.v || typeof g !== 'number') return; const gg = na === 'porce' ? g * r.porce : g; for (let i = 0; i < 5; i++) s[i] += (x.v[i] ?? 0) * gg / 100; });
   return (ZIV[id] = s.map(v => v / r.porce));
 }
 
+function uplnaVlaknina(id) {
+  return R[id].suroviny.every(([key, g]) => typeof g !== 'number' || Number.isFinite(S[key]?.v?.[4]));
+}
+function vlakninaDne(den) { return SLOTY.every(slot => !den[slot] || uplnaVlaknina(den[slot].id)); }
+function popisVlakniny(value, complete = true, target = null) {
+  return `${complete ? '' : '≥ '}${cislo(value, 1)}${target ? ' / ' + cislo(target, 1) : ''} g`;
+}
 // Zkušební pravidla: navýšení v gramech na jednu porci. Základní recepty se nemění.
 const BILKOVINY = {
   'oats-hruska': { s: 'tvaroh', krok: 10, max: 150 },
@@ -643,7 +654,7 @@ function platneNavyseni(x, n) {
 }
 function zivinyJidla(x) {
   const base = ziviny(x.id);
-  return x.extraG ? base.map((v, i) => v + S[BILKOVINY[x.id].s].v[i] * x.extraG / 100) : base;
+  return x.extraG ? base.map((v, i) => v + (S[BILKOVINY[x.id].s].v[i] ?? 0) * x.extraG / 100) : base;
 }
 function popisNavyseni(id, g) {
   const rule = BILKOVINY[id];
@@ -660,7 +671,7 @@ function navrhyBilkovin(k, d, target) {
     const x = day[slot], rule = x && BILKOVINY[x.id];
     if (!rule || t.snedeno?.[d + '-' + slot]) return;
     for (let g = (x.extraG || 0) + rule.krok; g <= rule.max; g += rule.krok) {
-      const delta = S[rule.s].v.map(v => v * (g - (x.extraG || 0)) / 100);
+      const delta = S[rule.s].v.map(v => (v ?? 0) * (g - (x.extraG || 0)) / 100);
       choices.push({ edits: [{ kk: d + '-' + slot, id: x.id, g }], delta });
     }
   });
@@ -698,7 +709,7 @@ function panelBilkovin(k, d) {
   else if (!denLzeUpravit(k, d)) o += `<p>Minulé dny už nenavyšujeme. Vyber dnešní nebo budoucí den.</p>`;
   else if (!offers.length) o += `<p>Pro zbývající jídla zatím nemáme vhodnou úpravu. Už snědená jídla neměníme. Zkus v plánu vyměnit některé jídlo.</p>`;
   offers.forEach((offer, i) => {
-    o += `<section class="protein-offer"><h3>${offer.full ? 'Doplnění k cíli' : 'Částečné doplnění'}</h3><ul>${offer.edits.map(e => `<li><b>${SLOT_N[e.kk.split('-')[1]]}</b>: ${popisNavyseni(e.id, e.g)}</li>`).join('')}</ul><p><b>${cislo(offer.after[1])} g bílkovin</b> · ${cislo(offer.after[0])} kcal</p><p class="tiny muted">Bílkoviny +${cislo(offer.delta[1], 1)} g. Sacharidy celkem ${cislo(offer.after[2])}/${cil().s} g · tuky ${cislo(offer.after[3])}/${cil().t} g.</p>${offer.after[2] > cil().s || offer.after[3] > cil().t ? '<p class="warn small">Po úpravě bude překročený také některý cíl sacharidů nebo tuků.</p>' : ''}${offer.over > 0 ? `<p class="warn small">Denní cíl ${cislo(cil().kcal)} kcal překročíš přibližně o ${cislo(offer.over)} kcal.</p>` : ''}${!offer.full ? `<p class="small">K cíli ještě chybí přibližně ${cislo(target - offer.after[1], 1)} g bílkovin.</p>` : ''}<button class="btn" data-a="protein-pouzit:${i}">${offer.over > 0 ? 'Použít i s vyššími kaloriemi' : 'Použít úpravu'}</button></section>`;
+    o += `<section class="protein-offer"><h3>${offer.full ? 'Doplnění k cíli' : 'Částečné doplnění'}</h3><ul>${offer.edits.map(e => `<li><b>${SLOT_N[e.kk.split('-')[1]]}</b>: ${popisNavyseni(e.id, e.g)}</li>`).join('')}</ul><p><b>${cislo(offer.after[1])} g bílkovin</b> · ${cislo(offer.after[0])} kcal</p><p class="tiny muted">Bílkoviny +${cislo(offer.delta[1], 1)} g. Sacharidy celkem ${cislo(offer.after[2])}/${cil().s} g · tuky ${cislo(offer.after[3])}/${cil().t} g · vláknina ${popisVlakniny(offer.after[4], vlakninaDne(day))}.</p>${offer.after[2] > cil().s || offer.after[3] > cil().t ? '<p class="warn small">Po úpravě bude překročený také některý cíl sacharidů nebo tuků.</p>' : ''}${offer.over > 0 ? `<p class="warn small">Denní cíl ${cislo(cil().kcal)} kcal překročíš přibližně o ${cislo(offer.over)} kcal.</p>` : ''}${!offer.full ? `<p class="small">K cíli ještě chybí přibližně ${cislo(target - offer.after[1], 1)} g bílkovin.</p>` : ''}<button class="btn" data-a="protein-pouzit:${i}">${offer.over > 0 ? 'Použít i s vyššími kaloriemi' : 'Použít úpravu'}</button></section>`;
   });
   return o + `<p class="tiny muted">Zkušební funkce pro vybrané snídaně a večeře. Cíl bílkovin se uloží spolu s potvrzenou úpravou. Před potvrzením si ověř, že jídlo ještě můžeš upravit. Změní se jen tento den; navýšení se promítne do nákupu. Upravený recept otevři z tohoto dne, katalog zachovává základní recepty. Hodnoty jsou přibližné.</p>`;
 }
@@ -748,7 +759,7 @@ function dnyBaleni(t) {
     return { id, porce: R[id].porce, kde, celek: true };
   }) : []));
 }
-function denZiviny(den) { const s = [0, 0, 0, 0]; SLOTY.forEach(sl => { const x = den[sl]; if (x) zivinyJidla(x).forEach((v, i) => s[i] += v); }); return s; }
+function denZiviny(den) { const s = [0, 0, 0, 0, 0]; SLOTY.forEach(sl => { const x = den[sl]; if (x) zivinyJidla(x).forEach((v, i) => s[i] += v); }); return s; }
 function mimoCil(kcal) { const c = cil().kcal; return kcal > c * 1.08 || kcal < c * .85; }
 
 /* --- nákup --- */
@@ -791,12 +802,12 @@ function hodn(id) { return stav.hodnoceni[id] || 0; }
 function serie() { let n = 0, k = maPlan(PRISTI) ? PRISTI : TENTO; while (maPlan(k)) { n++; k = iso(plus(zIso(k), -7)); } return n; }
 
 /* --- komponenty --- */
-function soucet(z, dily) {
+function soucet(z, dily, fiberComplete = true) {
   const c = cil(), strop = Math.max(c.kcal, z[0]);
   const casti = (dily || [{ kcal: z[0], c: 'var(--ok)' }]).map(d => `<i style="width:${d.kcal / strop * 100}%;--c:${d.c}"></i>`).join('');
   return `<p class="kc ${mimoCil(z[0]) ? 'off' : ''}"><b>${cislo(z[0])}</b> z ${cislo(c.kcal)} kcal</p>
     <div class="meter">${casti}${z[0] > c.kcal ? `<span class="goal" style="left:${c.kcal / strop * 100}%"></span>` : ''}</div>
-    <div class="mac"><span>bílkoviny <b>${cislo(z[1])}</b>/${c.b} g</span><span>sacharidy <b>${cislo(z[2])}</b>/${c.s} g</span><span>tuky <b>${cislo(z[3])}</b>/${c.t} g</span></div>`;
+    <div class="mac"><span>bílkoviny <b>${cislo(z[1])}</b>/${c.b} g</span><span>sacharidy <b>${cislo(z[2])}</b>/${c.s} g</span><span>tuky <b>${cislo(z[3])}</b>/${c.t} g</span><span>vláknina <b>${popisVlakniny(z[4], fiberComplete, c.vl)}</b></span></div>`;
 }
 function vyberTydne(k) {
   if (!maPlan(TENTO)) return '';
@@ -825,7 +836,7 @@ function vDnes() {
     const rc = R[x.id], values = zivinyJidla(x), eaten = !!t.snedeno[d + '-' + slot];
     o += `<article class="home-meal ${i === 0 ? 'featured' : ''} ${eaten ? 'eaten' : ''}"><div class="home-meal-top"><span class="home-eyebrow">${SLOT_N[slot]}</span><span class="home-number">0${i + 1} / 03</span></div><button class="home-recipe" data-a="recept:${rc.id}:1:${d}-${slot}:${k}"><h3>${esc(rc.nazev)}</h3><span class="home-recipe-arrow" aria-hidden="true">↗</span></button>${x.extraG ? `<p class="protein-badge">${popisNavyseni(x.id, x.extraG)}</p>` : ''}<div class="home-meal-bottom"><div class="home-pills"><span>${cislo(values[0])} kcal</span><span>${rc.cas} min</span></div>${current ? `<button class="home-eaten ${eaten ? 'on' : ''}" aria-pressed="${eaten}" data-a="snedeno:${d}-${slot}">${eaten ? '✓ Snědeno' : 'Označit snědené'}</button>` : `<span class="home-protein">${cislo(values[1])} g bílkovin</span>`}</div></article>`;
   });
-  o += `</div><button class="btn home-plan-button" data-a="${planned ? 'planovat:' + k : 'home-pouzit'}">${planned ? 'Můj plán na celý týden' : 'Použít tento jídelníček'} <span aria-hidden="true">↗</span></button></section><aside class="home-aside"><section class="home-nutrition"><div class="home-aside-title"><h2>Souhrn dne</h2><button class="home-settings" data-a="cil" aria-label="Upravit nastavení">Nastavení</button></div><div class="home-calories"><strong>${cislo(z[0])}</strong><span>z ${cislo(cil().kcal)} kcal</span></div><div class="home-calorie-bar"><i style="width:${Math.min(100, z[0] / cil().kcal * 100)}%"></i></div><p class="tiny muted">Naplánovaná jídla · ${DNY[d].toLowerCase()}</p><div class="home-macros">${[['Bílkoviny', z[1], cil().b], ['Sacharidy', z[2], cil().s], ['Tuky', z[3], cil().t]].map(([name, value, target]) => `<div><span>${name}</span><b>${cislo(value)} <small>/ ${target} g</small></b></div>`).join('')}</div><div class="protein-actions"><button class="btn line" data-a="protein:${d}">Doplnit bílkoviny</button>${SLOTY.some(slot => day[slot]?.extraG) ? `<button class="link small" data-a="protein-zrusit:${d}">Zrušit navýšení tohoto dne</button>` : ''}</div></section><section class="home-shortcuts"><button data-a="home-nakup"><span><b>Nákupní seznam</b><small>Suroviny na celý týden</small></span><span aria-hidden="true">↗</span></button><button data-a="${planned ? 'planovat:' + k : 'home-pouzit-nakup'}"><span><b>${planned ? 'Upravit jídelníček' : 'Použít návrh a nakoupit'}</b><small>${planned ? 'Vyměnit jídla v plánu' : 'Uložit plán a otevřít seznam'}</small></span><span aria-hidden="true">↗</span></button></section></aside></div>`;
+  o += `</div><button class="btn home-plan-button" data-a="${planned ? 'planovat:' + k : 'home-pouzit'}">${planned ? 'Můj plán na celý týden' : 'Použít tento jídelníček'} <span aria-hidden="true">↗</span></button></section><aside class="home-aside"><section class="home-nutrition"><div class="home-aside-title"><h2>Souhrn dne</h2><button class="home-settings" data-a="cil" aria-label="Upravit nastavení">Nastavení</button></div><div class="home-calories"><strong>${cislo(z[0])}</strong><span>z ${cislo(cil().kcal)} kcal</span></div><div class="home-calorie-bar"><i style="width:${Math.min(100, z[0] / cil().kcal * 100)}%"></i></div><p class="tiny muted">Naplánovaná jídla · ${DNY[d].toLowerCase()}</p><div class="home-macros">${[['Bílkoviny', z[1], cil().b], ['Sacharidy', z[2], cil().s], ['Tuky', z[3], cil().t]].map(([name, value, target]) => `<div><span>${name}</span><b>${cislo(value)} <small>/ ${target} g</small></b></div>`).join('')}<div><span>Vláknina</span><b>${popisVlakniny(z[4], vlakninaDne(day), cil().vl)}</b></div></div>${!vlakninaDne(day) ? '<p class="tiny muted">≥ znamená nejméně známé množství. U některých surovin údaj chybí.</p>' : ''}<div class="protein-actions"><button class="btn line" data-a="protein:${d}">Doplnit bílkoviny</button>${SLOTY.some(slot => day[slot]?.extraG) ? `<button class="link small" data-a="protein-zrusit:${d}">Zrušit navýšení tohoto dne</button>` : ''}</div></section><section class="home-shortcuts"><button data-a="home-nakup"><span><b>Nákupní seznam</b><small>Suroviny na celý týden</small></span><span aria-hidden="true">↗</span></button><button data-a="${planned ? 'planovat:' + k : 'home-pouzit-nakup'}"><span><b>${planned ? 'Upravit jídelníček' : 'Použít návrh a nakoupit'}</b><small>${planned ? 'Vyměnit jídla v plánu' : 'Uložit plán a otevřít seznam'}</small></span><span aria-hidden="true">↗</span></button></section></aside></div>`;
   return o;
 }
 
@@ -920,8 +931,8 @@ function vPrehled(k, t) {
   o += `</div>`;
 
   const pd = NASTAVENI.planDny;
-  const prumer = pd.map(d => denZiviny(r[d])).reduce((a, z) => a.map((v, i) => v + z[i] / pd.length), [0, 0, 0, 0]);
-  o += `<h3 style="margin:24px 0 0">Průměrný den</h3><div class="sum">${soucet(prumer)}</div>`;
+  const prumer = pd.map(d => denZiviny(r[d])).reduce((a, z) => a.map((v, i) => v + z[i] / pd.length), [0, 0, 0, 0, 0]);
+  o += `<h3 style="margin:24px 0 0">Průměrný den</h3><div class="sum">${soucet(prumer, null, pd.every(d => vlakninaDne(r[d])))}</div>`;
 
   const extraMeals = pd.flatMap(d => SLOTY.filter(slot => r[d][slot]?.extraG).map(slot => `<li>${DNY[d]}, ${SLOT_N[slot].toLowerCase()}: ${popisNavyseni(r[d][slot].id, r[d][slot].extraG)}</li>`));
   if (extraMeals.length) o += `<section class="protein-offer"><h3>Navýšení na jednotlivé dny</h3><ul>${extraMeals.join('')}</ul></section>`;
@@ -984,7 +995,7 @@ function vRecepty() {
     RECEPTY.filter(r => r.typ === typ).sort((a, b) => hodn(b.id) - hodn(a.id)).forEach(r => {
       const z = ziviny(r.id);
       o += `<button class="rec ${lokalniFotka(r.foto) ? 'has-photo' : ''}" data-a="recept:${r.id}">${fotkaReceptu(r)}<span class="t"><b>${esc(r.nazev)}${hodn(r.id) > 0 ? ' ♥' : ''}</b>
-        <span>${r.chut ? CHUT_N[r.chut] + ', ' : ''}${r.cas} min, ${cislo(z[0])} kcal, ${cislo(z[1])} g bílkovin</span></span></button>`;
+        <span>${r.chut ? CHUT_N[r.chut] + ', ' : ''}${r.cas} min, ${cislo(z[0])} kcal, ${cislo(z[1])} g bílkovin, ${popisVlakniny(z[4], uplnaVlaknina(r.id))} vlákniny</span></span></button>`;
     });
   });
   return o;
@@ -997,8 +1008,8 @@ function vRecept(id, porce, context = null) {
   const forma = porce === 1 ? 'porce' : porce < 5 ? 'porce' : 'porcí';
   return `<article class="recipe-page"><button class="recipe-back" data-a="recept-zpet">← Zpět</button><header class="recipe-heading"><p class="home-eyebrow">${TYP_N[r.typ]}</p><h1>${esc(r.nazev)}</h1>${bezpecnyOdkaz(r.zdroj) && /^https?:/.test(r.zdroj) ? `<p class="tiny"><a class="link" href="${esc(r.zdroj)}" target="_blank" rel="noopener noreferrer">Původní recept${r.autor ? ' · ' + esc(r.autor) : ''}</a></p>` : ''}
     <p class="small muted" style="margin:0">${r.cas} minut${r.typ !== 'snidane' ? `, v lednici vydrží ${r.lednice} ${r.lednice === 1 ? 'den' : 'dny'}${r.mrazak ? ', jde zamrazit' : ''}` : ''}</p></header>
-    ${extra ? `<p class="protein-offer">Úprava pro ${DNY[+context.kk.split('-')[0]].toLowerCase()} ${kr(datumDne(context.k, +context.kk.split('-')[0]))}: ${popisNavyseni(id, extra)}. Ostatní dny se řídí vlastním plánem.</p>` : ''}${fotkaReceptu(r, true)}<div class="recipe-facts"><div class="facts"><div><b>${cislo(z[0])}</b><span>kcal</span></div><div><b>${cislo(z[1])}</b><span>bílkoviny</span></div><div><b>${cislo(z[2])}</b><span>sacharidy</span></div><div><b>${cislo(z[3])}</b><span>tuky</span></div></div>
-    <p class="tiny muted" style="margin-top:-8px">Na jednu porci, přibližně spočítáno ze surovin.</p></div>
+    ${extra ? `<p class="protein-offer">Úprava pro ${DNY[+context.kk.split('-')[0]].toLowerCase()} ${kr(datumDne(context.k, +context.kk.split('-')[0]))}: ${popisNavyseni(id, extra)}. Ostatní dny se řídí vlastním plánem.</p>` : ''}${fotkaReceptu(r, true)}<div class="recipe-facts"><div class="facts"><div><b>${cislo(z[0])}</b><span>kcal</span></div><div><b>${cislo(z[1])}</b><span>bílkoviny</span></div><div><b>${cislo(z[2])}</b><span>sacharidy</span></div><div><b>${cislo(z[3])}</b><span>tuky</span></div><div><b>${uplnaVlaknina(id) ? '' : '≥ '}${cislo(z[4], 1)}</b><span>vláknina (g)</span></div></div>
+    <p class="tiny muted" style="margin-top:-8px">Na jednu porci, přibližně spočítáno ze surovin.${!uplnaVlaknina(id) ? ' ≥ u vlákniny znamená nejméně známé množství; některé údaje chybí.' : ''}</p></div>
     <div class="recipe-columns"><section class="recipe-ingredients"><div class="recipe-ingredients-heading"><h2>Suroviny</h2>
       <div class="stepper"><button data-a="porce:${id}:${Math.max(1, porce - 1)}" aria-label="Méně porcí">−</button><b>${porce} ${forma}</b><button data-a="porce:${id}:${porce + 1}" aria-label="Více porcí">+</button></div></div>
     <ul class="ing">${r.suroviny.map(([k, g, na]) => `<li><span>${esc(S[k].n)}${na === 'porce' ? ' <span class="muted">(k jídlu)</span>' : ''}</span><span class="muted">${typeof g === 'number' ? cislo(Math.round((na === 'porce' ? g * porce : g * f) + (extra && k === BILKOVINY[id].s ? extra * porce : 0))) + ' g' : esc(g)}</span></li>`).join('')}</ul>
@@ -1014,7 +1025,7 @@ const LOKALNI_DATA = 'Jméno, cíle a plán se ukládají pouze v tomto prohlí�
 function formularNastaveni() {
   const c = cil();
   const pole = [['kcal', 'Kalorie', 'kcal'], ['b', 'Bílkoviny', 'g'], ['s', 'Sacharidy', 'g'], ['t', 'Tuky', 'g']];
-  return `<label class="fld"><span>Jak tě oslovovat (nepovinné)</span><input id="nast-jmeno" type="text" maxlength="60" autocomplete="off" value="${esc(stav.profil?.jmeno || '')}"></label>${pole.map(([k, n, j]) => `<label class="fld"><span>${n} <span class="muted">(${j} za den)</span></span><input id="cil-${k}" type="number" inputmode="numeric" min="1" step="1" value="${c[k] || ''}" required></label>`).join('')}<p class="small muted">Zadej vlastní denní cíle. Aplikace je sama neurčuje.</p><p class="local-data-note">${LOKALNI_DATA}</p><button class="btn" data-a="ulozit-cil">Uložit nastavení</button>`;
+  return `<label class="fld"><span>Jak tě oslovovat (nepovinné)</span><input id="nast-jmeno" type="text" maxlength="60" autocomplete="off" value="${esc(stav.profil?.jmeno || '')}"></label>${pole.map(([k, n, j]) => `<label class="fld"><span>${n} <span class="muted">(${j} za den)</span></span><input id="cil-${k}" type="number" inputmode="numeric" min="1" step="1" value="${c[k] || ''}" required></label>`).join('')}<label class="fld"><span>Vláknina <span class="muted">(g za den, nepovinné)</span></span><input id="cil-vl" type="number" inputmode="decimal" min="0.1" step="0.1" value="${c.vl || ''}"></label><p class="small muted">Zadej vlastní denní cíle. Aplikace je sama neurčuje.</p><p class="local-data-note">${LOKALNI_DATA}</p><button class="btn" data-a="ulozit-cil">Uložit nastavení</button>`;
 }
 function vUvodniNastaveni() {
   return `<section class="onboarding"><header class="top"><h1>Vítej v Nachystáno</h1><p class="sub">Nejdřív si nastav oslovení a své denní cíle.</p></header>${Object.keys(stav.tydny || {}).length ? '<p class="shopping-proposal">Tvůj dosavadní plán zůstává uložený. Doplněním nastavení o něj nepřijdeš.</p>' : ''}${formularNastaveni()}</section>`;
@@ -1167,6 +1178,8 @@ document.addEventListener('click', e => {
     case 'ulozit-cil': {
       const v = {}; let ok = true;
       ['kcal', 'b', 's', 't'].forEach(k => { const n = Number(document.getElementById('cil-' + k).value); if (!Number.isInteger(n) || n <= 0) ok = false; v[k] = n; });
+      const fiberRaw = $('#cil-vl').value.trim();
+      if (fiberRaw) { const n = Number(fiberRaw); if (!Number.isFinite(n) || n <= 0) { toast('Vlákninu nech prázdnou, nebo zadej kladné číslo.'); return; } else v.vl = n; }
       if (!ok) { toast('Vyplň všechny denní cíle kladnými celými čísly.'); return; }
       stav.cil = v; stav.profil = { jmeno: $('#nast-jmeno').value.trim().slice(0, 60), nastaveno: true };
       uloz(); ui.sheet = null; toast(ulozeniNefunguje ? 'Ukládání není dostupné. Nastavení platí jen do zavření stránky.' : 'Nastavení je uložené.'); break;
