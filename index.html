@@ -213,7 +213,7 @@ nav.tabs svg{width:24px;height:24px}
    NASTAVENÍ - tady se personalizuje
    ===================================================================== */
 const NASTAVENI = {
-  pozdrav: 'Ahoj holky',
+  pozdrav: 'Ahoj Kájo',
   autor: 'Helča',
   // Výchozí denní cíl, než si ho každá nastaví v aplikaci (ukládá se v jejím telefonu)
   cil: { kcal: 1900, b: 120, s: 200, t: 65 },
@@ -507,7 +507,7 @@ function vDnes() {
   const ser = serie();
   let o = `<header class="listek"><h1>${NASTAVENI.pozdrav}</h1>
     <p class="sub">${DNY[DEN].toLowerCase()} ${kr(DNES)}</p><p class="motto">${motto()}</p>${ser >= 2 ? `<span class="streak">${ser}. týden v řadě s plánem</span>` : ''}
-    <p class="od">Tuhle aplikaci pro vás udělala ${NASTAVENI.autor}.</p></header>`;
+    <p class="od">Tuhle aplikaci pro tebe udělala ${NASTAVENI.autor}.</p></header>`;
   if (!stav.cil) o += `<div class="callout" style="--c:#E0A408;margin:0 0 26px"><h2>Nastav si denní cíl</h2><p>Kolik kalorií a makroživin denně chceš. Podle toho ti aplikace ukáže, jestli jídla na den sedí.</p>
     <button class="btn" data-a="cil">Nastavit cíl</button></div>`;
   const polK = maPlan(TENTO) ? TENTO : maPlan(PRISTI) ? PRISTI : null;
@@ -684,7 +684,7 @@ function vNakup() {
 
 function vRecepty() {
   const f = ui.filtr;
-  let o = `<header class="top"><h1>Recepty</h1><p class="sub">Zatím ukázkové, brzy tu budou ty vaše.</p></header>
+  let o = `<header class="top"><h1>Recepty</h1><p class="sub">Zatím ukázkové, brzy tu budou ty tvoje.</p></header>
     <div class="seg" style="flex-wrap:wrap">${['vse', 'snidane', 'hlavni', 'zachranne'].map(x => `<button class="${f === x ? 'on' : ''}" data-a="filtr:${x}">${x === 'vse' ? 'Vše' : TYP_N[x]}</button>`).join('')}</div>`;
   ['snidane', 'hlavni', 'zachranne'].filter(x => f === 'vse' || f === x).forEach(typ => {
     o += `<h2>${TYP_N[typ]}</h2>`;
