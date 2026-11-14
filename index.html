@@ -220,9 +220,10 @@ const NASTAVENI = {
   // Která jídla dne se plní z vaření do zásoby (večeře se střídá sladká a slaná, viz typ 'vecere')
   hlavniSloty: ['obed'],
   // Vaření do zásoby: den vaření (-1 = neděle před týdnem, 0 = pondělí ... 6 = neděle) a dny, které pokryje
+  // Plánují se jen pracovní dny pondělí až čtvrtek (Kája 14. 11. 2026), víkend je volný
+  planDny: [0, 1, 2, 3],
   vareni: [
     { nazev: 'Neděle večer', denVareni: -1, dny: [0, 1, 2, 3] },
-    { nazev: 'Čtvrtek večer', denVareni: 3, dny: [4, 5, 6] },
   ],
   maxJidelNaVareni: 2,
   maxSnidani: 2,
@@ -451,9 +452,9 @@ function ziviny(id) {
 /* --- rozpis týdne --- */
 function rozpis(t) {
   const out = DNY.map(() => ({}));
-  if (t.snidane.length) DNY.forEach((_, d) => { out[d].snidane = { id: t.snidane[d % t.snidane.length] }; });
+  if (t.snidane.length) NASTAVENI.planDny.forEach(d => { out[d].snidane = { id: t.snidane[d % t.snidane.length] }; });
   const vec = t.vecere || [];
-  if (vec.length) DNY.forEach((_, d) => { out[d].vecere = { id: vec[d % vec.length] }; });
+  if (vec.length) NASTAVENI.planDny.forEach(d => { out[d].vecere = { id: vec[d % vec.length] }; });
   NASTAVENI.vareni.forEach((v, b) => {
     const j = t.vareni[b] || []; const m = j.length; if (!m) return;
     v.dny.forEach((d, i) => {
@@ -537,10 +538,10 @@ const MOTTA = [
   'Krabičky jsou hotové. Dneska stačí otevřít lednici.',
   'Každá krabička je jedno rozhodnutí, které už dneska nemusíš dělat.',
   'Půlka týdne za tebou a pořád podle plánu. To se počítá.',
-  'Dnes večer vaření a do neděle máš klid.',
-  'Víkend bez otázky „co budu jíst?“. O to se postaral nedělní plán.',
+  'Poslední krabička týdne. Dotáhni to do konce.',
+  'Čtyři dny podle plánu jsou za tebou. Víkend je tvůj.',
   'Zítra večer patnáct minut a celý příští týden je vyřešený.',
-  'Dnes je plánovací večer. Patnáct minut teď ušetří sedm večerů vymýšlení.',
+  'Dnes je plánovací večer. Patnáct minut teď ušetří čtyři dny vymýšlení.',
 ];
 function motto() {
   if (!maPlan(TENTO) && DEN < 4) return 'Nikdy není pozdě. Naplánuj zbytek týdne a zítra už nevymýšlíš.';
@@ -564,7 +565,9 @@ function vDnes() {
   if (DEN === 6 && maPlan(PRISTI)) NASTAVENI.vareni.forEach((v, b) => { if (v.denVareni === -1) vareniDnes.push({ k: PRISTI, b }); });
   vareniDnes.forEach(({ k, b }) => { o += kartaVareni(k, b, true); });
 
-  if (maPlan(TENTO)) {
+  if (maPlan(TENTO) && !NASTAVENI.planDny.includes(DEN)) {
+    o += `<p class="small muted" style="margin:6px 0 0">Dneska plán nemáš, jez, na co máš chuť.</p>`;
+  } else if (maPlan(TENTO)) {
     const t = stav.tydny[TENTO], den = rozpis(t)[DEN], m = barvy(t);
     o += `<h2>Dnes jíš</h2>`;
     SLOTY.forEach(s => {
@@ -583,7 +586,7 @@ function vDnes() {
   }
 
   const zK = DEN === 6 ? PRISTI : TENTO, zD = (DEN + 1) % 7;
-  if (maPlan(zK)) {
+  if (maPlan(zK) && NASTAVENI.planDny.includes(zD)) {
     const t = stav.tydny[zK], den = rozpis(t)[zD], m = barvy(t);
     o += `<h2>Zítra</h2>` + SLOTY.filter(s => den[s]).map(s => {
       const rc = R[den[s].id];
@@ -617,6 +620,7 @@ function kartaVareni(k, b, dnes) {
       <span style="flex:1;min-width:0"><b>${esc(rc.nazev)}</b><br><span class="small muted">${x.celek ? `celý koláč, ${x.porce} ${kus(x.porce)}` : `${x.porce} ${x.porce < 5 ? 'krabičky' : 'krabiček'}`}, ${rc.cas} min</span>
       <span class="boxes">${x.kde.map(z => `<i style="--c:${m[x.id]}" class="${z.st === 'mraz' ? 'fz' : z.st === 'nevydrzi' ? 'bad' : ''}">${DNY_KR[z.d]} ${z.s === 'obed' ? 'oběd' : 'večeře'}</i>`).join('')}</span></span></button>`;
   });
+  bal.filter(x => x.celek && x.kde.length < x.porce).forEach(x => { o += `<p class="note">Z koláče sníš tento týden ${x.kde.length} ${x.kde.length < 5 ? 'kousky' : 'kousků'}. Zbytek hned zamraz a příští týden ho nepeč, stačí vytáhnout z mrazáku a koláčové suroviny v nákupu odškrtnout.</p>`; });
   if (bal.some(x => !x.celek)) o += `<p class="note">Uvařený hrnec zvaž a vyděl počtem krabiček, ať je v každé stejně.</p>`;
   if (bal.some(x => x.kde.some(z => z.st === 'mraz'))) o += `<p class="note">Krabičky a kousky s ❄ dej hned po uvaření do mrazáku a večer předem je přendej do lednice.</p>`;
   bal.filter(x => x.kde.some(z => z.st === 'nevydrzi')).forEach(x => {
@@ -680,7 +684,7 @@ function vPrehled(k, t) {
   const r = rozpis(t), m = barvy(t);
   let o = t.hotovo ? '' : `<h2 style="margin-top:14px">Takhle vypadá tvůj týden</h2><p class="small muted">Klepnutím na krabičku jídlo vyměníš.</p>`;
   o += `<div class="fridge" style="margin-top:${t.hotovo ? 4 : 14}px"><span></span>${SLOTY.map(s => `<span class="hd">${SLOT_N[s]}</span>`).join('')}`;
-  DNY.forEach((_, d) => {
+  NASTAVENI.planDny.forEach(d => {
     const den = r[d], z = denZiviny(den), dnes = k === TENTO && d === DEN;
     o += `<div class="day ${dnes ? 'today-row' : ''}"><b>${DNY_KR[d]}</b><span class="${mimoCil(z[0]) ? 'off' : ''}">${cislo(z[0])} kcal</span></div>`;
     SLOTY.forEach(s => {
@@ -693,7 +697,8 @@ function vPrehled(k, t) {
   });
   o += `</div>`;
 
-  const prumer = r.map(denZiviny).reduce((a, z) => a.map((v, i) => v + z[i] / 7), [0, 0, 0, 0]);
+  const pd = NASTAVENI.planDny;
+  const prumer = pd.map(d => denZiviny(r[d])).reduce((a, z) => a.map((v, i) => v + z[i] / pd.length), [0, 0, 0, 0]);
   o += `<h3 style="margin:24px 0 0">Průměrný den</h3><div class="sum">${soucet(prumer)}</div>`;
 
   o += `<h2>Kdy vaříš</h2>`;
