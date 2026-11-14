@@ -209,6 +209,40 @@ nav.tabs svg{width:24px;height:24px}
 .callout{background:var(--surface);border-radius:var(--r-md);padding:18px 16px 16px;margin-top:26px}
 .callout h2{margin:0 0 6px;font-size:20px}
 .callout p{color:var(--muted);margin:0 0 16px}
+
+/* Lehký den: mobilní i široké rozložení */
+:root{--bg:#F8F6FB;--surface:#FFFFFF;--ink:#29213D;--muted:#71667F;--line:#E8E1EF;--line2:#CFC3DF;--btn:#7961AD;--btn-ink:#FFFFFF;--note:#E9E0F5;--note-ink:#392A50;--r-lg:28px;--r-md:22px;--r-sm:15px;--font:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#191520;--surface:#241F2E;--ink:#F1EBFA;--muted:#B7ABC7;--line:#393044;--line2:#594B6B;--btn:#B49ADD;--btn-ink:#21172F;--note:#392D4D;--note-ink:#EFE4FF}}
+:root[data-theme="dark"]{--bg:#191520;--surface:#241F2E;--ink:#F1EBFA;--muted:#B7ABC7;--line:#393044;--line2:#594B6B;--btn:#B49ADD;--btn-ink:#21172F;--note:#392D4D;--note-ink:#EFE4FF}
+h1,.hello h1{font-size:36px;letter-spacing:-.045em;line-height:1.12}
+.listek{padding:24px}.listek .motto{font-size:22px;letter-spacing:-.025em}.listek .od{font-size:12px}
+.box{padding:20px 16px;margin-bottom:12px}.box .nm{font-size:18px}.btn{border-radius:24px}.seg button{border-radius:14px}
+nav.tabs button.on{color:var(--btn)}
+@media(min-width:800px){
+ body{padding:100px 0 40px}
+ .wrap{max-width:1200px;padding:28px 40px 48px}
+ nav.tabs{top:0;bottom:auto;padding:14px 32px;border-top:0;border-bottom:1px solid var(--line)}
+ nav.tabs .in{max-width:1120px;gap:12px}
+ nav.tabs button{flex-direction:row;justify-content:center;gap:10px;font-size:16px;padding:12px;border-radius:16px}
+ nav.tabs button.on{background:var(--note)}
+ h1,.hello h1{font-size:48px}
+ .view-dnes,.view-recepty{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px 22px;align-items:start}
+ .view-dnes>*,.view-recepty>*{grid-column:1/-1;min-width:0}
+ .view-dnes>.box,.view-recepty>.rec{grid-column:auto;margin:0;height:100%;align-items:flex-start}
+ .view-dnes>.hello{grid-column:1/3}.view-dnes>.listek{grid-column:3;grid-row:1/3;margin:0}
+ .view-dnes>.box{flex-wrap:wrap;min-height:190px}.view-dnes>.box .body{flex-basis:calc(100% - 70px)}
+ .view-dnes>.top-sum{max-width:100%}
+ .fridge{grid-template-columns:100px repeat(3,minmax(0,1fr));gap:12px}
+ .cell{min-height:125px;padding:18px;gap:10px}.cell .cn{font-size:17px;-webkit-line-clamp:3}.cell .em{font-size:26px}
+ .view-tyden>[role=list]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.opt{height:100%;margin:0}
+ .shop{columns:2;column-gap:48px}.shop-group{break-inside:avoid;padding:1px 0 12px}
+ .pair{max-width:600px;margin-left:auto}.callout{padding:26px}.rec{padding:22px;min-height:130px}
+ .sheet .panel{top:50%;bottom:auto;transform:translateY(-50%);max-width:760px;max-height:85%;border-radius:28px;padding:0 32px 32px}
+ .toast{bottom:24px}
+}
+@media(min-width:800px) and (prefers-reduced-motion:no-preference){.sheet.open .panel{animation:none}}
+@media(min-width:800px) and (max-width:1040px){.view-dnes,.view-recepty{grid-template-columns:repeat(2,minmax(0,1fr))}.view-dnes>.hello{grid-column:1}.view-dnes>.listek{grid-column:2}.view-dnes>.box{grid-column:auto}}
+
 </style>
 </head>
 <body>
@@ -732,7 +766,7 @@ function vNakup() {
   o += `<p class="count">${zbyva ? `Zbývá ${zbyva} z ${vse.length}` : 'Máš všechno'}</p><p class="small muted" style="margin-top:2px">Odškrtni i to, co už máš doma.</p><div class="shop">`;
   sk.forEach(g => {
     const pol = g.polozky.slice().sort((a, b) => (t.nakup[a.k] ? 1 : 0) - (t.nakup[b.k] ? 1 : 0));
-    o += `<h3>${g.o}</h3>` + (g.o === ZASOBY ? `<p class="small muted" style="margin:-4px 0 6px">Vydrží dlouho, většinou je máš. Mrkni, jestli máš aspoň tolik, a kup jen to, co dochází.</p>` : '');
+    o += `<section class="shop-group"><h3>${g.o}</h3>` + (g.o === ZASOBY ? `<p class="small muted" style="margin:-4px 0 6px">Vydrží dlouho, většinou je máš. Mrkni, jestli máš aspoň tolik, a kup jen to, co dochází.</p>` : '');
     pol.forEach(p => {
       const on = t.nakup[p.k]; const s = S[p.k];
       const pozdeji = s.o === 'Maso a ryby' && p.pozdejiG > 0
@@ -740,6 +774,7 @@ function vNakup() {
       o += `<button class="item ${on ? 'on' : ''}" aria-pressed="${!!on}" data-a="koupeno:${p.k}"><span class="sq">${IKONA_OK.replace('#fff', 'var(--bg)')}</span>
         <span class="nm">${esc(s.n)}${pozdeji}</span><span class="amt">${mnozstvi(p.k, p.g)}</span></button>`;
     });
+    o += `</section>`;
   });
   o += `</div><div style="margin-top:22px"><button class="btn line" data-a="sdilet">Poslat seznam do Poznámek</button></div>`;
   return o;
@@ -807,6 +842,7 @@ function sheetSlot(kk) {
    VYKRESLENÍ A AKCE
    ===================================================================== */
 function render() {
+  $('#view').className = 'wrap view-' + ui.tab;
   $('#view').innerHTML = { dnes: vDnes, tyden: vTyden, nakup: vNakup, recepty: vRecepty }[ui.tab]();
   document.querySelectorAll('nav.tabs button').forEach(b => { const on = b.dataset.a === 'tab:' + ui.tab; b.classList.toggle('on', on); b.setAttribute('aria-current', on ? 'page' : 'false'); });
   if (ui.sheet) { $('#panel').innerHTML = ui.sheet.typ === 'recept' ? sheetRecept(ui.sheet.id, ui.sheet.porce) : ui.sheet.typ === 'cil' ? sheetCil() : sheetSlot(ui.sheet.kk); $('#sheet').classList.add('open'); }
