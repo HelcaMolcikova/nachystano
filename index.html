@@ -418,6 +418,20 @@ const NASTAVENI = {
    doma = koření a věci, které se jen zkontrolují
    ===================================================================== */
 const S = {
+  spaldaCela: {"n": "Celozrnná špaldová mouka", "v": [353, 14, 64, 2.6, 8.4], "o": "Trvanlivé", "zasoba": true},
+  kuskusCely: {"n": "Celozrnný kuskus (suchý)", "v": [349, 11.7, 68.7, 1.7, 6.2], "o": "Trvanlivé"},
+  reckyJogurt: {"n": "Řecký jogurt 0 %", "v": [59, 10.19, 3.6, 0.39, 0], "o": "Mléčné a vejce"},
+  zerve: {"n": "Žervé přírodní", "v": [251, 6.2, 2.5, 24, null], "o": "Mléčné a vejce"},
+  balkansky: {"n": "Balkánský sýr", "v": [258, 20, 1.8, 19, null], "o": "Mléčné a vejce"},
+  repkovy: {"n": "Řepkový olej", "v": [884, 0, 0, 100, 0], "o": "Trvanlivé", "zasoba": true},
+  orechy: {"n": "Vlašské ořechy", "v": [654, 15.23, 13.71, 65.21, 6.7], "o": "Trvanlivé"},
+  dyne: {"n": "Dýně Hokkaido (očištěná)", "v": [26, 1, 6.5, 0.1, 0.5], "o": "Ovoce a zelenina"},
+  granat: {"n": "Granátové jablko (zrníčka)", "v": [83, 1.67, 18.7, 1.17, 4], "o": "Ovoce a zelenina"},
+  horcice: {"n": "Hořčice plnotučná", "v": [60, 3.74, 5.83, 3.34, 4], "o": "Trvanlivé", "zasoba": true},
+  citronStava: {"n": "Citronová šťáva", "v": [22, 0.35, 6.9, 0.24, 0.3], "o": "Ovoce a zelenina"},
+  soda: {"n": "Jedlá soda", "doma": true, "o": "Koření a doma"},
+  cesnekSus: {"n": "Česnek sušený", "doma": true, "o": "Koření a doma"},
+
   vlocky:    { n: 'Ovesné vločky', v: [370, 13, 60, 7, 10.1], o: 'Trvanlivé', zasoba: true },
   mleko:     { n: 'Mléko polotučné', v: [47, 3.4, 4.8, 1.5, 0.0], o: 'Mléčné a vejce', ks: 1000, ksN: 'l' },
   skyr:      { n: 'Skyr bílý', v: [63, 11, 4, 0.2, 0.0], o: 'Mléčné a vejce' },
@@ -503,6 +517,50 @@ const ODDELENI = ['Ovoce a zelenina', 'Maso a ryby', 'Mléčné a vejce', 'Peči
    suroviny: [klíč suroviny, gramy] nebo [klíč, 'text' pro koření]
    ===================================================================== */
 const RECEPTY = [
+  {
+    id: "mrkvovy-dortik",
+    typ: "snidane",
+    nazev: "Mrkvový snídaňový dortík s jogurtovou polevou",
+    porce: 3,
+    cas: 45,
+    lednice: null,
+    mrazak: false,
+    foto: "fotky/mrkvovy-dortik.jpg",
+    zdroj: "https://www.instagram.com/reel/DfNXnkaRiin/",
+    autor: "Ing. Tereza Smětalová (@vyzivasteri)",
+    suroviny: [["spaldaCela", 120], ["vlocky", 30], ["mrkev", 180], ["vejce", 110, null, "2 vejce na základní 3 porce"], ["cukrTrt", 30], ["reckyJogurt", 140, null, "do těsta"], ["repkovy", 15], ["orechy", 15], ["mleko", 50], ["kypr", "1 lžička na 3 porce"], ["soda", "½ lžičky na 3 porce"], ["skorice", "1 lžička na 3 porce"], ["sul", "špetka soli"], ["reckyJogurt", 220, null, "na polevu"], ["zerve", 60, null, "na polevu"], ["cukr", 15, null, "na polevu"], ["citronStava", 10, null, "na polevu"]],
+    poznamka: "Výpočet používá řecký jogurt 0 % i do těsta, kde autorka tučnost neuvádí, a vlašské ořechy. Místo nich lze podle autorky použít mandle. Dvě vejce počítáme jako 110 g, dvě lžičky citronové šťávy jako 10 g a 50 ml mléka přibližně jako 50 g. Čas je odhad přípravy a pečení, bez chladnutí. Skladování autorka neupřesňuje.",
+    postup: [
+      "Mrkev jemně nastrouhej a ořechy nasekej. Troubu předehřej na 180 °C.",
+      "Smíchej mouku, vločky, mrkev, vejce, třtinový cukr, jogurt určený do těsta, řepkový olej, ořechy, mléko, kypřicí prášek, sodu, skořici a sůl.",
+      "Těsto rozděl do malých forem, jedna forma na porci. Peč přibližně 25-35 minut. Propečení ověř špejlí.",
+      "Na polevu promíchej zbývající řecký jogurt, žervé, cukr krupici a citronovou šťávu.",
+      "Dortíky nech úplně vychladnout a teprve potom je potři polevou."
+    ]
+  },
+  {
+    id: "kuskus-dyne-kure",
+    typ: "hlavni",
+    nazev: "Kuskusový salát s pečenou dýní a kuřecím masem",
+    porce: 3,
+    cas: 40,
+    lednice: null,
+    mrazak: false,
+    foto: "fotky/kuskus-dyne-kure.jpg",
+    zdroj: "https://www.instagram.com/reel/DfNXnkaRiin/",
+    autor: "Ing. Tereza Smětalová (@vyzivasteri)",
+    odhady: [2, 3, 4, 6],
+    suroviny: [["kuskusCely", 210], ["kurPrsa", 300], ["dyne", 400], ["spenat", 60], ["granat", 150], ["balkansky", 120], ["olej", 10, null, "na dýni"], ["olej", 5, null, "na kuře, přepočet 1 lžičky"], ["horcice", 20, null, "na dresink"], ["med", 20, null, "na dresink"], ["olej", 20, null, "na dresink"], ["citronStava", 20, null, "na dresink, přibližně 20 ml"], ["sul", "podle chuti"], ["paprikaM", "podle chuti"], ["cesnekSus", "podle chuti"]],
+    poznamka: "Označený odhad pro základní 3 porce: půl dýně = 400 g očištěné dýně, baby špenát = 60 g, jedno granátové jablko = 150 g zrníček a trocha oleje na dýni = 10 g. Tyto gramáže nejsou od autorky. Lžičku oleje na kuře počítáme jako 5 g; s 20 g do dresinku jde celkem o 35 g oleje. Při změně porcí se gramáže v seznamu přepočítají. Výživové hodnoty jsou orientační, u dýně zatím vycházejí z obecné syrové dýně USDA, ne z konkrétní odrůdy Hokkaido. Čas 40 minut je pracovní odhad. Skladování autorka neupřesňuje.",
+    postup: [
+      "Hokkaido zbav semínek a nakrájej na kostičky. Promíchej s olejem určeným na dýni, solí, pepřem a paprikou. Peč při 200 °C přibližně 20-30 minut doměkka.",
+      "Suchý kuskus osol a zalij vroucí vodou podle obalu. Nech pod pokličkou nabobtnat a pak ho načechrej vidličkou.",
+      "Kuře nakrájej, osol, opepři a ochuť česnekem. Na oleji určeném na kuře ho opeč do úplného propečení.",
+      "Ve skleničce protřepej hořčici, med, olej na dresink a citronovou šťávu. Přidej trochu vody podle požadované hustoty, osol a opepři. Autorka připouští i dijonskou hořčici.",
+      "Rozděl kuskus, kuře a dýni na porce. Přidej omytý špenát, rozdrobený balkánský sýr a zrníčka granátového jablka. Dresink přidej při podávání."
+    ]
+  },
+
   { id: 'oats-hruska', typ: 'snidane', em: '🍐', nazev: 'Hruškové overnight oats se slaným karamelem', porce: 1, cas: 5, lednice: 2, mrazak: false,
     suroviny: [['vlocky', 30], ['chia', 10], ['protein', 15], ['mleko', 70], ['tvaroh', 125], ['arasidy', 20], ['hruska', 100], ['sladidlo', 'pár kapek']],
     postup: ['Smíchej vločky, chia, čokoládový protein a mléko. Bez proteinu dej vanilku a lžičku kakaa.', 'Tvaroh osladi karamelovými kapkami a dej na vločky.', 'Na tvaroh rozetři oříškové máslo, navrch nakrájenou hrušku.', 'Přiklop a dej přes noc do lednice.'] },
@@ -744,7 +802,8 @@ function rozpis(t) {
 }
 function stavKrabicky(x) {
   if (!x || x.stari === undefined) return '';
-  const r = R[x.id]; if (x.stari <= r.lednice) return '';
+  const r = R[x.id]; if (r.lednice == null) return 'neovereno';
+  if (x.stari <= r.lednice) return '';
   return r.mrazak ? 'mraz' : 'nevydrzi';
 }
 function dnyBaleni(t) {
@@ -855,6 +914,7 @@ function kartaVareni(k, b, dnes) {
   });
   bal.filter(x => x.celek && x.kde.length < x.porce).forEach(x => { o += `<p class="note">Z koláče sníš tento týden ${x.kde.length} ${x.kde.length < 5 ? 'kousky' : 'kousků'}. Zbytek hned zamraz a příští týden ho nepeč, stačí vytáhnout z mrazáku a koláčové suroviny v nákupu odškrtnout.</p>`; });
   if (bal.some(x => !x.celek)) o += `<p class="note">Uvařený hrnec zvaž a vyděl počtem krabiček, ať je v každé stejně.</p>`;
+  bal.filter(x => R[x.id].lednice == null).forEach(x => { o += `<p class="note">${esc(kratce(x.id))}: autorka dobu skladování neupřesňuje.</p>`; });
   if (bal.some(x => x.kde.some(z => z.st === 'mraz'))) o += `<p class="note">Krabičky a kousky s ❄ dej hned po uvaření do mrazáku a večer předem je přendej do lednice.</p>`;
   bal.filter(x => x.kde.some(z => z.st === 'nevydrzi')).forEach(x => {
     o += `<p class="note"><span class="warn">${esc(kratce(x.id))} vydrží jen ${R[x.id].lednice} dny a zamrazit nejde.</span> Na orámované dny si v plánu dej jiné jídlo.</p>`;
@@ -901,10 +961,10 @@ function vyber(typy, vybrane, akce, t, pocetDni = 0, uzVybrane = []) {
   const list = RECEPTY.filter(r => typy.includes(r.typ)).sort((a, b) => hodn(b.id) - hodn(a.id));
   return `<div role="list">${list.map(r => {
     const z = ziviny(r.id), on = vybrane.includes(r.id);
-    const kratka = r.typ === 'hlavni' && !r.mrazak && r.lednice < pocetDni;
+    const kratka = r.typ === 'hlavni' && r.lednice != null && !r.mrazak && r.lednice < pocetDni;
     return `<button class="opt ${on ? 'on' : ''}" role="listitem" aria-pressed="${on}" style="--c:${on ? barva(r.id, m) : 'var(--line)'}" data-a="${akce}:${r.id}">
       <span class="sw"></span>
-      <span class="t"><b>${esc(r.nazev)}${hodn(r.id) > 0 ? ' ♥' : ''}</b><span>${r.chut ? CHUT_N[r.chut] + ', ' : ''}${r.cas} min, ${cislo(z[0])} kcal, ${cislo(z[1])} g bílkovin${kratka ? `, <span class="warn">vydrží jen ${r.lednice} dny</span>` : ''}${uzVybrane.includes(r.id) ? ', už máš v neděli' : ''}</span></span></button>`;
+      <span class="t"><b>${esc(r.nazev)}${hodn(r.id) > 0 ? ' ♥' : ''}</b><span>${r.chut ? CHUT_N[r.chut] + ', ' : ''}${r.cas} min, ${cislo(z[0])} kcal, ${cislo(z[1])} g bílkovin${kratka ? `, <span class="warn">vydrží jen ${r.lednice} dny</span>` : ''}${r.lednice == null ? ', skladování neupřesněno' : ''}${uzVybrane.includes(r.id) ? ', už máš v neděli' : ''}</span></span></button>`;
   }).join('')}</div>`;
 }
 
@@ -924,7 +984,7 @@ function vPrehled(k, t) {
       const x = den[slot];
       if (!x) { o += `<button class="week-meal empty" data-a="slot:${d}-${slot}"><span class="home-eyebrow">${SLOT_N[slot]}</span><span>Vybrat jídlo +</span></button>`; return; }
       const st = stavKrabicky(x), rc = R[x.id];
-      o += `<button class="week-meal ${slot === 'snidane' ? 'featured' : ''}" data-a="slot:${d}-${slot}" aria-label="${DNY[d]}, ${SLOT_N[slot]}: ${esc(rc.nazev)}"><span class="home-eyebrow">${SLOT_N[slot]}</span><span class="week-name">${esc(rc.nazev)}</span><span class="week-meta">${cislo(zivinyJidla(x)[0])} kcal · ${rc.cas} min</span>${x.extraG ? '<span class="protein-badge">Navýšené bílkoviny</span>' : ''}${st === 'mraz' ? '<span class="week-storage">Z mrazáku</span>' : st === 'nevydrzi' ? '<span class="warn tiny">Vyber čerstvější jídlo</span>' : ''}</button>`;
+      o += `<button class="week-meal ${slot === 'snidane' ? 'featured' : ''}" data-a="slot:${d}-${slot}" aria-label="${DNY[d]}, ${SLOT_N[slot]}: ${esc(rc.nazev)}"><span class="home-eyebrow">${SLOT_N[slot]}</span><span class="week-name">${esc(rc.nazev)}</span><span class="week-meta">${cislo(zivinyJidla(x)[0])} kcal · ${rc.cas} min</span>${x.extraG ? '<span class="protein-badge">Navýšené bílkoviny</span>' : ''}${st === 'neovereno' ? '<span class="tiny muted">Skladování neupřesněno</span>' : st === 'mraz' ? '<span class="week-storage">Z mrazáku</span>' : st === 'nevydrzi' ? '<span class="warn tiny">Vyber čerstvější jídlo</span>' : ''}</button>`;
     });
     o += `</div><p class="week-total">Celkem <b>${cislo(z[0])} kcal</b></p></section>`;
   });
@@ -995,7 +1055,7 @@ function vRecepty() {
     RECEPTY.filter(r => r.typ === typ).sort((a, b) => hodn(b.id) - hodn(a.id)).forEach(r => {
       const z = ziviny(r.id);
       o += `<button class="rec ${lokalniFotka(r.foto) ? 'has-photo' : ''}" data-a="recept:${r.id}">${fotkaReceptu(r)}<span class="t"><b>${esc(r.nazev)}${hodn(r.id) > 0 ? ' ♥' : ''}</b>
-        <span>${r.chut ? CHUT_N[r.chut] + ', ' : ''}${r.cas} min, ${cislo(z[0])} kcal, ${cislo(z[1])} g bílkovin, ${popisVlakniny(z[4], uplnaVlaknina(r.id))} vlákniny</span></span></button>`;
+        <span>${r.chut ? CHUT_N[r.chut] + ', ' : ''}${r.cas} min, ${cislo(z[0])} kcal, ${cislo(z[1])} g bílkovin, ${popisVlakniny(z[4], uplnaVlaknina(r.id))} vlákniny${r.odhady?.length ? ' · Část gramáží odhadem' : ''}</span></span></button>`;
     });
   });
   return o;
@@ -1007,12 +1067,12 @@ function vRecept(id, porce, context = null) {
   const r = R[id], z = x ? zivinyJidla(x) : ziviny(id), f = porce / r.porce;
   const forma = porce === 1 ? 'porce' : porce < 5 ? 'porce' : 'porcí';
   return `<article class="recipe-page"><button class="recipe-back" data-a="recept-zpet">← Zpět</button><header class="recipe-heading"><p class="home-eyebrow">${TYP_N[r.typ]}</p><h1>${esc(r.nazev)}</h1>${bezpecnyOdkaz(r.zdroj) && /^https?:/.test(r.zdroj) ? `<p class="tiny"><a class="link" href="${esc(r.zdroj)}" target="_blank" rel="noopener noreferrer">Původní recept${r.autor ? ' · ' + esc(r.autor) : ''}</a></p>` : ''}
-    <p class="small muted" style="margin:0">${r.cas} minut${r.typ !== 'snidane' ? `, v lednici vydrží ${r.lednice} ${r.lednice === 1 ? 'den' : 'dny'}${r.mrazak ? ', jde zamrazit' : ''}` : ''}</p></header>
+    <p class="small muted" style="margin:0">${r.cas} minut${r.lednice == null ? ', skladování neupřesněno' : r.typ !== 'snidane' ? `, v lednici vydrží ${r.lednice} ${r.lednice === 1 ? 'den' : 'dny'}${r.mrazak ? ', jde zamrazit' : ''}` : ''}</p></header>
     ${extra ? `<p class="protein-offer">Úprava pro ${DNY[+context.kk.split('-')[0]].toLowerCase()} ${kr(datumDne(context.k, +context.kk.split('-')[0]))}: ${popisNavyseni(id, extra)}. Ostatní dny se řídí vlastním plánem.</p>` : ''}${fotkaReceptu(r, true)}<div class="recipe-facts"><div class="facts"><div><b>${cislo(z[0])}</b><span>kcal</span></div><div><b>${cislo(z[1])}</b><span>bílkoviny</span></div><div><b>${cislo(z[2])}</b><span>sacharidy</span></div><div><b>${cislo(z[3])}</b><span>tuky</span></div><div><b>${uplnaVlaknina(id) ? '' : '≥ '}${cislo(z[4], 1)}</b><span>vláknina (g)</span></div></div>
     <p class="tiny muted" style="margin-top:-8px">Na jednu porci, přibližně spočítáno ze surovin.${!uplnaVlaknina(id) ? ' ≥ u vlákniny znamená nejméně známé množství; některé údaje chybí.' : ''}</p></div>
-    <div class="recipe-columns"><section class="recipe-ingredients"><div class="recipe-ingredients-heading"><h2>Suroviny</h2>
+    ${r.poznamka ? `<p class="shopping-proposal">${esc(r.poznamka)}</p>` : ''}<div class="recipe-columns"><section class="recipe-ingredients"><div class="recipe-ingredients-heading"><h2>Suroviny</h2>
       <div class="stepper"><button data-a="porce:${id}:${Math.max(1, porce - 1)}" aria-label="Méně porcí">−</button><b>${porce} ${forma}</b><button data-a="porce:${id}:${porce + 1}" aria-label="Více porcí">+</button></div></div>
-    <ul class="ing">${r.suroviny.map(([k, g, na]) => `<li><span>${esc(S[k].n)}${na === 'porce' ? ' <span class="muted">(k jídlu)</span>' : ''}</span><span class="muted">${typeof g === 'number' ? cislo(Math.round((na === 'porce' ? g * porce : g * f) + (extra && k === BILKOVINY[id].s ? extra * porce : 0))) + ' g' : esc(g)}</span></li>`).join('')}</ul>
+    <ul class="ing">${r.suroviny.map(([k, g, na, popis], i) => `<li><span>${esc(S[k].n)}${popis ? ' <span class="muted">(' + esc(popis) + ')</span>' : ''}${r.odhady?.includes(i) ? ' <span class="muted">(odhad)</span>' : ''}${na === 'porce' ? ' <span class="muted">(k jídlu)</span>' : ''}</span><span class="muted">${typeof g === 'number' ? cislo(Math.round((na === 'porce' ? g * porce : g * f) + (extra && k === BILKOVINY[id].s ? extra * porce : 0))) + ' g' : esc(g)}</span></li>`).join('')}</ul>
     </section><section class="recipe-instructions"><h2>Postup</h2><ol class="how">${r.postup.map(p => {
       if (extra && id === 'tousty') p = p.replace('2 vajíčka', 'vejce podle množství v seznamu surovin');
       if (extra && id === 'kolac') p = p.replace('150 g bílého skyru', `${150 + extra} g bílého skyru`);
