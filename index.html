@@ -243,6 +243,38 @@ nav.tabs button.on{color:var(--btn)}
 @media(min-width:800px) and (prefers-reduced-motion:no-preference){.sheet.open .panel{animation:none}}
 @media(min-width:800px) and (max-width:1040px){.view-dnes,.view-recepty{grid-template-columns:repeat(2,minmax(0,1fr))}.view-dnes>.hello{grid-column:1}.view-dnes>.listek{grid-column:2}.view-dnes>.box{grid-column:auto}}
 
+
+/* Úvod odpovídá schválenému směru E; stejné komponenty na mobilu i počítači. */
+.view-dnes{display:block;max-width:1120px}
+.home-heading{display:flex;justify-content:space-between;align-items:flex-start;margin:12px 0 28px}
+.home-eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:650;margin:0;color:var(--muted)}
+.home-heading h1{font-size:clamp(34px,4vw,52px);line-height:1.08;letter-spacing:-.055em;margin:16px 0 14px;font-weight:750}
+.home-sub{font-size:15px;color:var(--muted);margin:0;line-height:1.6}
+.home-mark{font-size:36px;color:var(--btn);line-height:1;margin-top:8px}
+.home-layout{display:grid;gap:28px}.home-menu,.home-aside{min-width:0}
+.home-days{display:flex;gap:9px;margin:0 0 24px}.home-day{border-radius:16px;min-width:62px;min-height:70px;display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:center;background:var(--note);color:var(--note-ink)}
+.home-day span{font-size:12px}.home-day b{font-size:19px;font-weight:650}.home-day.on{background:var(--btn);color:var(--btn-ink)}
+.home-day-heading{display:flex;justify-content:space-between;align-items:center;margin:0 0 14px}.home-day-heading h2{font-size:18px;margin:0}.home-day-heading>span{color:var(--muted);font-size:13px}
+.home-meals{display:grid;gap:12px}.home-meal{background:var(--surface);border-radius:22px;padding:22px;min-width:0}
+.home-meal.featured{background:var(--note);color:var(--note-ink)}
+.home-meal-top{display:flex;justify-content:space-between;align-items:center;gap:12px}.home-number{font-size:11px;color:var(--muted);letter-spacing:.06em}
+.home-recipe{display:flex;align-items:center;justify-content:space-between;gap:24px;width:100%;padding:14px 0 18px}
+.home-recipe h3{font-size:20px;font-weight:650;letter-spacing:-.025em;line-height:1.3;max-width:30ch}
+.home-meal.featured h3{font-size:25px;max-width:25ch}.home-recipe-arrow{font-size:22px;flex:none;color:var(--btn)}
+.home-meal-bottom{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center}
+.home-pills{display:flex;gap:7px}.home-pills span{font-size:12px;padding:7px 10px;border-radius:24px;background:var(--bg)}.featured .home-pills span{background:color-mix(in srgb,var(--surface) 65%,transparent)}
+.home-protein{font-size:12px;color:var(--muted)}.home-eaten{font-size:12px;padding:8px 10px;min-height:36px;border:1px solid var(--line2);border-radius:22px}.home-eaten.on{background:var(--btn);color:var(--btn-ink);border-color:transparent}.home-meal.eaten h3{opacity:.55}
+.home-plan-button{margin-top:20px;gap:16px;font-size:15px;font-weight:600}
+.home-aside{display:grid;align-content:start;gap:18px}.home-nutrition{padding:24px;background:var(--surface);border-radius:22px}
+.home-aside-title{display:flex;justify-content:space-between;gap:12px;align-items:center}.home-aside-title h2{font-size:16px;margin:0}.home-settings{font-size:12px;color:var(--btn);min-height:36px}
+.home-calories{margin-top:22px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}.home-calories strong{font-size:38px;font-weight:700;letter-spacing:-.05em}.home-calories>span{font-size:13px;color:var(--muted)}
+.home-calorie-bar{height:7px;overflow:hidden;border-radius:8px;background:var(--line);margin-top:12px}.home-calorie-bar i{display:block;height:100%;background:var(--btn);border-radius:8px}
+.home-macros{margin-top:24px;display:grid;gap:17px}.home-macros>div{display:flex;justify-content:space-between;gap:10px;font-size:13px}.home-macros b{font-weight:600}.home-macros small{font-size:12px;color:var(--muted);font-weight:400}
+.home-shortcuts{border:1px solid var(--line);border-radius:22px;padding:4px 20px}.home-shortcuts button{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:19px 0;width:100%;font-size:14px}.home-shortcuts button+button{border-top:1px solid var(--line)}.home-shortcuts small{display:block;margin-top:5px;font-size:12px;color:var(--muted)}
+.home-empty{background:var(--note);border-radius:24px;padding:28px;margin-top:22px;max-width:640px}.home-empty h2{margin:0;font-size:24px}.home-empty p{color:var(--muted);font-size:15px;line-height:1.6}.home-empty .btn{margin-top:24px;max-width:280px}
+@media(min-width:800px){.home-layout{grid-template-columns:minmax(0,1fr) 310px;gap:48px}.home-aside{padding-top:94px}.home-meal{padding:24px 28px}.home-heading{margin:8px 0 38px}.home-days{gap:10px}.home-day{min-width:70px}.view-dnes>.seg{margin-bottom:24px}}
+@media(max-width:799px){.view-dnes{padding:22px 22px 32px}.home-heading{margin:8px 0 26px}.home-heading h1{font-size:36px}.home-meal{padding:20px}.home-meal.featured h3{font-size:23px}.home-days{gap:8px}.home-day{min-width:58px}.home-aside{gap:16px}.home-number{font-size:10px}}
+
 </style>
 </head>
 <body>
@@ -262,7 +294,6 @@ nav.tabs button.on{color:var(--btn)}
    ===================================================================== */
 const NASTAVENI = {
   pozdrav: 'Ahoj Kájo',
-  autor: 'Helča',
   // Kájin denní cíl (14. 11. 2026: 1600 kcal); v aplikaci si ho může změnit
   cil: { kcal: 1600, b: 100, s: 170, t: 60 },
   // Která jídla dne se plní z vaření do zásoby (večeře se střídá sladká a slaná, viz typ 'vecere')
@@ -585,69 +616,23 @@ function vyberTydne(k) {
 /* =====================================================================
    OBRAZOVKY
    ===================================================================== */
-// Motivační věta na lísteček, jedna na každý den v týdnu
-const MOTTA = [
-  'Krabičky jsou hotové. Dneska stačí otevřít lednici.',
-  'Každá krabička je jedno rozhodnutí, které už dneska nemusíš dělat.',
-  'Půlka týdne za tebou a pořád podle plánu. To se počítá.',
-  'Poslední krabička týdne. Dotáhni to do konce.',
-  'Čtyři dny podle plánu jsou za tebou. Víkend je tvůj.',
-  'Zítra večer patnáct minut a celý příští týden je vyřešený.',
-  'Dnes je plánovací večer. Patnáct minut teď ušetří čtyři dny vymýšlení.',
-];
-function motto() {
-  if (!maPlan(TENTO)) return maPlan(PRISTI) ? 'Plán na příští týden máš. V neděli večer uvaříš a pak už jen otevřeš lednici.' : 'Od pondělí už jen otevřeš lednici. Patnáct minut plánování a máš vyřešené čtyři dny.';
-  return MOTTA[DEN];
-}
-
 function vDnes() {
-  const ser = serie();
-  let o = `<header class="hello"><p class="date">${DNY[DEN]} ${kr(DNES)}</p><h1>${NASTAVENI.pozdrav}</h1></header>
-    <div class="listek"><p class="motto">${motto()}</p>${ser >= 2 ? `<p class="streak">${ser}. týden v řadě s plánem</p>` : ''}
-    <p class="od">Tuhle aplikaci pro tebe udělala ${NASTAVENI.autor}.</p></div>`;
-
-  const vareniDnes = [];
-  if (maPlan(TENTO)) NASTAVENI.vareni.forEach((v, b) => { if (v.denVareni === DEN) vareniDnes.push({ k: TENTO, b }); });
-  if (DEN === 6 && maPlan(PRISTI)) NASTAVENI.vareni.forEach((v, b) => { if (v.denVareni === -1) vareniDnes.push({ k: PRISTI, b }); });
-  vareniDnes.forEach(({ k, b }) => { o += kartaVareni(k, b, true); });
-
-  if (maPlan(TENTO) && !NASTAVENI.planDny.includes(DEN)) {
-    o += `<p class="small muted" style="margin:6px 0 0">Dneska plán nemáš, jez, na co máš chuť.</p>`;
-  } else if (maPlan(TENTO)) {
-    const t = stav.tydny[TENTO], den = rozpis(t)[DEN], m = barvy(t);
-    const dily = SLOTY.filter(s => den[s]).map(s => ({ kcal: ziviny(den[s].id)[0], c: barva(den[s].id, m) }));
-    o += `<h2>Dnes jíš</h2><div class="sum top-sum">${soucet(denZiviny(den), dily)}</div>`;
-    SLOTY.forEach(s => {
-      const x = den[s]; if (!x) return; const rc = R[x.id]; const kk = DEN + '-' + s; const on = t.snedeno[kk];
-      o += `<div class="box ${on ? 'eaten' : ''}" style="--c:${barva(rc.id, m)}">
-        <span class="em" aria-hidden="true">${rc.em}</span>
-        <button class="body" data-a="recept:${rc.id}"><span class="when">${SLOT_N[s]}${x.b !== undefined ? ', z krabičky' : rc.chut ? ', ' + CHUT_N[rc.chut] : ''}</span>
-          <span class="nm">${esc(rc.nazev)}</span><span class="meta">${cislo(ziviny(rc.id)[0])} kcal, ${cislo(ziviny(rc.id)[1])} g bílkovin</span></button>
-        <button class="tick ${on ? 'on' : ''}" data-a="snedeno:${kk}" aria-label="${on ? 'Snědeno' : 'Označit jako snědené'}">${IKONA_OK}</button></div>`;
-      if (on && !hodn(rc.id)) o += `<div class="rate"><span class="muted">Chutnalo?</span><button data-a="hodnotit:${rc.id}:1">Ano, uvařím znovu</button><button data-a="hodnotit:${rc.id}:-1">Spíš ne</button></div>`;
-    });
-  }
-
-  const zK = DEN === 6 ? PRISTI : TENTO, zD = (DEN + 1) % 7;
-  if (maPlan(zK) && NASTAVENI.planDny.includes(zD)) {
-    const t = stav.tydny[zK], den = rozpis(t)[zD], m = barvy(t);
-    o += `<h2>Zítra</h2>` + SLOTY.filter(s => den[s]).map(s => {
-      const rc = R[den[s].id];
-      return `<button class="cook-dish" style="padding-top:8px" data-a="recept:${rc.id}"><span class="lid" style="--c:${barva(rc.id, m)}"></span><span><span class="tiny muted">${SLOT_N[s]}</span><br><b>${esc(rc.nazev)}</b></span></button>`;
-    }).join('');
-  }
-
-  const doPristiho = DEN >= 4 || !maPlan(TENTO);
-  if (doPristiho && !maPlan(PRISTI)) {
-    o += `<div class="callout" style="--c:#E4572E"><h2>Naplánuj si příští týden</h2><p>Udělej to dnes nebo v neděli, ať máš v pondělí nakoupeno a uvařeno.</p>
-      <button class="btn" data-a="planovat:${PRISTI}">Naplánovat ${rozsah(PRISTI)}</button></div>`;
-  } else if (doPristiho && DEN < 6 && maPlan(PRISTI)) {
-    o += `<div class="callout" style="--c:#2E9A5A"><h2>Příští týden máš naplánovaný</h2><p>Do neděle nakoupit, v neděli večer vaříš.</p>
-      <button class="btn" data-a="nakup-pristi">Otevřít nákupní seznam</button></div>`;
-  }
-
-  if (maPlan(TENTO)) o += `<p class="small muted" style="margin-top:28px">Dnes plán nevyšel? <button class="link" data-a="zachrana">Záchranná jídla ze zásob</button></p>`;
-  o += `<p class="small muted" style="margin-top:${maPlan(TENTO) ? 0 : 28}px">Tvůj denní cíl: ${cislo(cil().kcal)} kcal. <button class="link" data-a="cil">Změnit</button></p>`;
+  const k = ui.tyden, t = stav.tydny[k], planned = maPlan(k);
+  const days = NASTAVENI.planDny;
+  const d = days.includes(ui.den) ? ui.den : (k === TENTO && days.includes(DEN) ? DEN : days[0]);
+  const date = datumDne(k, d), current = k === TENTO && d === DEN;
+  let o = `<header class="home-heading"><div><p class="home-eyebrow">Ahoj, Kájo</p><h1>${planned ? 'Tenhle týden<br>máš vyřešený.' : 'Tvůj týden,<br>tvoje jídla.'}</h1><p class="home-sub">${planned ? 'Tvůj jídelníček na ' + rozsah(k) : 'Vyber si jídla a nákupní seznam vznikne sám.'}</p></div><span class="home-mark" aria-hidden="true">✳</span></header>`;
+  o += vyberTydne(k);
+  if (!planned) return o + `<section class="home-empty"><h2>Co si dáš tento týden?</h2><p>Naplánuj snídaně, obědy a večeře na pondělí až čtvrtek.</p><button class="btn" data-a="planovat:${k}">Vybrat jídla</button></section>`;
+  const day = rozpis(t)[d], z = denZiviny(day);
+  o += `<div class="home-layout"><section class="home-menu" aria-label="Jídelníček"><div class="home-days" aria-label="Vybrat den">${days.map(n => `<button class="home-day ${d === n ? 'on' : ''}" aria-pressed="${d === n}" data-a="home-den:${n}"><span>${DNY_KR[n]}</span><b>${datumDne(k, n).getDate()}</b></button>`).join('')}</div><div class="home-day-heading"><h2>${current ? 'Dnes' : DNY[d]}</h2><span>${kr(date)}</span></div><div class="home-meals">`;
+  SLOTY.forEach((slot, i) => {
+    const x = day[slot];
+    if (!x) { o += `<div class="home-meal"><span class="home-eyebrow">${SLOT_N[slot]}</span><p>Jídlo zatím není vybrané.</p><button class="link" data-a="planovat:${k}">Doplnit jídelníček</button></div>`; return; }
+    const rc = R[x.id], values = ziviny(rc.id), eaten = !!t.snedeno[d + '-' + slot];
+    o += `<article class="home-meal ${i === 0 ? 'featured' : ''} ${eaten ? 'eaten' : ''}"><div class="home-meal-top"><span class="home-eyebrow">${SLOT_N[slot]}</span><span class="home-number">0${i + 1} / 03</span></div><button class="home-recipe" data-a="recept:${rc.id}:1"><h3>${esc(rc.nazev)}</h3><span class="home-recipe-arrow" aria-hidden="true">↗</span></button><div class="home-meal-bottom"><div class="home-pills"><span>${cislo(values[0])} kcal</span><span>${rc.cas} min</span></div>${current ? `<button class="home-eaten ${eaten ? 'on' : ''}" aria-pressed="${eaten}" data-a="snedeno:${d}-${slot}">${eaten ? '✓ Snědeno' : 'Označit snědené'}</button>` : `<span class="home-protein">${cislo(values[1])} g bílkovin</span>`}</div></article>`;
+  });
+  o += `</div><button class="btn home-plan-button" data-a="planovat:${k}">Můj plán na celý týden <span aria-hidden="true">↗</span></button></section><aside class="home-aside"><section class="home-nutrition"><div class="home-aside-title"><h2>Souhrn dne</h2><button class="home-settings" data-a="cil" aria-label="Upravit výživové cíle">Upravit cíl</button></div><div class="home-calories"><strong>${cislo(z[0])}</strong><span>z ${cislo(cil().kcal)} kcal</span></div><div class="home-calorie-bar"><i style="width:${Math.min(100, z[0] / cil().kcal * 100)}%"></i></div><p class="tiny muted">Naplánovaná jídla · ${DNY[d].toLowerCase()}</p><div class="home-macros">${[['Bílkoviny', z[1], cil().b], ['Sacharidy', z[2], cil().s], ['Tuky', z[3], cil().t]].map(([name, value, target]) => `<div><span>${name}</span><b>${cislo(value)} <small>/ ${target} g</small></b></div>`).join('')}</div></section><section class="home-shortcuts"><button data-a="home-nakup"><span><b>Nákupní seznam</b><small>Suroviny na celý týden</small></span><span aria-hidden="true">↗</span></button><button data-a="planovat:${k}"><span><b>Upravit jídelníček</b><small>Vyměnit jídla v plánu</small></span><span aria-hidden="true">↗</span></button></section></aside></div>`;
   return o;
 }
 
@@ -857,7 +842,9 @@ document.addEventListener('click', e => {
   const t = () => tyden(ui.tyden);
   switch (a) {
     case 'tab': ui.tab = p[0]; ui.sheet = null; if (p[0] === 'tyden' && !maPlan(ui.tyden) && ui.krok === PREHLED) ui.krok = 0; nahoru(); break;
-    case 'tyden': ui.tyden = p[0]; ui.krok = maPlan(p[0]) ? PREHLED : 0; break;
+    case 'home-den': ui.den = +p[0]; break;
+    case 'home-nakup': ui.tab = 'nakup'; nahoru(); break;
+    case 'tyden': ui.den = null; ui.tyden = p[0]; ui.krok = maPlan(p[0]) ? PREHLED : 0; break;
     case 'planovat': ui.tyden = p[0]; ui.tab = 'tyden'; ui.krok = maPlan(p[0]) ? PREHLED : 0; nahoru(); break;
     case 'pick': {
       const id = p[1], kam = p[0];
