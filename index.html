@@ -2,6 +2,7 @@
 <html lang="cs" data-theme="light">
 <head>
 <meta charset="utf-8">
+<meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -363,11 +364,17 @@ nav.tabs .theme-toggle.on{color:var(--btn)}
 
 @media(min-width:800px){.home-recipe h3,.home-meal.featured h3{max-width:none}.recipe-heading{max-width:none}}
 
+nav.tabs button:disabled{opacity:.4;cursor:default}
 nav.tabs .theme-toggle{justify-content:center;min-height:44px;min-width:44px;gap:0}
 @media(min-width:800px){nav.tabs .theme-toggle{padding:10px;width:44px;height:44px}nav.tabs .theme-toggle svg{width:22px;height:22px}}
 
 .protein-actions{display:grid;gap:14px;margin-top:22px}.protein-actions .btn{font-size:14px;min-height:44px}
 .protein-offer{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;margin:20px 0}.protein-offer h3{font-size:18px;font-weight:600}.protein-offer ul{padding-left:20px;font-size:14px;line-height:1.6}.protein-offer .btn{font-size:14px}.protein-badge{font-size:12px;color:var(--btn);line-height:1.5;margin:0 0 12px}
+
+
+.onboarding{max-width:620px;margin:0 auto;padding-bottom:24px}.onboarding .top{margin-top:4px}
+.local-data-note{font-size:13px;line-height:1.6;color:var(--muted);background:var(--surface);padding:16px;border-radius:16px;margin:22px 0}
+.fld #nast-jmeno{width:210px;max-width:50%;text-align:left}
 
 </style>
 </head>
@@ -388,13 +395,10 @@ nav.tabs .theme-toggle{justify-content:center;min-height:44px;min-width:44px;gap
    NASTAVENÍ - tady se personalizuje
    ===================================================================== */
 const NASTAVENI = {
-  pozdrav: 'Ahoj Kájo',
-  // Kájin denní cíl (14. 11. 2026: 1600 kcal); v aplikaci si ho může změnit
-  cil: { kcal: 1600, b: 100, s: 170, t: 60 },
   // Která jídla dne se plní z vaření do zásoby (večeře se střídá sladká a slaná, viz typ 'vecere')
   hlavniSloty: ['obed'],
   // Vaření do zásoby: den vaření (-1 = neděle před týdnem, 0 = pondělí ... 6 = neděle) a dny, které pokryje
-  // Plánují se jen pracovní dny pondělí až čtvrtek (Kája 14. 11. 2026), víkend je volný
+  // Plánují se pracovní dny pondělí až čtvrtek, víkend je volný
   planDny: [0, 1, 2, 3],
   vareni: [
     { nazev: 'Neděle večer', denVareni: -1, dny: [0, 1, 2, 3] },
@@ -486,7 +490,7 @@ const ZASOBY = 'Zásoby doma';
 const ODDELENI = ['Ovoce a zelenina', 'Maso a ryby', 'Mléčné a vejce', 'Pečivo', 'Trvanlivé', 'Konzervy', 'Mražené', ZASOBY, 'Koření a doma'];
 
 /* =====================================================================
-   RECEPTY - nahoře Kájiny (14. 11. 2026), pod nimi ukázkové na vyzkoušení
+   RECEPTY - nahoře výchozí recepty, pod nimi další na vyzkoušení
    typ: snidane | hlavni | vecere | zachranne; u večeře chut: sladka | slana
    celek: true = nakupuje a peče se celý recept (koláč), ne po porcích
    suroviny: [klíč, gramy, 'porce'] = gramy na jednu porci (přidává se ke každé porci zvlášť)
@@ -588,8 +592,10 @@ function nacti() {
   return { tydny: {}, sablony: [], hodnoceni: {} };
 }
 let stav = nacti();
-function cil() { return stav.cil || NASTAVENI.cil; }
-function uloz() { try { localStorage.setItem(KLIC, JSON.stringify(stav)); } catch (e) {} }
+function cil() { return stav.cil || { kcal: 0, b: 0, s: 0, t: 0 }; }
+function maNastaveni() { return !!stav.profil?.nastaveno && ['kcal', 'b', 's', 't'].every(k => Number.isFinite(stav.cil?.[k]) && stav.cil[k] > 0); }
+let ulozeniNefunguje = false;
+function uloz() { try { localStorage.setItem(KLIC, JSON.stringify(stav)); ulozeniNefunguje = false; return true; } catch (e) { ulozeniNefunguje = true; return false; } }
 
 /* --- data --- */
 function pondeli(d) { const x = new Date(d.getFullYear(), d.getMonth(), d.getDate()); x.setDate(x.getDate() - (x.getDay() + 6) % 7); return x; }
@@ -809,7 +815,7 @@ function vDnes() {
   const days = NASTAVENI.planDny;
   const d = days.includes(ui.den) ? ui.den : (k === TENTO && days.includes(DEN) ? DEN : days[0]);
   const date = datumDne(k, d), current = planned && k === TENTO && d === DEN;
-  let o = `<header class="home-heading"><div><p class="home-eyebrow">Ahoj, Kájo</p><h1>Tvůj jídelníček</h1><p class="home-sub">${planned ? 'Tvůj jídelníček na ' + rozsah(k) : 'Návrh jídelníčku na ' + rozsah(k)}</p></div></header>`;
+  let o = `<header class="home-heading"><div><p class="home-eyebrow">Ahoj${stav.profil?.jmeno ? ', ' + esc(stav.profil.jmeno) : ''}</p><h1>Tvůj jídelníček</h1><p class="home-sub">${planned ? 'Tvůj jídelníček na ' + rozsah(k) : 'Návrh jídelníčku na ' + rozsah(k)}</p></div></header>`;
   o += vyberTydne(k);
   const day = rozpis(t)[d], z = denZiviny(day);
   o += `<div class="home-controls"><div class="home-days" aria-label="Vybrat den">${days.map(n => `<button class="home-day ${d === n ? 'on' : ''}" aria-pressed="${d === n}" data-a="home-den:${n}"><span>${DNY_KR[n]}</span><b>${datumDne(k, n).getDate()}</b></button>`).join('')}</div><div class="home-day-heading"><h2>${current ? 'Dnes' : DNY[d]}</h2><span>${kr(date)}</span></div></div><div class="home-layout"><section class="home-menu" aria-label="Jídelníček"><div class="home-meals">`;
@@ -819,7 +825,7 @@ function vDnes() {
     const rc = R[x.id], values = zivinyJidla(x), eaten = !!t.snedeno[d + '-' + slot];
     o += `<article class="home-meal ${i === 0 ? 'featured' : ''} ${eaten ? 'eaten' : ''}"><div class="home-meal-top"><span class="home-eyebrow">${SLOT_N[slot]}</span><span class="home-number">0${i + 1} / 03</span></div><button class="home-recipe" data-a="recept:${rc.id}:1:${d}-${slot}:${k}"><h3>${esc(rc.nazev)}</h3><span class="home-recipe-arrow" aria-hidden="true">↗</span></button>${x.extraG ? `<p class="protein-badge">${popisNavyseni(x.id, x.extraG)}</p>` : ''}<div class="home-meal-bottom"><div class="home-pills"><span>${cislo(values[0])} kcal</span><span>${rc.cas} min</span></div>${current ? `<button class="home-eaten ${eaten ? 'on' : ''}" aria-pressed="${eaten}" data-a="snedeno:${d}-${slot}">${eaten ? '✓ Snědeno' : 'Označit snědené'}</button>` : `<span class="home-protein">${cislo(values[1])} g bílkovin</span>`}</div></article>`;
   });
-  o += `</div><button class="btn home-plan-button" data-a="${planned ? 'planovat:' + k : 'home-pouzit'}">${planned ? 'Můj plán na celý týden' : 'Použít tento jídelníček'} <span aria-hidden="true">↗</span></button></section><aside class="home-aside"><section class="home-nutrition"><div class="home-aside-title"><h2>Souhrn dne</h2><button class="home-settings" data-a="cil" aria-label="Upravit výživové cíle">Upravit cíl</button></div><div class="home-calories"><strong>${cislo(z[0])}</strong><span>z ${cislo(cil().kcal)} kcal</span></div><div class="home-calorie-bar"><i style="width:${Math.min(100, z[0] / cil().kcal * 100)}%"></i></div><p class="tiny muted">Naplánovaná jídla · ${DNY[d].toLowerCase()}</p><div class="home-macros">${[['Bílkoviny', z[1], cil().b], ['Sacharidy', z[2], cil().s], ['Tuky', z[3], cil().t]].map(([name, value, target]) => `<div><span>${name}</span><b>${cislo(value)} <small>/ ${target} g</small></b></div>`).join('')}</div><div class="protein-actions"><button class="btn line" data-a="protein:${d}">Doplnit bílkoviny</button>${SLOTY.some(slot => day[slot]?.extraG) ? `<button class="link small" data-a="protein-zrusit:${d}">Zrušit navýšení tohoto dne</button>` : ''}</div></section><section class="home-shortcuts"><button data-a="home-nakup"><span><b>Nákupní seznam</b><small>Suroviny na celý týden</small></span><span aria-hidden="true">↗</span></button><button data-a="${planned ? 'planovat:' + k : 'home-pouzit-nakup'}"><span><b>${planned ? 'Upravit jídelníček' : 'Použít návrh a nakoupit'}</b><small>${planned ? 'Vyměnit jídla v plánu' : 'Uložit plán a otevřít seznam'}</small></span><span aria-hidden="true">↗</span></button></section></aside></div>`;
+  o += `</div><button class="btn home-plan-button" data-a="${planned ? 'planovat:' + k : 'home-pouzit'}">${planned ? 'Můj plán na celý týden' : 'Použít tento jídelníček'} <span aria-hidden="true">↗</span></button></section><aside class="home-aside"><section class="home-nutrition"><div class="home-aside-title"><h2>Souhrn dne</h2><button class="home-settings" data-a="cil" aria-label="Upravit nastavení">Nastavení</button></div><div class="home-calories"><strong>${cislo(z[0])}</strong><span>z ${cislo(cil().kcal)} kcal</span></div><div class="home-calorie-bar"><i style="width:${Math.min(100, z[0] / cil().kcal * 100)}%"></i></div><p class="tiny muted">Naplánovaná jídla · ${DNY[d].toLowerCase()}</p><div class="home-macros">${[['Bílkoviny', z[1], cil().b], ['Sacharidy', z[2], cil().s], ['Tuky', z[3], cil().t]].map(([name, value, target]) => `<div><span>${name}</span><b>${cislo(value)} <small>/ ${target} g</small></b></div>`).join('')}</div><div class="protein-actions"><button class="btn line" data-a="protein:${d}">Doplnit bílkoviny</button>${SLOTY.some(slot => day[slot]?.extraG) ? `<button class="link small" data-a="protein-zrusit:${d}">Zrušit navýšení tohoto dne</button>` : ''}</div></section><section class="home-shortcuts"><button data-a="home-nakup"><span><b>Nákupní seznam</b><small>Suroviny na celý týden</small></span><span aria-hidden="true">↗</span></button><button data-a="${planned ? 'planovat:' + k : 'home-pouzit-nakup'}"><span><b>${planned ? 'Upravit jídelníček' : 'Použít návrh a nakoupit'}</b><small>${planned ? 'Vyměnit jídla v plánu' : 'Uložit plán a otevřít seznam'}</small></span><span aria-hidden="true">↗</span></button></section></aside></div>`;
   return o;
 }
 
@@ -961,8 +967,9 @@ function bezpecnyOdkaz(url) {
   if (typeof url !== 'string') return '';
   return /^https?:\/\//i.test(url) || /^fotky\/[a-zA-Z0-9_./-]+$/.test(url) && !url.includes('..') ? url : '';
 }
+function lokalniFotka(url) { return typeof url === 'string' && /^fotky\/[a-zA-Z0-9_-]+\.(jpe?g|png|webp)$/i.test(url) ? url : ''; }
 function fotkaReceptu(r, detail = false) {
-  const src = bezpecnyOdkaz(r.foto);
+  const src = lokalniFotka(r.foto);
   if (!src) return '';
   return `<img class="recipe-photo ${detail ? 'detail-photo' : ''}" src="${esc(src)}" alt="${esc(r.nazev)}" loading="lazy" decoding="async" onerror="this.closest('.has-photo')?.classList.remove('has-photo');this.remove()">`;
 }
@@ -976,7 +983,7 @@ function vRecepty() {
     if (typ === 'zachranne') o += `<p class="small muted" style="margin-top:-6px">Ze zásob za deset minut, na dny, kdy plán nevyjde.</p>`;
     RECEPTY.filter(r => r.typ === typ).sort((a, b) => hodn(b.id) - hodn(a.id)).forEach(r => {
       const z = ziviny(r.id);
-      o += `<button class="rec ${bezpecnyOdkaz(r.foto) ? 'has-photo' : ''}" data-a="recept:${r.id}">${fotkaReceptu(r)}<span class="t"><b>${esc(r.nazev)}${hodn(r.id) > 0 ? ' ♥' : ''}</b>
+      o += `<button class="rec ${lokalniFotka(r.foto) ? 'has-photo' : ''}" data-a="recept:${r.id}">${fotkaReceptu(r)}<span class="t"><b>${esc(r.nazev)}${hodn(r.id) > 0 ? ' ♥' : ''}</b>
         <span>${r.chut ? CHUT_N[r.chut] + ', ' : ''}${r.cas} min, ${cislo(z[0])} kcal, ${cislo(z[1])} g bílkovin</span></span></button>`;
     });
   });
@@ -1003,13 +1010,17 @@ function vRecept(id, porce, context = null) {
     <div class="rate" style="margin:18px 0 0"><span class="muted" style="flex:1">Uvařit znovu?</span>
       <button class="${hodn(id) > 0 ? 'on' : ''}" data-a="hodnotit:${id}:1">Ano</button><button class="${hodn(id) < 0 ? 'on' : ''}" data-a="hodnotit:${id}:-1">Ne</button></div></section></div></article>`;
 }
-function sheetCil() {
+const LOKALNI_DATA = 'Jméno, cíle a plán se ukládají pouze v tomto prohlížeči. Nesynchronizují se. Smazání dat webu nebo nový telefon znamená ztrátu těchto údajů. Neukládáme je na server.';
+function formularNastaveni() {
   const c = cil();
   const pole = [['kcal', 'Kalorie', 'kcal'], ['b', 'Bílkoviny', 'g'], ['s', 'Sacharidy', 'g'], ['t', 'Tuky', 'g']];
-  return `<div class="lidbar" style="--c:#E0A408"></div><button class="x" data-a="zavrit" aria-label="Zavřít">✕</button>
-    <h2 style="margin:0 44px 6px 0">Tvůj denní cíl</h2><p class="small muted" style="margin:0 0 8px">Podle něj aplikace ukazuje, jestli jídla na den sedí. Ukládá se jen v tomhle telefonu.</p>
-    ${pole.map(([k, n, j]) => `<label class="fld"><span>${n} <span class="muted">(${j})</span></span><input id="cil-${k}" type="number" inputmode="numeric" min="1" value="${stav.cil ? c[k] : ''}" placeholder="${NASTAVENI.cil[k]}"></label>`).join('')}
-    <div style="margin-top:20px"><button class="btn" data-a="ulozit-cil">Uložit cíl</button></div>`;
+  return `<label class="fld"><span>Jak tě oslovovat (nepovinné)</span><input id="nast-jmeno" type="text" maxlength="60" autocomplete="off" value="${esc(stav.profil?.jmeno || '')}"></label>${pole.map(([k, n, j]) => `<label class="fld"><span>${n} <span class="muted">(${j} za den)</span></span><input id="cil-${k}" type="number" inputmode="numeric" min="1" step="1" value="${c[k] || ''}" required></label>`).join('')}<p class="small muted">Zadej vlastní denní cíle. Aplikace je sama neurčuje.</p><p class="local-data-note">${LOKALNI_DATA}</p><button class="btn" data-a="ulozit-cil">Uložit nastavení</button>`;
+}
+function vUvodniNastaveni() {
+  return `<section class="onboarding"><header class="top"><h1>Vítej v Nachystáno</h1><p class="sub">Nejdřív si nastav oslovení a své denní cíle.</p></header>${Object.keys(stav.tydny || {}).length ? '<p class="shopping-proposal">Tvůj dosavadní plán zůstává uložený. Doplněním nastavení o něj nepřijdeš.</p>' : ''}${formularNastaveni()}</section>`;
+}
+function sheetCil() {
+  return `<div class="lidbar"></div><button class="x" data-a="zavrit" aria-label="Zavřít">✕</button><h2>Nastavení</h2>${formularNastaveni()}`;
 }
 function sheetSlot(kk) {
   const [d, s] = kk.split('-'); const t = stav.tydny[ui.tyden]; const m = barvy(t);
@@ -1074,13 +1085,21 @@ function vykresliTema() {
 }
 function render() {
   vykresliTema();
+  if (!maNastaveni()) {
+    $('#view').className = 'wrap view-nastaveni'; $('#view').innerHTML = vUvodniNastaveni();
+    $('#sheet').classList.remove('open'); document.title = 'Nastavení | Nachystáno';
+    document.querySelectorAll('nav.tabs [data-a^="tab:"]').forEach(b => { b.classList.remove('on'); b.removeAttribute('aria-current'); b.disabled = true; });
+    if (ulozeniNefunguje) $('#view').insertAdjacentHTML('afterbegin', '<p class="shopping-proposal" role="alert">Prohlížeč nepovolil ukládání. Po zavření stránky můžeš o nastavení a plán přijít.</p>');
+    return;
+  }
   const recipe = receptZAdresy();
   $('#view').className = 'wrap view-' + (recipe ? 'recept' : ui.tab);
   $('#view').innerHTML = recipe ? (Object.hasOwn(R, recipe.id) ? vRecept(recipe.id, recipe.porce, recipe.context) : `<h1>Recept se nenašel</h1><p><button class="link" data-a="recept-zpet">Přejít na recepty</button></p>`) : { dnes: vDnes, tyden: vTyden, nakup: vNakup, recepty: vRecepty }[ui.tab]();
   document.title = recipe && Object.hasOwn(R, recipe.id) ? R[recipe.id].nazev + ' | Nachystáno' : 'Nachystáno';
-  document.querySelectorAll('nav.tabs [data-a^="tab:"]').forEach(b => { const on = b.dataset.a === 'tab:' + (recipe ? 'recepty' : ui.tab); b.classList.toggle('on', on); b.setAttribute('aria-current', on ? 'page' : 'false'); });
+  document.querySelectorAll('nav.tabs [data-a^="tab:"]').forEach(b => { const on = b.dataset.a === 'tab:' + (recipe ? 'recepty' : ui.tab); b.disabled = false; b.classList.toggle('on', on); b.setAttribute('aria-current', on ? 'page' : 'false'); });
   if (ui.sheet && !recipe) { $('#panel').innerHTML = ui.sheet.typ === 'bilkoviny' ? panelBilkovin(ui.sheet.k, ui.sheet.d) : ui.sheet.typ === 'cil' ? sheetCil() : sheetSlot(ui.sheet.kk); $('#sheet').classList.add('open'); }
   else $('#sheet').classList.remove('open');
+  if (ulozeniNefunguje) $('#view').insertAdjacentHTML('afterbegin', '<p class="shopping-proposal" role="alert">Prohlížeč nepovolil ukládání. Změny platí jen pro tuto otevřenou stránku.</p>');
 }
 function toast(t) { const el = $('#toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('on'), 2400); }
 function nahoru() { window.scrollTo({ top: 0 }); }
@@ -1147,9 +1166,10 @@ document.addEventListener('click', e => {
     case 'cil': ui.sheet = { typ: 'cil' }; break;
     case 'ulozit-cil': {
       const v = {}; let ok = true;
-      ['kcal', 'b', 's', 't'].forEach(k => { const n = parseInt(document.getElementById('cil-' + k).value || NASTAVENI.cil[k], 10); if (!(n > 0)) ok = false; v[k] = n; });
-      if (!ok) { toast('Vyplň kladná čísla.'); return; }
-      stav.cil = v; uloz(); ui.sheet = null; toast('Cíl je uložený.'); break;
+      ['kcal', 'b', 's', 't'].forEach(k => { const n = Number(document.getElementById('cil-' + k).value); if (!Number.isInteger(n) || n <= 0) ok = false; v[k] = n; });
+      if (!ok) { toast('Vyplň všechny denní cíle kladnými celými čísly.'); return; }
+      stav.cil = v; stav.profil = { jmeno: $('#nast-jmeno').value.trim().slice(0, 60), nastaveno: true };
+      uloz(); ui.sheet = null; toast(ulozeniNefunguje ? 'Ukládání není dostupné. Nastavení platí jen do zavření stránky.' : 'Nastavení je uložené.'); break;
     }
     case 'snedeno': { const tt = tyden(TENTO); tt.snedeno[p[0]] = !tt.snedeno[p[0]]; uloz(); break; }
     case 'hodnotit': stav.hodnoceni[p[0]] = hodn(p[0]) === +p[1] ? 0 : +p[1]; uloz(); if (+p[1] > 0) toast('Uloženo, při plánování ho uvidíš nahoře.'); break;
