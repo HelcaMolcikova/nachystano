@@ -495,6 +495,17 @@ const S = {
   protlak:   { n: 'Rajčatový protlak', v: [82, 4.3, 15, 0.5, 4.1], o: 'Konzervy' },
   boruvky:   { n: 'Borůvky mražené', v: [57, 0.7, 14, 0.3, 2.7], o: 'Mražené' },
   hrasek:    { n: 'Hrášek mražený', v: [80, 5, 14, 0.4, 4.5], o: 'Mražené' },
+  moukaPolo: { n: 'Pšeničná mouka polohrubá', v: [364, 10.3, 76.3, 1, 2.7], o: 'Trvanlivé', zasoba: true },
+  kakao:     { n: 'Kakao (neslazené)', v: [228, 19.6, 57.9, 13.7, 37], o: 'Trvanlivé', zasoba: true },
+  proteinVan:{ n: 'Vanilkový protein', v: [380, 75, 8, 6, null], o: 'Trvanlivé', zasoba: true },
+  tvarohOdt: { n: 'Tvaroh odtučněný', v: [64, 11, 4.2, 0.2, 0], o: 'Mléčné a vejce', ks: 250, ksN: ['balení', 'balení', 'balení'] },
+  cokoHorka: { n: 'Hořká čokoláda 70 %', v: [598, 7.8, 45.9, 42.6, 10.9], o: 'Trvanlivé' },
+  brambory:  { n: 'Brambory', v: [77, 2.05, 17.5, 0.09, 2.1], o: 'Ovoce a zelenina' },
+  rajce:     { n: 'Rajčata', v: [18, 0.88, 3.89, 0.2, 1.2], o: 'Ovoce a zelenina', ks: 100 },
+  limetka:   { n: 'Limetka', v: [30, 0.7, 10.5, 0.2, 2.8], o: 'Ovoce a zelenina', ks: 67 },
+  koriandr:  { n: 'Koriandr čerstvý', v: [23, 2.13, 3.67, 0.52, 2.8], o: 'Ovoce a zelenina', ks: 30, ksN: ['svazek', 'svazky', 'svazků'] },
+  vyvar:     { n: 'Zeleninový vývar', doma: true, o: 'Koření a doma' },
+  chilli:    { n: 'Chilli', doma: true, o: 'Koření a doma' },
   kari:      { n: 'Kari koření', doma: true, o: 'Koření a doma' },
   skorice:   { n: 'Skořice', doma: true, o: 'Koření a doma' },
   oregano:   { n: 'Oregano', doma: true, o: 'Koření a doma' },
@@ -558,6 +569,48 @@ const RECEPTY = [
       "Kuře nakrájej, osol, opepři a ochuť česnekem. Na oleji určeném na kuře ho opeč do úplného propečení.",
       "Ve skleničce protřepej hořčici, med, olej na dresink a citronovou šťávu. Přidej trochu vody podle požadované hustoty, osol a opepři. Autorka připouští i dijonskou hořčici.",
       "Rozděl kuskus, kuře a dýni na porce. Přidej omytý špenát, rozdrobený balkánský sýr a zrníčka granátového jablka. Dresink přidej při podávání."
+    ]
+  },
+  {
+    id: "misa-rezy",
+    typ: "snidane",
+    nazev: "Proteinové Míša řezy v misce",
+    porce: 1,
+    cas: 30,
+    lednice: null,
+    mrazak: false,
+    foto: "fotky/misa-rezy.jpg",
+    zdroj: "https://www.instagram.com/reel/DVoUGQkDBQn/",
+    autor: "Lucie Minářová (@luciemin)",
+    suroviny: [["vejce", 55, null, "1 vejce"], ["banan", 65, null, "rozmačkaný"], ["moukaPolo", 35, null, "nebo jemné ovesné vločky"], ["protein", 15, null, "do korpusu"], ["kakao", 10], ["mleko", 45, null, "do korpusu"], ["kypr", "¼ lžičky"], ["tvarohOdt", 150], ["proteinVan", 10, null, "do krému"], ["sladidlo", "podle chuti, autorka nedává"], ["cokoHorka", 15, null, "na polevu"], ["mleko", 15, null, "na polevu, 1 lžíce"]],
+    poznamka: "Recept je od autorky na jednu porci a všechno se míchá rovnou v zapékací misce. Lžíci mléka na polevu počítáme jako 15 g. Čas zahrnuje přípravu a pečení, ne chladnutí: řezy pak potřebují pár hodin v lednici, ideálně přes noc. Jak dlouho vydrží, autorka neupřesňuje, píše jen o meal prepu na pár dní dopředu.",
+    postup: [
+      "V zapékací misce promíchej vejce, rozmačkaný banán, mouku, čokoládový protein, kakao, mléko do korpusu a prášek do pečiva do hladkého těsta.",
+      "Peč 14-18 minut na 180 °C a nech úplně vychladnout.",
+      "Tvaroh promíchej s vanilkovým proteinem do hladkého krému, případně oslaď. Natři ho na vychladlý korpus.",
+      "Čokoládu s lžící mléka rozpusť v mikrovlnce, rozmíchej dohladka a polij krém.",
+      "Dej do lednice alespoň na pár hodin, ideálně přes noc, aby poleva ztuhla."
+    ]
+  },
+  {
+    id: "taco-bowl",
+    typ: "hlavni",
+    nazev: "Bramborová taco miska s hovězím a salsou",
+    porce: 4,
+    cas: 40,
+    lednice: null,
+    mrazak: false,
+    foto: "fotky/taco-bowl.jpg",
+    zdroj: "https://www.instagram.com/reel/DUyTyHXDDrL/",
+    autor: "Lucie Minářová (@luciemin)",
+    suroviny: [["brambory", 800], ["olej", 10, null, "na brambory, autorka uvádí 5-10 g"], ["paprikaM", "1 lžička uzené papriky"], ["kmin", "2 lžičky římského kmínu"], ["hovezi", 600, null, "mleté, 10 % tuku"], ["fazole", 240, null, "po slití"], ["kukurice", 150], ["cibule", 150, null, "1 velká cibule"], ["paprika", 150, null, "1 červená paprika"], ["vyvar", "asi 120 ml"], ["chilli", "špetka"], ["cesnekSus", "½ lžičky"], ["sul", "podle chuti"], ["limetka", 67, null, "1 limetka do směsi, kousek do salsy"], ["rajce", 200, null, "na salsu"], ["koriandr", 20, null, "hrst do salsy a trochu navrch"], ["reckyJogurt", 160, null, "navrch"], ["avokado", 40, null, "navrch"], ["eidam", 60, null, "strouhaný, 15 g na porci"]],
+    poznamka: "Recept je od autorky na 4 porce, podle ní má porce asi 600 kcal a 46 g bílkovin. Olej počítáme horní hranicí 10 g. Velkou cibuli počítáme jako 150 g, červenou papriku jako 150 g, limetku jako 67 g a hrst koriandru jako 20 g. Autorka uvádí 25 minut práce, brambory se pečou 30 minut; celkem počítáme asi 40 minut. Jak dlouho vydrží, autorka neupřesňuje.",
+    postup: [
+      "Brambory nakrájej, smíchej s olejem, uzenou paprikou, lžičkou kmínu, solí a pepřem a peč na 200 °C asi 30 minut.",
+      "Mezitím opeč mleté maso. Přidej nadrobno nakrájenou cibuli a papriku a osmahni.",
+      "Přidej fazole, kukuřici, vývar, chilli, druhou lžičku kmínu, sušený česnek, sůl a pepř. Nech probublat a zakápni šťávou z limetky.",
+      "Na salsu smíchej rajčata nakrájená na kostičky s koriandrem, solí a trochou limetky.",
+      "Rozděl brambory a masovou směs do 4 krabiček. Navrch dej jogurt, salsu, trochu avokáda a 15 g sýra na porci."
     ]
   },
 
@@ -655,7 +708,8 @@ function nacti() {
 }
 let stav = nacti();
 function cil() { return stav.cil || { kcal: 0, b: 0, s: 0, t: 0 }; }
-function maNastaveni() { return !!stav.profil?.nastaveno && ['kcal', 'b', 's', 't'].every(k => Number.isFinite(stav.cil?.[k]) && stav.cil[k] > 0); }
+function maNastaveni() { return !!stav.profil?.nastaveno && !!stav.profil?.jmeno?.trim(); }
+function limitKcal() { return cil().kcal > 0 ? cil().kcal : Infinity; }
 let ulozeniNefunguje = false;
 function uloz() { try { localStorage.setItem(KLIC, JSON.stringify(stav)); ulozeniNefunguje = false; return true; } catch (e) { ulozeniNefunguje = true; return false; } }
 
@@ -738,9 +792,9 @@ function navrhyBilkovin(k, d, target) {
     if (choices[a].edits[0].kk === choices[b].edits[0].kk) continue;
     all.push({ edits: [...choices[a].edits, ...choices[b].edits], delta: choices[a].delta.map((v, i) => v + choices[b].delta[i]) });
   }
-  all.forEach(o => { o.after = before.map((v, i) => v + o.delta[i]); o.over = Math.max(0, o.after[0] - cil().kcal); o.full = o.after[1] >= target; });
+  all.forEach(o => { o.after = before.map((v, i) => v + o.delta[i]); o.over = Math.max(0, o.after[0] - limitKcal()); o.full = o.after[1] >= target; });
   const full = all.filter(o => o.full).sort((a, b) => a.delta[0] - b.delta[0] || a.edits.length - b.edits.length || a.after[1] - b.after[1]);
-  const within = all.filter(o => o.after[0] <= cil().kcal).sort((a, b) => Math.min(b.after[1], target) - Math.min(a.after[1], target) || a.delta[0] - b.delta[0]);
+  const within = all.filter(o => o.after[0] <= limitKcal()).sort((a, b) => Math.min(b.after[1], target) - Math.min(a.after[1], target) || a.delta[0] - b.delta[0]);
   const result = [];
   if (full[0]) result.push(full[0]);
   if (within[0] && !result.some(o => JSON.stringify(o.edits) === JSON.stringify(within[0].edits)) && (!result[0] || result[0].over > 0)) result.push(within[0]);
@@ -761,13 +815,14 @@ function zapisNavyseni(k, edits) {
 }
 function panelBilkovin(k, d) {
   const target = ui.bCil || cil().b, t = zobrazenyTyden(k), day = rozpis(t)[d], z = denZiviny(day);
-  const offers = navrhyBilkovin(k, d, target);
-  let o = `<div class="lidbar"></div><button class="x" data-a="zavrit" aria-label="Zavřít">✕</button><h2>Doplnit bílkoviny</h2><p class="small muted">${DNY[d]} ${kr(datumDne(k, d))} · nyní ${cislo(z[1])} g bílkovin a ${cislo(z[0])} kcal.</p><label class="fld"><span>Cíl bílkovin na den (g)</span><input id="protein-target" type="number" min="1" max="500" value="${target}"></label><button class="btn line" style="margin:14px 0" data-a="protein-prepocitat">Přepočítat návrhy</button>`;
-  if (z[1] >= target) o += `<p>Cíl už je splněný. Další navýšení není potřeba.</p>`;
+  const offers = target > 0 ? navrhyBilkovin(k, d, target) : [], c = cil(), zCile = v => v > 0 ? '/' + cislo(v) : '';
+  let o = `<div class="lidbar"></div><button class="x" data-a="zavrit" aria-label="Zavřít">✕</button><h2>Doplnit bílkoviny</h2><p class="small muted">${DNY[d]} ${kr(datumDne(k, d))} · nyní ${cislo(z[1])} g bílkovin a ${cislo(z[0])} kcal.</p><label class="fld"><span>Cíl bílkovin na den (g)</span><input id="protein-target" type="number" min="1" max="500" value="${target || ''}"></label><button class="btn line" style="margin:14px 0" data-a="protein-prepocitat">Přepočítat návrhy</button>`;
+  if (!(target > 0)) o += `<p>Zadej, kolik gramů bílkovin chceš za den, a přepočítej návrhy.</p>`;
+  else if (z[1] >= target) o += `<p>Cíl už je splněný. Další navýšení není potřeba.</p>`;
   else if (!denLzeUpravit(k, d)) o += `<p>Minulé dny už nenavyšujeme. Vyber dnešní nebo budoucí den.</p>`;
   else if (!offers.length) o += `<p>Pro zbývající jídla zatím nemáme vhodnou úpravu. Už snědená jídla neměníme. Zkus v plánu vyměnit některé jídlo.</p>`;
   offers.forEach((offer, i) => {
-    o += `<section class="protein-offer"><h3>${offer.full ? 'Doplnění k cíli' : 'Částečné doplnění'}</h3><ul>${offer.edits.map(e => `<li><b>${SLOT_N[e.kk.split('-')[1]]}</b>: ${popisNavyseni(e.id, e.g)}</li>`).join('')}</ul><p><b>${cislo(offer.after[1])} g bílkovin</b> · ${cislo(offer.after[0])} kcal</p><p class="tiny muted">Bílkoviny +${cislo(offer.delta[1], 1)} g. Sacharidy celkem ${cislo(offer.after[2])}/${cil().s} g · tuky ${cislo(offer.after[3])}/${cil().t} g · vláknina ${popisVlakniny(offer.after[4], vlakninaDne(day))}.</p>${offer.after[2] > cil().s || offer.after[3] > cil().t ? '<p class="warn small">Po úpravě bude překročený také některý cíl sacharidů nebo tuků.</p>' : ''}${offer.over > 0 ? `<p class="warn small">Denní cíl ${cislo(cil().kcal)} kcal překročíš přibližně o ${cislo(offer.over)} kcal.</p>` : ''}${!offer.full ? `<p class="small">K cíli ještě chybí přibližně ${cislo(target - offer.after[1], 1)} g bílkovin.</p>` : ''}<button class="btn" data-a="protein-pouzit:${i}">${offer.over > 0 ? 'Použít i s vyššími kaloriemi' : 'Použít úpravu'}</button></section>`;
+    o += `<section class="protein-offer"><h3>${offer.full ? 'Doplnění k cíli' : 'Částečné doplnění'}</h3><ul>${offer.edits.map(e => `<li><b>${SLOT_N[e.kk.split('-')[1]]}</b>: ${popisNavyseni(e.id, e.g)}</li>`).join('')}</ul><p><b>${cislo(offer.after[1])} g bílkovin</b> · ${cislo(offer.after[0])} kcal</p><p class="tiny muted">Bílkoviny +${cislo(offer.delta[1], 1)} g. Sacharidy celkem ${cislo(offer.after[2])}${zCile(c.s)} g · tuky ${cislo(offer.after[3])}${zCile(c.t)} g · vláknina ${popisVlakniny(offer.after[4], vlakninaDne(day))}.</p>${(c.s > 0 && offer.after[2] > c.s) || (c.t > 0 && offer.after[3] > c.t) ? '<p class="warn small">Po úpravě bude překročený také některý cíl sacharidů nebo tuků.</p>' : ''}${offer.over > 0 ? `<p class="warn small">Denní cíl ${cislo(cil().kcal)} kcal překročíš přibližně o ${cislo(offer.over)} kcal.</p>` : ''}${!offer.full ? `<p class="small">K cíli ještě chybí přibližně ${cislo(target - offer.after[1], 1)} g bílkovin.</p>` : ''}<button class="btn" data-a="protein-pouzit:${i}">${offer.over > 0 ? 'Použít i s vyššími kaloriemi' : 'Použít úpravu'}</button></section>`;
   });
   return o + `<p class="tiny muted">Zkušební funkce pro vybrané snídaně a večeře. Cíl bílkovin se uloží spolu s potvrzenou úpravou. Před potvrzením si ověř, že jídlo ještě můžeš upravit. Změní se jen tento den; navýšení se promítne do nákupu. Upravený recept otevři z tohoto dne, katalog zachovává základní recepty. Hodnoty jsou přibližné.</p>`;
 }
@@ -819,7 +874,7 @@ function dnyBaleni(t) {
   }) : []));
 }
 function denZiviny(den) { const s = [0, 0, 0, 0, 0]; SLOTY.forEach(sl => { const x = den[sl]; if (x) zivinyJidla(x).forEach((v, i) => s[i] += v); }); return s; }
-function mimoCil(kcal) { const c = cil().kcal; return kcal > c * 1.08 || kcal < c * .85; }
+function mimoCil(kcal) { const c = cil().kcal; return c > 0 && (kcal > c * 1.08 || kcal < c * .85); }
 
 /* --- nákup --- */
 function nakup(t) {
@@ -862,11 +917,11 @@ function serie() { let n = 0, k = maPlan(PRISTI) ? PRISTI : TENTO; while (maPlan
 
 /* --- komponenty --- */
 function soucet(z, dily, fiberComplete = true) {
-  const c = cil(), strop = Math.max(c.kcal, z[0]);
+  const c = cil(), strop = Math.max(c.kcal || 0, z[0]) || 1, zCile = v => v > 0 ? '/' + cislo(v) : '';
   const casti = (dily || [{ kcal: z[0], c: 'var(--ok)' }]).map(d => `<i style="width:${d.kcal / strop * 100}%;--c:${d.c}"></i>`).join('');
-  return `<p class="kc ${mimoCil(z[0]) ? 'off' : ''}"><b>${cislo(z[0])}</b> z ${cislo(c.kcal)} kcal</p>
-    <div class="meter">${casti}${z[0] > c.kcal ? `<span class="goal" style="left:${c.kcal / strop * 100}%"></span>` : ''}</div>
-    <div class="mac"><span>bílkoviny <b>${cislo(z[1])}</b>/${c.b} g</span><span>sacharidy <b>${cislo(z[2])}</b>/${c.s} g</span><span>tuky <b>${cislo(z[3])}</b>/${c.t} g</span><span>vláknina <b>${popisVlakniny(z[4], fiberComplete, c.vl)}</b></span></div>`;
+  return `<p class="kc ${mimoCil(z[0]) ? 'off' : ''}"><b>${cislo(z[0])}</b>${c.kcal > 0 ? ' z ' + cislo(c.kcal) : ''} kcal</p>
+    <div class="meter">${casti}${c.kcal > 0 && z[0] > c.kcal ? `<span class="goal" style="left:${c.kcal / strop * 100}%"></span>` : ''}</div>
+    <div class="mac"><span>bílkoviny <b>${cislo(z[1])}</b>${zCile(c.b)} g</span><span>sacharidy <b>${cislo(z[2])}</b>${zCile(c.s)} g</span><span>tuky <b>${cislo(z[3])}</b>${zCile(c.t)} g</span><span>vláknina <b>${popisVlakniny(z[4], fiberComplete, c.vl)}</b></span></div>`;
 }
 function vyberTydne(k) {
   if (!maPlan(TENTO)) return '';
@@ -895,7 +950,7 @@ function vDnes() {
     const rc = R[x.id], values = zivinyJidla(x), eaten = !!t.snedeno[d + '-' + slot];
     o += `<article class="home-meal ${i === 0 ? 'featured' : ''} ${eaten ? 'eaten' : ''}"><div class="home-meal-top"><span class="home-eyebrow">${SLOT_N[slot]}</span><span class="home-number">0${i + 1} / 03</span></div><button class="home-recipe" data-a="recept:${rc.id}:1:${d}-${slot}:${k}"><h3>${esc(rc.nazev)}</h3><span class="home-recipe-arrow" aria-hidden="true">↗</span></button>${x.extraG ? `<p class="protein-badge">${popisNavyseni(x.id, x.extraG)}</p>` : ''}<div class="home-meal-bottom"><div class="home-pills"><span>${cislo(values[0])} kcal</span><span>${rc.cas} min</span></div>${current ? `<button class="home-eaten ${eaten ? 'on' : ''}" aria-pressed="${eaten}" data-a="snedeno:${d}-${slot}">${eaten ? '✓ Snědeno' : 'Označit snědené'}</button>` : `<span class="home-protein">${cislo(values[1])} g bílkovin</span>`}</div></article>`;
   });
-  o += `</div><button class="btn home-plan-button" data-a="${planned ? 'planovat:' + k : 'home-pouzit'}">${planned ? 'Můj plán na celý týden' : 'Použít tento jídelníček'} <span aria-hidden="true">↗</span></button></section><aside class="home-aside"><section class="home-nutrition"><div class="home-aside-title"><h2>Souhrn dne</h2><button class="home-settings" data-a="cil" aria-label="Upravit nastavení">Nastavení</button></div><div class="home-calories"><strong>${cislo(z[0])}</strong><span>z ${cislo(cil().kcal)} kcal</span></div><div class="home-calorie-bar"><i style="width:${Math.min(100, z[0] / cil().kcal * 100)}%"></i></div><p class="tiny muted">Naplánovaná jídla · ${DNY[d].toLowerCase()}</p><div class="home-macros">${[['Bílkoviny', z[1], cil().b], ['Sacharidy', z[2], cil().s], ['Tuky', z[3], cil().t]].map(([name, value, target]) => `<div><span>${name}</span><b>${cislo(value)} <small>/ ${target} g</small></b></div>`).join('')}<div><span>Vláknina</span><b>${popisVlakniny(z[4], vlakninaDne(day), cil().vl)}</b></div></div>${!vlakninaDne(day) ? '<p class="tiny muted">≥ znamená nejméně známé množství. U některých surovin údaj chybí.</p>' : ''}<div class="protein-actions"><button class="btn line" data-a="protein:${d}">Doplnit bílkoviny</button>${SLOTY.some(slot => day[slot]?.extraG) ? `<button class="link small" data-a="protein-zrusit:${d}">Zrušit navýšení tohoto dne</button>` : ''}</div></section><section class="home-shortcuts"><button data-a="home-nakup"><span><b>Nákupní seznam</b><small>Suroviny na celý týden</small></span><span aria-hidden="true">↗</span></button><button data-a="${planned ? 'planovat:' + k : 'home-pouzit-nakup'}"><span><b>${planned ? 'Upravit jídelníček' : 'Použít návrh a nakoupit'}</b><small>${planned ? 'Vyměnit jídla v plánu' : 'Uložit plán a otevřít seznam'}</small></span><span aria-hidden="true">↗</span></button></section></aside></div>`;
+  o += `</div><button class="btn home-plan-button" data-a="${planned ? 'planovat:' + k : 'home-pouzit'}">${planned ? 'Můj plán na celý týden' : 'Použít tento jídelníček'} <span aria-hidden="true">↗</span></button></section><aside class="home-aside"><section class="home-nutrition"><div class="home-aside-title"><h2>Souhrn dne</h2><button class="home-settings" data-a="cil" aria-label="Upravit nastavení">Nastavení</button></div><div class="home-calories"><strong>${cislo(z[0])}</strong><span>${cil().kcal > 0 ? 'z ' + cislo(cil().kcal) + ' ' : ''}kcal</span></div>${cil().kcal > 0 ? `<div class="home-calorie-bar"><i style="width:${Math.min(100, z[0] / cil().kcal * 100)}%"></i></div>` : ''}<p class="tiny muted">Naplánovaná jídla · ${DNY[d].toLowerCase()}</p><div class="home-macros">${[['Bílkoviny', z[1], cil().b], ['Sacharidy', z[2], cil().s], ['Tuky', z[3], cil().t]].map(([name, value, target]) => `<div><span>${name}</span><b>${cislo(value)} ${target > 0 ? `<small>/ ${target} g</small>` : '<small>g</small>'}</b></div>`).join('')}<div><span>Vláknina</span><b>${popisVlakniny(z[4], vlakninaDne(day), cil().vl)}</b></div></div>${!vlakninaDne(day) ? '<p class="tiny muted">≥ znamená nejméně známé množství. U některých surovin údaj chybí.</p>' : ''}<div class="protein-actions"><button class="btn line" data-a="protein:${d}">Doplnit bílkoviny</button>${SLOTY.some(slot => day[slot]?.extraG) ? `<button class="link small" data-a="protein-zrusit:${d}">Zrušit navýšení tohoto dne</button>` : ''}</div></section><section class="home-shortcuts"><button data-a="home-nakup"><span><b>Nákupní seznam</b><small>Suroviny na celý týden</small></span><span aria-hidden="true">↗</span></button><button data-a="${planned ? 'planovat:' + k : 'home-pouzit-nakup'}"><span><b>${planned ? 'Upravit jídelníček' : 'Použít návrh a nakoupit'}</b><small>${planned ? 'Vyměnit jídla v plánu' : 'Uložit plán a otevřít seznam'}</small></span><span aria-hidden="true">↗</span></button></section></aside></div>`;
   return o;
 }
 
@@ -1085,10 +1140,10 @@ const LOKALNI_DATA = 'Jméno, cíle a plán se ukládají pouze v tomto prohlí�
 function formularNastaveni() {
   const c = cil();
   const pole = [['kcal', 'Kalorie', 'kcal'], ['b', 'Bílkoviny', 'g'], ['s', 'Sacharidy', 'g'], ['t', 'Tuky', 'g']];
-  return `<label class="fld"><span>Jak tě oslovovat (nepovinné)</span><input id="nast-jmeno" type="text" maxlength="60" autocomplete="off" value="${esc(stav.profil?.jmeno || '')}"></label>${pole.map(([k, n, j]) => `<label class="fld"><span>${n} <span class="muted">(${j} za den)</span></span><input id="cil-${k}" type="number" inputmode="numeric" min="1" step="1" value="${c[k] || ''}" required></label>`).join('')}<label class="fld"><span>Vláknina <span class="muted">(g za den, nepovinné)</span></span><input id="cil-vl" type="number" inputmode="decimal" min="0.1" step="0.1" value="${c.vl || ''}"></label><p class="small muted">Zadej vlastní denní cíle. Aplikace je sama neurčuje.</p><p class="local-data-note">${LOKALNI_DATA}</p><button class="btn" data-a="ulozit-cil">Uložit nastavení</button>`;
+  return `<label class="fld"><span>Jak tě oslovovat</span><input id="nast-jmeno" type="text" maxlength="60" autocomplete="off" required value="${esc(stav.profil?.jmeno || '')}"></label>${pole.map(([k, n, j]) => `<label class="fld"><span>${n} <span class="muted">(${j} za den, nepovinné)</span></span><input id="cil-${k}" type="number" inputmode="numeric" min="1" step="1" value="${c[k] || ''}"></label>`).join('')}<label class="fld"><span>Vláknina <span class="muted">(g za den, nepovinné)</span></span><input id="cil-vl" type="number" inputmode="decimal" min="0.1" step="0.1" value="${c.vl || ''}"></label><p class="small muted">Cíle můžeš nechat prázdné a doplnit kdykoli později. Aplikace je sama neurčuje.</p><p class="local-data-note">${LOKALNI_DATA}</p><button class="btn" data-a="ulozit-cil">Uložit nastavení</button>`;
 }
 function vUvodniNastaveni() {
-  return `<section class="onboarding"><header class="top"><h1>Vítej v Nachystáno</h1><p class="sub">Nejdřív si nastav oslovení a své denní cíle.</p></header>${Object.keys(stav.tydny || {}).length ? '<p class="shopping-proposal">Tvůj dosavadní plán zůstává uložený. Doplněním nastavení o něj nepřijdeš.</p>' : ''}${formularNastaveni()}</section>`;
+  return `<section class="onboarding"><header class="top"><h1>Vítej v Nachystáno</h1><p class="sub">Napiš, jak tě máme oslovovat. Denní cíle jsou nepovinné.</p></header>${Object.keys(stav.tydny || {}).length ? '<p class="shopping-proposal">Tvůj dosavadní plán zůstává uložený. Doplněním nastavení o něj nepřijdeš.</p>' : ''}${formularNastaveni()}</section>`;
 }
 function sheetCil() {
   return `<div class="lidbar"></div><button class="x" data-a="zavrit" aria-label="Zavřít">✕</button><h2>Nastavení</h2>${formularNastaveni()}`;
@@ -1237,11 +1292,13 @@ document.addEventListener('click', e => {
     case 'cil': ui.sheet = { typ: 'cil' }; break;
     case 'ulozit-cil': {
       const v = {}; let ok = true;
-      ['kcal', 'b', 's', 't'].forEach(k => { const n = Number(document.getElementById('cil-' + k).value); if (!Number.isInteger(n) || n <= 0) ok = false; v[k] = n; });
+      const jmeno = $('#nast-jmeno').value.trim().slice(0, 60);
+      if (!jmeno) { toast('Napiš, jak tě máme oslovovat.'); $('#nast-jmeno').focus(); return; }
+      ['kcal', 'b', 's', 't'].forEach(k => { const raw = document.getElementById('cil-' + k).value.trim(); if (!raw) return; const n = Number(raw); if (!Number.isInteger(n) || n <= 0) ok = false; else v[k] = n; });
       const fiberRaw = $('#cil-vl').value.trim();
       if (fiberRaw) { const n = Number(fiberRaw); if (!Number.isFinite(n) || n <= 0) { toast('Vlákninu nech prázdnou, nebo zadej kladné číslo.'); return; } else v.vl = n; }
-      if (!ok) { toast('Vyplň všechny denní cíle kladnými celými čísly.'); return; }
-      stav.cil = v; stav.profil = { jmeno: $('#nast-jmeno').value.trim().slice(0, 60), nastaveno: true };
+      if (!ok) { toast('Cíle nech prázdné, nebo zadej kladná celá čísla.'); return; }
+      stav.cil = v; stav.profil = { jmeno, nastaveno: true };
       uloz(); ui.sheet = null; toast(ulozeniNefunguje ? 'Ukládání není dostupné. Nastavení platí jen do zavření stránky.' : 'Nastavení je uložené.'); break;
     }
     case 'snedeno': { const tt = tyden(TENTO); tt.snedeno[p[0]] = !tt.snedeno[p[0]]; uloz(); break; }
