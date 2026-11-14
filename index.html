@@ -304,6 +304,9 @@ h1,.hello h1,.home-heading h1{font-size:24px;line-height:1.25;font-weight:600;le
  .view-recepty{row-gap:16px}
 }
 
+
+.shop{display:block}.shop-main .shop-group{margin-bottom:24px;break-inside:avoid}.shop-stocks{display:grid;gap:18px;margin-top:8px}
+@media(min-width:800px){.shop-main{columns:2;column-gap:40px}}
 </style>
 </head>
 <body>
@@ -779,8 +782,11 @@ function vNakup() {
   const sk = nakup(t);
   const vse = sk.flatMap(g => g.polozky).filter(p => !S[p.k].doma && !S[p.k].zasoba);
   const zbyva = vse.filter(p => !t.nakup[p.k]).length;
-  o += `<p class="count">${zbyva ? `Zbývá ${zbyva} z ${vse.length}` : 'Máš všechno'}</p><p class="small muted" style="margin-top:2px">Odškrtni i to, co už máš doma.</p><div class="shop">`;
-  sk.forEach(g => {
+  o += `<p class="count">${zbyva ? `Zbývá ${zbyva} z ${vse.length}` : 'Máš všechno'}</p><p class="small muted" style="margin-top:2px">Odškrtni i to, co už máš doma.</p><div class="shop"><div class="shop-main">`;
+  const jeZasoba = g => g.o === ZASOBY || g.o === 'Koření a doma';
+  let zasobyZacaly = false;
+  [...sk.filter(g => !jeZasoba(g)), ...sk.filter(jeZasoba)].forEach(g => {
+    if (jeZasoba(g) && !zasobyZacaly) { o += `</div><div class="shop-stocks">`; zasobyZacaly = true; }
     const pol = g.polozky.slice().sort((a, b) => (t.nakup[a.k] ? 1 : 0) - (t.nakup[b.k] ? 1 : 0));
     o += `<section class="shop-group ${g.o === ZASOBY || g.o === 'Koření a doma' ? 'stock' : ''}"><h3>${g.o}</h3>` + (g.o === ZASOBY ? `<p class="small muted" style="margin:-4px 0 6px">Vydrží dlouho, většinou je máš. Mrkni, jestli máš aspoň tolik, a kup jen to, co dochází.</p>` : '');
     pol.forEach(p => {
@@ -792,7 +798,7 @@ function vNakup() {
     });
     o += `</section>`;
   });
-  o += `</div><div style="margin-top:22px"><button class="btn line" data-a="sdilet">Poslat seznam do Poznámek</button></div>`;
+  o += `</div></div><div style="margin-top:22px"><button class="btn line" data-a="sdilet">Poslat seznam do Poznámek</button></div>`;
   return o;
 }
 
