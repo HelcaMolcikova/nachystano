@@ -307,6 +307,23 @@ h1,.hello h1,.home-heading h1{font-size:24px;line-height:1.25;font-weight:600;le
 
 .shop{display:block}.shop-main .shop-group{margin-bottom:24px;break-inside:avoid}.shop-stocks{display:grid;gap:18px;margin-top:8px}
 @media(min-width:800px){.shop-main{columns:2;column-gap:40px}}
+
+/* Recepty a týden sdílí klidné textové karty úvodní stránky. */
+.rec{padding:18px;gap:0;min-height:0;align-items:flex-start}.rec .t b,.opt .t b{font-size:16px;line-height:1.45;font-weight:500;letter-spacing:0}
+.rec .t span,.opt .t span{display:block;margin-top:8px;font-size:13px;line-height:1.5}
+.view-recepty .rec{min-height:104px}.view-recepty>.seg{margin-bottom:4px}
+.opt{padding:18px;gap:16px;--c:var(--btn)!important}.opt.on{background:var(--note)}.opt .sw{order:3}
+.week-days{display:grid;gap:24px;margin-top:22px}.week-day{min-width:0}
+.week-day-title{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}.week-day-title h2{font-size:18px;font-weight:600;letter-spacing:0;margin:0}.week-day-title>span{font-size:12px;color:var(--muted)}
+.week-meals{display:grid;gap:10px}.week-meal{display:flex;flex-direction:column;gap:10px;background:var(--surface);border-radius:22px;padding:16px;width:100%;min-width:0}
+.week-meal.featured{background:var(--note);color:var(--note-ink)}.week-name{font-size:16px;line-height:1.45;font-weight:500}.week-meta,.week-storage{font-size:12px;color:var(--muted)}
+.week-total{font-size:13px;color:var(--muted);display:flex;justify-content:space-between;margin:12px 0 0}.week-total b{color:var(--ink);font-weight:500}
+.week-meal.empty{border:1px dashed var(--line2);text-align:left;font-size:14px}.is-today .week-day-title h2{color:var(--btn)}
+.view-tyden>h2{font-size:20px;letter-spacing:0;font-weight:600}.view-tyden>.sum{background:var(--surface);border-radius:22px;padding:20px;margin-top:12px}
+@media(min-width:800px){.week-days{grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.week-meals{grid-template-rows:repeat(3,minmax(145px,auto))}.view-recepty{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(min-width:800px) and (max-width:1050px){.week-days{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.view-tyden .meter i,.view-tyden .lid{background:var(--btn)}
 </style>
 </head>
 <body>
@@ -507,7 +524,7 @@ const DNY_KDY = ['pondělí', 'úterý', 'středu', 'čtvrtek', 'pátek', 'sobot
 const DNY_KR = ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'];
 const SLOTY = ['snidane', 'obed', 'vecere'];
 const SLOT_N = { snidane: 'Snídaně', obed: 'Oběd', vecere: 'Večeře' };
-const TYP_N = { snidane: 'Snídaně', hlavni: 'Obědy do krabiček', vecere: 'Večeře', zachranne: 'Záchranná jídla' };
+const TYP_N = { snidane: 'Snídaně', hlavni: 'Obědy', vecere: 'Večeře', zachranne: 'Záchranná jídla' };
 const CHUT_N = { sladka: 'sladká', slana: 'slaná' };
 const PREHLED = 2 + NASTAVENI.vareni.length;
 const DRUHE_VARENI = DNY_KDY[((NASTAVENI.vareni[1] || NASTAVENI.vareni[0]).denVareni + 7) % 7];
@@ -734,7 +751,7 @@ function vyber(typy, vybrane, akce, t, pocetDni = 0, uzVybrane = []) {
     const z = ziviny(r.id), on = vybrane.includes(r.id);
     const kratka = r.typ === 'hlavni' && !r.mrazak && r.lednice < pocetDni;
     return `<button class="opt ${on ? 'on' : ''}" role="listitem" aria-pressed="${on}" style="--c:${on ? barva(r.id, m) : 'var(--line)'}" data-a="${akce}:${r.id}">
-      <span class="sw"></span><span class="em" aria-hidden="true">${r.em}</span>
+      <span class="sw"></span>
       <span class="t"><b>${esc(r.nazev)}${hodn(r.id) > 0 ? ' ♥' : ''}</b><span>${r.chut ? CHUT_N[r.chut] + ', ' : ''}${r.cas} min, ${cislo(z[0])} kcal, ${cislo(z[1])} g bílkovin${kratka ? `, <span class="warn">vydrží jen ${r.lednice} dny</span>` : ''}${uzVybrane.includes(r.id) ? ', už máš v neděli' : ''}</span></span></button>`;
   }).join('')}</div>`;
 }
@@ -747,17 +764,17 @@ function navigace(muzeDal, hlaska) {
 function vPrehled(k, t) {
   const r = rozpis(t), m = barvy(t);
   let o = t.hotovo ? '' : `<h2 style="margin-top:14px">Takhle vypadá tvůj týden</h2><p class="small muted">Klepnutím na krabičku jídlo vyměníš.</p>`;
-  o += `<div class="fridge" style="margin-top:${t.hotovo ? 4 : 14}px"><span></span>${SLOTY.map(s => `<span class="hd">${SLOT_N[s]}</span>`).join('')}`;
+  o += `<div class="week-days">`;
   NASTAVENI.planDny.forEach(d => {
     const den = r[d], z = denZiviny(den), dnes = k === TENTO && d === DEN;
-    o += `<div class="day ${dnes ? 'today-row' : ''}"><b>${DNY_KR[d]}</b><span class="${mimoCil(z[0]) ? 'off' : ''}">${cislo(z[0])} kcal</span></div>`;
-    SLOTY.forEach(s => {
-      const x = den[s];
-      if (!x) { o += `<button class="cell empty" data-a="slot:${d}-${s}" aria-label="${DNY[d]}, ${SLOT_N[s]}: vybrat jídlo">+</button>`; return; }
-      const st = stavKrabicky(x);
-      o += `<button class="cell" style="--c:${barva(x.id, m)}" data-a="slot:${d}-${s}" aria-label="${DNY[d]}, ${SLOT_N[s]}: ${esc(R[x.id].nazev)}">
-        <span class="em" aria-hidden="true">${R[x.id].em}</span><span class="cn">${esc(kratce(x.id))}</span>${st === 'mraz' ? '<span class="flag">❄</span>' : st === 'nevydrzi' ? '<span class="flag">!</span>' : ''}</button>`;
+    o += `<section class="week-day ${dnes ? 'is-today' : ''}"><header class="week-day-title"><h2>${DNY[d]}</h2><span>${kr(datumDne(k, d))}</span></header><div class="week-meals">`;
+    SLOTY.forEach(slot => {
+      const x = den[slot];
+      if (!x) { o += `<button class="week-meal empty" data-a="slot:${d}-${slot}"><span class="home-eyebrow">${SLOT_N[slot]}</span><span>Vybrat jídlo +</span></button>`; return; }
+      const st = stavKrabicky(x), rc = R[x.id];
+      o += `<button class="week-meal ${slot === 'snidane' ? 'featured' : ''}" data-a="slot:${d}-${slot}" aria-label="${DNY[d]}, ${SLOT_N[slot]}: ${esc(rc.nazev)}"><span class="home-eyebrow">${SLOT_N[slot]}</span><span class="week-name">${esc(rc.nazev)}</span><span class="week-meta">${cislo(ziviny(rc.id)[0])} kcal · ${rc.cas} min</span>${st === 'mraz' ? '<span class="week-storage">Z mrazáku</span>' : st === 'nevydrzi' ? '<span class="warn tiny">Vyber čerstvější jídlo</span>' : ''}</button>`;
     });
+    o += `</div><p class="week-total">Celkem <b>${cislo(z[0])} kcal</b></p></section>`;
   });
   o += `</div>`;
 
@@ -803,15 +820,15 @@ function vNakup() {
 }
 
 function vRecepty() {
-  const f = ui.filtr;
-  let o = `<header class="top"><h1>Recepty</h1><p class="sub">Nahoře tvoje, pod nimi pár dalších na vyzkoušení.</p></header>
-    <div class="seg" style="flex-wrap:wrap">${['vse', 'snidane', 'hlavni', 'vecere', 'zachranne'].map(x => `<button class="${f === x ? 'on' : ''}" data-a="filtr:${x}">${x === 'vse' ? 'Vše' : TYP_N[x]}</button>`).join('')}</div>`;
-  ['snidane', 'hlavni', 'vecere', 'zachranne'].filter(x => f === 'vse' || f === x).forEach(typ => {
+  const f = ['snidane', 'hlavni', 'vecere'].includes(ui.filtr) ? ui.filtr : 'snidane';
+  let o = `<header class="top"><h1>Recepty</h1><p class="sub">Recepty pro tvůj jídelníček.</p></header>
+    <div class="seg" style="flex-wrap:wrap">${['snidane', 'hlavni', 'vecere'].map(x => `<button class="${f === x ? 'on' : ''}" data-a="filtr:${x}">${x === 'vse' ? 'Vše' : TYP_N[x]}</button>`).join('')}</div>`;
+  ['snidane', 'hlavni', 'vecere'].filter(x => f === x).forEach(typ => {
     o += `<h2>${TYP_N[typ]}</h2>`;
     if (typ === 'zachranne') o += `<p class="small muted" style="margin-top:-6px">Ze zásob za deset minut, na dny, kdy plán nevyjde.</p>`;
     RECEPTY.filter(r => r.typ === typ).sort((a, b) => hodn(b.id) - hodn(a.id)).forEach(r => {
       const z = ziviny(r.id);
-      o += `<button class="rec" data-a="recept:${r.id}"><span class="em" aria-hidden="true">${r.em}</span><span class="t"><b>${esc(r.nazev)}${hodn(r.id) > 0 ? ' ♥' : ''}</b>
+      o += `<button class="rec" data-a="recept:${r.id}"><span class="t"><b>${esc(r.nazev)}${hodn(r.id) > 0 ? ' ♥' : ''}</b>
         <span>${r.chut ? CHUT_N[r.chut] + ', ' : ''}${r.cas} min, ${cislo(z[0])} kcal, ${cislo(z[1])} g bílkovin</span></span></button>`;
     });
   });
@@ -824,7 +841,7 @@ function sheetRecept(id, porce) {
   const t = stav.tydny[ui.tyden]; const c = barva(id, barvy(t));
   const forma = porce === 1 ? 'porce' : porce < 5 ? 'porce' : 'porcí';
   return `<div class="lidbar" style="--c:${c}"></div><button class="x" data-a="zavrit" aria-label="Zavřít">✕</button>
-    <div style="font-size:42px;line-height:1">${r.em}</div><h2 style="margin:10px 44px 6px 0">${esc(r.nazev)}</h2>
+    <h2 style="margin:10px 44px 6px 0">${esc(r.nazev)}</h2>
     <p class="small muted" style="margin:0">${r.cas} minut${r.typ !== 'snidane' ? `, v lednici vydrží ${r.lednice} ${r.lednice === 1 ? 'den' : 'dny'}${r.mrazak ? ', jde zamrazit' : ''}` : ''}</p>
     <div class="facts"><div><b>${cislo(z[0])}</b><span>kcal</span></div><div><b>${cislo(z[1])}</b><span>bílkoviny</span></div><div><b>${cislo(z[2])}</b><span>sacharidy</span></div><div><b>${cislo(z[3])}</b><span>tuky</span></div></div>
     <p class="tiny muted" style="margin-top:-8px">Na jednu porci, přibližně spočítáno ze surovin.</p>
@@ -854,7 +871,7 @@ function sheetSlot(kk) {
   typy.forEach(typ => {
     o += `<h3 style="margin:20px 0 2px">${typ === 'zachranne' ? 'Záchranná jídla' : 'Vyměnit za'}</h3>`;
     RECEPTY.filter(r => r.typ === typ).forEach(r => {
-      o += `<button class="rec" data-a="zmena:${kk}:${r.id}"><span class="em" aria-hidden="true">${r.em}</span><span class="t"><b>${esc(r.nazev)}</b><span>${cislo(ziviny(r.id)[0])} kcal, ${r.cas} min</span></span></button>`;
+      o += `<button class="rec" data-a="zmena:${kk}:${r.id}"><span class="t"><b>${esc(r.nazev)}</b><span>${cislo(ziviny(r.id)[0])} kcal, ${r.cas} min</span></span></button>`;
     });
   });
   return o;
